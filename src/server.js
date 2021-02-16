@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
+const initial = require("./initial");
+
 
 import routes from './routes';
 
@@ -19,8 +21,15 @@ app.use(express.urlencoded({ extended: true }));
   next();
 }); */
 
-app.use('/users', routes.user);
+initial.seed();
+
+
+
+app.use('/platforms', routes.platform);
+
 
 app.listen(process.env.PORT, () =>
   console.log(`Example app listening on port ${process.env.PORT}!`),
 );
+
+

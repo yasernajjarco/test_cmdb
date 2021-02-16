@@ -4,48 +4,39 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    ID: {
+    Client_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "ID"
+      field: "Client_ID"
     },
-    LastName: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "LastName"
-    },
-    FirstName: {
-      type: DataTypes.STRING(255),
+    companyName: {
+      type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "FirstName"
+      field: "companyName"
     },
-    Age: {
-      type: DataTypes.INTEGER(11),
+    address: {
+      type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Age"
+      field: "address"
     }
   };
   const options = {
-    tableName: "persons",
+    tableName: "client",
     comment: "",
     indexes: []
   };
-  const PersonsModel = sequelize.define("persons", attributes, options);
-  return PersonsModel;
+  const ClientModel = sequelize.define("client_model", attributes, options);
+  return ClientModel;
 };

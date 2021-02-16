@@ -1,5 +1,6 @@
-import user from './user';
+import platform from './platform';
 
 export default {
-  user,
+  
+  platform
 };
