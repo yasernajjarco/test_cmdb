@@ -24,7 +24,7 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "env_type",
+    tableName: "ENV_TYPE",
     comment: "",
     indexes: []
   };

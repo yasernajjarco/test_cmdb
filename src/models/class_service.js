@@ -24,7 +24,7 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "class_service",
+    tableName: "CLASS_SERVICE",
     comment: "",
     indexes: []
   };

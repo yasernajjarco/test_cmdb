@@ -24,7 +24,7 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "status",
+    tableName: "Status",
     comment: "",
     indexes: []
   };
