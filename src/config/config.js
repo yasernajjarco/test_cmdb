@@ -6,10 +6,10 @@ module.exports = {
   /** DATABASE */
 
     HOST: "localhost",
-    USER: "root",
-    PASSWORD: "rootroot",
-    DB: "cmdb",
-    dialect: "mysql",
+    USER: "lsyalh",
+    PASSWORD: "lsyalh",
+    DB: "dbCMDBdev",
+    dialect: "mariadb",
     pool: {
       max: 5,
       min: 0,
