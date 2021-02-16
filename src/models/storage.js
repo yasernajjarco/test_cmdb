@@ -4,14 +4,14 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Storage_ID: {
+    STORAGE_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Storage_ID"
+      field: "STORAGE_ID"
     },
     SERIAL_NO: {
       type: DataTypes.STRING(150),
@@ -35,16 +35,16 @@ module.exports = sequelize => {
         model: "env_type_model"
       }
     },
-    Storage_Type_ID: {
+    STORAGE_TYPE_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Storage_Type_ID",
+      field: "STORAGE_TYPE_ID",
       references: {
-        key: "Storage_Type_ID",
+        key: "STORAGE_TYPE_ID",
         model: "storage_type_model"
       }
     },
@@ -71,10 +71,10 @@ module.exports = sequelize => {
       type: "BTREE",
       fields: ["ENV_TYPE_ID"]
     }, {
-      name: "Storage_Type_ID",
+      name: "STORAGE_TYPE_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Storage_Type_ID"]
+      fields: ["STORAGE_TYPE_ID"]
     }, {
       name: "CI_ID",
       unique: false,

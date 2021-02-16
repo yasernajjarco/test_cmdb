@@ -4,14 +4,14 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Systeme_ID: {
+    SYSTEME_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Systeme_ID"
+      field: "SYSTEME_ID"
     },
     ENV_TYPE_ID: {
       type: DataTypes.INTEGER(11),

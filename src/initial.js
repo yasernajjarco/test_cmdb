@@ -1,4 +1,4 @@
-const db = require("./models/index");
+const db = require("./index");
 const Platform = db.platforms;
 const Status = db.status;
 const ClassService = db.classService;

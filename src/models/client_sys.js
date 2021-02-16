@@ -4,29 +4,29 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Client_ID: {
+    CLIENT_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "Client_ID",
+      field: "CLIENT_ID",
       references: {
-        key: "Client_ID",
+        key: "CLIENT_ID",
         model: "client_model"
       }
     },
-    Systeme_ID: {
+    SYSTEME_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "Systeme_ID",
+      field: "SYSTEME_ID",
       references: {
-        key: "Systeme_ID",
+        key: "SYSTEME_ID",
         model: "systeme_model"
       }
     }
@@ -35,10 +35,10 @@ module.exports = sequelize => {
     tableName: "client_sys",
     comment: "",
     indexes: [{
-      name: "Systeme_ID",
+      name: "SYSTEME_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Systeme_ID"]
+      fields: ["SYSTEME_ID"]
     }]
   };
   const ClientSysModel = sequelize.define("client_sys_model", attributes, options);

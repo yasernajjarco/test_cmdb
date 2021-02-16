@@ -31,16 +31,16 @@ module.exports = sequelize => {
       comment: null,
       field: "HOST_TYPE"
     },
-    Pserver_ID: {
+    PSERVER_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Pserver_ID",
+      field: "PSERVER_ID",
       references: {
-        key: "Pserver_ID",
+        key: "PSERVER_ID",
         model: "pserver_model"
       }
     },
@@ -75,10 +75,10 @@ module.exports = sequelize => {
     tableName: "lpar",
     comment: "",
     indexes: [{
-      name: "Pserver_ID",
+      name: "PSERVER_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Pserver_ID"]
+      fields: ["PSERVER_ID"]
     }, {
       name: "ENV_TYPE_ID",
       unique: false,

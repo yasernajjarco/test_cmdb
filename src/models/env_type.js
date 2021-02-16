@@ -13,18 +13,18 @@ module.exports = sequelize => {
       comment: null,
       field: "ENV_TYPE_ID"
     },
-    name: {
+    NAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "name"
+      field: "NAME"
     }
   };
   const options = {
-    tableName: "ENV_TYPE",
+    tableName: "env_type",
     comment: "",
     indexes: []
   };

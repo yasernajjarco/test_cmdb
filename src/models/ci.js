@@ -49,14 +49,14 @@ module.exports = sequelize => {
       comment: null,
       field: "DESCRIPTION"
     },
-    name: {
+    NAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "name"
+      field: "NAME"
     },
     CLASS_SERVICE_ID: {
       type: DataTypes.INTEGER(11),
@@ -71,29 +71,29 @@ module.exports = sequelize => {
         model: "class_service_model"
       }
     },
-    Platform_ID: {
+    PLATFORM_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Platform_ID",
+      field: "PLATFORM_ID",
       references: {
-        key: "Platform_ID",
+        key: "PLATFORM_ID",
         model: "platform_model"
       }
     },
-    Status_ID: {
+    STATUS_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Status_ID",
+      field: "STATUS_ID",
       references: {
-        key: "Status_ID",
+        key: "STATUS_ID",
         model: "status_model"
       }
     }
@@ -107,15 +107,15 @@ module.exports = sequelize => {
       type: "BTREE",
       fields: ["CLASS_SERVICE_ID"]
     }, {
-      name: "Platform_ID",
+      name: "PLATFORM_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Platform_ID"]
+      fields: ["PLATFORM_ID"]
     }, {
-      name: "Status_ID",
+      name: "STATUS_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Status_ID"]
+      fields: ["STATUS_ID"]
     }]
   };
   const CiModel = sequelize.define("ci_model", attributes, options);

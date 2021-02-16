@@ -4,61 +4,61 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Contact_ID: {
+    CONTACT_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Contact_ID"
+      field: "CONTACT_ID"
     },
-    lastname: {
+    LASTNAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "lastname"
+      field: "LASTNAME"
     },
-    firstname: {
+    FIRSTNAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "firstname"
+      field: "FIRSTNAME"
     },
-    telephone: {
+    TELEPHONE: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "telephone"
+      field: "TELEPHONE"
     },
-    email: {
+    EMAIL: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "email"
+      field: "EMAIL"
     },
-    Client_ID: {
+    CLIENT_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Client_ID",
+      field: "CLIENT_ID",
       references: {
-        key: "Client_ID",
+        key: "CLIENT_ID",
         model: "client_model"
       }
     }
@@ -67,10 +67,10 @@ module.exports = sequelize => {
     tableName: "contact",
     comment: "",
     indexes: [{
-      name: "Client_ID",
+      name: "CLIENT_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Client_ID"]
+      fields: ["CLIENT_ID"]
     }]
   };
   const ContactModel = sequelize.define("contact_model", attributes, options);

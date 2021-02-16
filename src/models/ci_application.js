@@ -4,23 +4,23 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    CI_Application_ID: {
+    CI_APPLICATION_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "CI_Application_ID"
+      field: "CI_APPLICATION_ID"
     },
-    itService: {
+    ITSERVICE: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "itService"
+      field: "ITSERVICE"
     },
     PRODUCT_CODE: {
       type: DataTypes.STRING(150),
@@ -67,16 +67,16 @@ module.exports = sequelize => {
       comment: null,
       field: "END_EXTENDED_SUPPORT"
     },
-    Provider_ID: {
+    PROVIDER_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Provider_ID",
+      field: "PROVIDER_ID",
       references: {
-        key: "Provider_ID",
+        key: "PROVIDER_ID",
         model: "provider_model"
       }
     },
@@ -98,10 +98,10 @@ module.exports = sequelize => {
     tableName: "ci_application",
     comment: "",
     indexes: [{
-      name: "Provider_ID",
+      name: "PROVIDER_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Provider_ID"]
+      fields: ["PROVIDER_ID"]
     }, {
       name: "CI_ID",
       unique: false,

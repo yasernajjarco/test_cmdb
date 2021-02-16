@@ -13,18 +13,18 @@ module.exports = sequelize => {
       comment: null,
       field: "CLASS_SERVICE_ID"
     },
-    name: {
+    NAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "name"
+      field: "NAME"
     }
   };
   const options = {
-    tableName: "CLASS_SERVICE",
+    tableName: "class_service",
     comment: "",
     indexes: []
   };

@@ -1,4 +1,4 @@
-const config = require("../config/config.js");
+const config = require("./config/config");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 const sequelize = new Sequelize(
@@ -39,12 +39,12 @@ db.sequelize = sequelize;
 // });
 
 
-db.platforms = require("./platform")(sequelize, Sequelize, DataTypes);
-db.status = require("./status")(sequelize, Sequelize, DataTypes);
-db.classService = require("./class_service")(sequelize, Sequelize, DataTypes);
-db.envType = require("./env_type")(sequelize, Sequelize, DataTypes);
-db.pserverType = require("./pserver_type")(sequelize, Sequelize, DataTypes);
-db.storageType = require("./storage_type")(sequelize, Sequelize, DataTypes);
+db.platforms = require("./models/platform")(sequelize, Sequelize, DataTypes);
+db.status = require("./models/status")(sequelize, Sequelize, DataTypes);
+db.classService = require("./models/class_service")(sequelize, Sequelize, DataTypes);
+db.envType = require("./models/env_type")(sequelize, Sequelize, DataTypes);
+db.pserverType = require("./models/pserver_type")(sequelize, Sequelize, DataTypes);
+db.storageType = require("./models/storage_type")(sequelize, Sequelize, DataTypes);
 
 
 

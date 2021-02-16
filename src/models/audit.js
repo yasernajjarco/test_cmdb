@@ -4,50 +4,50 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Audit_ID: {
+    AUDIT_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Audit_ID"
+      field: "AUDIT_ID"
     },
-    role: {
+    ROLE: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "role"
+      field: "ROLE"
     },
-    auditTimestamp: {
+    AUDITTIMESTAMP: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "auditTimestamp"
+      field: "AUDITTIMESTAMP"
     },
-    auditUser: {
+    AUDITUSER: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "auditUser"
+      field: "AUDITUSER"
     },
-    auditDescription: {
+    AUDITDESCRIPTION: {
       type: DataTypes.STRING(1500),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "auditDescription"
+      field: "AUDITDESCRIPTION"
     },
     CI_ID: {
       type: DataTypes.INTEGER(11),
@@ -62,16 +62,16 @@ module.exports = sequelize => {
         model: "ci_model"
       }
     },
-    AuditAction_ID: {
+    AUDITACTION_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "AuditAction_ID",
+      field: "AUDITACTION_ID",
       references: {
-        key: "AuditAction_ID",
+        key: "AUDITACTION_ID",
         model: "auditaction_model"
       }
     }
@@ -85,10 +85,10 @@ module.exports = sequelize => {
       type: "BTREE",
       fields: ["CI_ID"]
     }, {
-      name: "AuditAction_ID",
+      name: "AUDITACTION_ID",
       unique: false,
       type: "BTREE",
-      fields: ["AuditAction_ID"]
+      fields: ["AUDITACTION_ID"]
     }]
   };
   const AuditModel = sequelize.define("audit_model", attributes, options);

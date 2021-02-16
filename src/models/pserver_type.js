@@ -4,27 +4,27 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Pserver_Type_ID: {
+    PSERVER_TYPE_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Pserver_Type_ID"
+      field: "PSERVER_TYPE_ID"
     },
-    name: {
+    NAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "name"
+      field: "NAME"
     }
   };
   const options = {
-    tableName: "Pserver_Type",
+    tableName: "pserver_type",
     comment: "",
     indexes: []
   };

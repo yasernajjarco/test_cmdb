@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-const db = require("../models/index");
+const db = require("../index");
 const platform = require("../controllers/platform.controller");
 const router = Router();
 

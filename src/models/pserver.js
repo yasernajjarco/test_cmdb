@@ -4,14 +4,14 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Pserver_ID: {
+    PSERVER_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Pserver_ID"
+      field: "PSERVER_ID"
     },
     SERIAL_NO: {
       type: DataTypes.STRING(150),
@@ -48,16 +48,16 @@ module.exports = sequelize => {
         model: "ci_model"
       }
     },
-    Pserver_Type_ID: {
+    PSERVER_TYPE_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Pserver_Type_ID",
+      field: "PSERVER_TYPE_ID",
       references: {
-        key: "Pserver_Type_ID",
+        key: "PSERVER_TYPE_ID",
         model: "pserver_type_model"
       }
     }
@@ -76,10 +76,10 @@ module.exports = sequelize => {
       type: "BTREE",
       fields: ["CI_ID"]
     }, {
-      name: "Pserver_Type_ID",
+      name: "PSERVER_TYPE_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Pserver_Type_ID"]
+      fields: ["PSERVER_TYPE_ID"]
     }]
   };
   const PserverModel = sequelize.define("pserver_model", attributes, options);

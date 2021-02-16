@@ -4,14 +4,14 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Zlinux_ID: {
+    ZLINUX_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Zlinux_ID"
+      field: "ZLINUX_ID"
     },
     DOMAINE: {
       type: DataTypes.STRING(150),
@@ -71,16 +71,16 @@ module.exports = sequelize => {
         model: "ci_model"
       }
     },
-    Systeme_ID: {
+    SYSTEME_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Systeme_ID",
+      field: "SYSTEME_ID",
       references: {
-        key: "Systeme_ID",
+        key: "SYSTEME_ID",
         model: "systeme_model"
       }
     }
@@ -94,10 +94,10 @@ module.exports = sequelize => {
       type: "BTREE",
       fields: ["CI_ID"]
     }, {
-      name: "Systeme_ID",
+      name: "SYSTEME_ID",
       unique: false,
       type: "BTREE",
-      fields: ["Systeme_ID"]
+      fields: ["SYSTEME_ID"]
     }]
   };
   const ZlinuxModel = sequelize.define("zlinux_model", attributes, options);

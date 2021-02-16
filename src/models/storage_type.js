@@ -4,27 +4,27 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    Storage_Type_ID: {
+    STORAGE_TYPE_ID: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "Storage_Type_ID"
+      field: "STORAGE_TYPE_ID"
     },
-    name: {
+    NAME: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "name"
+      field: "NAME"
     }
   };
   const options = {
-    tableName: "Storage_Type",
+    tableName: "storage_type",
     comment: "",
     indexes: []
   };

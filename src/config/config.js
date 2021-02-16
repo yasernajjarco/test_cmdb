@@ -6,9 +6,9 @@ module.exports = {
   /** DATABASE */
 
     HOST: "localhost",
-    USER: "lsyalh",
-    PASSWORD: "lsyalh",
-    DB: "dbCMDBdev",
+    USER: "root",
+    PASSWORD: "rootroot",
+    DB: "cmdb",
     dialect: "mariadb",
     pool: {
       max: 5,
