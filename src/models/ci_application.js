@@ -90,7 +90,7 @@ module.exports = sequelize => {
       field: "ci_id",
       references: {
         key: "ci_id",
-        model: "ci_model"
+        model: "ci"
       }
     }
   };

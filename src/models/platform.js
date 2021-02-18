@@ -28,6 +28,6 @@ module.exports = sequelize => {
     comment: "",
     indexes: []
   };
-  const PlatformModel = sequelize.define("platform_model", attributes, options);
+  const PlatformModel = sequelize.define("platform", attributes, options);
   return PlatformModel;
 };

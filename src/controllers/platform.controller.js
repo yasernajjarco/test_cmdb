@@ -5,8 +5,8 @@ const Op = db.Sequelize.Op;
 exports.findAll = (req, res) => {
  // const title = req.query.title;
  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-//include: [{cis}]
-  Platform.findAll()
+//{ include: ["ci"] }
+  Platform.findAll({ include: ["ci"] })
     .then(data => {
       res.send(data);
     })

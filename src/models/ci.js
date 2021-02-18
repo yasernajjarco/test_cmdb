@@ -81,7 +81,7 @@ module.exports = sequelize => {
       field: "platform_id",
       references: {
         key: "platform_id",
-        model: "platform_model"
+        model: "platform"
       }
     },
     status_id: {
@@ -118,6 +118,6 @@ module.exports = sequelize => {
       fields: ["status_id"]
     }]
   };
-  const CiModel = sequelize.define("ci_model", attributes, options);
+  const CiModel = sequelize.define("ci", attributes, options);
   return CiModel;
 };

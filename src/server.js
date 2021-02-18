@@ -6,6 +6,7 @@ import routes from './routes/index.routes';
 
 const app = express();
 
+//./node_modules/.bin/sequelize-automate -t js -h localhost -d cmdb -u root -p rootroot -o ./src/models
 app.use(cors());
 
 app.use(express.json());

@@ -47,11 +47,11 @@ db.pserverType = require("./models/pserver_type")(sequelize, Sequelize, DataType
 db.storageType = require("./models/storage_type")(sequelize, Sequelize, DataTypes);
 db.ci = require("./models/ci")(sequelize, Sequelize, DataTypes);
 
-/*  db.platforms.hasMany(db.ci, { as: "ci" });
-db.ci.belongsTo(db.platforms, {
-  foreignKey: ".platform_id",
-  as: "platform",
-});  */
+
+
+db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as : "ci"});
+db.ci.belongsTo(db.platforms, {foreignKey: 'platform_id', as: "platforms"});
+
 
 
 

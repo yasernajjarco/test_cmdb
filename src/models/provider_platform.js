@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "platform_id",
       references: {
         key: "platform_id",
-        model: "platform_model"
+        model: "platform"
       }
     },
     provider_id: {
@@ -41,6 +41,6 @@ module.exports = sequelize => {
       fields: ["provider_id"]
     }]
   };
-  const ProviderPlatformModel = sequelize.define("provider_platform_model", attributes, options);
+  const ProviderPlatformModel = sequelize.define("provider_platform", attributes, options);
   return ProviderPlatformModel;
 };
