@@ -4,92 +4,92 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    CI_APPLICATION_ID: {
+    ci_application_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "CI_APPLICATION_ID"
+      field: "ci_application_id"
     },
-    ITSERVICE: {
+    itservice: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ITSERVICE"
+      field: "itservice"
     },
-    PRODUCT_CODE: {
+    product_code: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "PRODUCT_CODE"
+      field: "product_code"
     },
-    VERSION: {
+    version: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "VERSION"
+      field: "version"
     },
-    IS_VALID: {
+    is_valid: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "IS_VALID"
+      field: "is_valid"
     },
-    END_OF_SUPPORT_DATE: {
+    end_of_support_date: {
       type: DataTypes.DATEONLY,
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "END_OF_SUPPORT_DATE"
+      field: "end_of_support_date"
     },
-    END_EXTENDED_SUPPORT: {
+    end_extended_support: {
       type: DataTypes.DATEONLY,
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "END_EXTENDED_SUPPORT"
+      field: "end_extended_support"
     },
-    PROVIDER_ID: {
+    provider_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "PROVIDER_ID",
+      field: "provider_id",
       references: {
-        key: "PROVIDER_ID",
+        key: "provider_id",
         model: "provider_model"
       }
     },
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_ID",
+      field: "ci_id",
       references: {
-        key: "CI_ID",
+        key: "ci_id",
         model: "ci_model"
       }
     }
@@ -98,15 +98,15 @@ module.exports = sequelize => {
     tableName: "ci_application",
     comment: "",
     indexes: [{
-      name: "PROVIDER_ID",
+      name: "provider_id",
       unique: false,
       type: "BTREE",
-      fields: ["PROVIDER_ID"]
+      fields: ["provider_id"]
     }, {
-      name: "CI_ID",
+      name: "ci_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_ID"]
+      fields: ["ci_id"]
     }]
   };
   const CiApplicationModel = sequelize.define("ci_application_model", attributes, options);

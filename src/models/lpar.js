@@ -4,69 +4,69 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    LPAR_ID: {
+    lpar_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "LPAR_ID"
+      field: "lpar_id"
     },
-    HOST_CI: {
+    host_ci: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "HOST_CI"
+      field: "host_ci"
     },
-    HOST_TYPE: {
+    host_type: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "HOST_TYPE"
+      field: "host_type"
     },
-    PSERVER_ID: {
+    pserver_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "PSERVER_ID",
+      field: "pserver_id",
       references: {
-        key: "PSERVER_ID",
+        key: "pserver_id",
         model: "pserver_model"
       }
     },
-    ENV_TYPE_ID: {
+    env_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ENV_TYPE_ID",
+      field: "env_type_id",
       references: {
-        key: "ENV_TYPE_ID",
+        key: "env_type_id",
         model: "env_type_model"
       }
     },
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_ID",
+      field: "ci_id",
       references: {
-        key: "CI_ID",
+        key: "ci_id",
         model: "ci_model"
       }
     }
@@ -75,20 +75,20 @@ module.exports = sequelize => {
     tableName: "lpar",
     comment: "",
     indexes: [{
-      name: "PSERVER_ID",
+      name: "pserver_id",
       unique: false,
       type: "BTREE",
-      fields: ["PSERVER_ID"]
+      fields: ["pserver_id"]
     }, {
-      name: "ENV_TYPE_ID",
+      name: "env_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["ENV_TYPE_ID"]
+      fields: ["env_type_id"]
     }, {
-      name: "CI_ID",
+      name: "ci_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_ID"]
+      fields: ["ci_id"]
     }]
   };
   const LparModel = sequelize.define("lpar_model", attributes, options);

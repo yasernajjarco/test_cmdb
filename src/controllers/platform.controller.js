@@ -1,11 +1,11 @@
-const db = require("../index");
+const db = require("../index.db");
 const Platform = db.platforms;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
  // const title = req.query.title;
  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
+//include: [{cis}]
   Platform.findAll()
     .then(data => {
       res.send(data);
@@ -52,7 +52,7 @@ exports.findOne = (req, res) => {
   const id = req.params.id;
 
 console.log(id)
-  Platform.findOne({ where: {  Platform_ID: id  } })
+  Platform.findOne({ where: {  platform_id: id  } })
     .then(data => {
       res.send(data);
     })
@@ -72,7 +72,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Platform.update(req.body, {
-    where: { Platform_ID: id }
+    where: { platform_id: id }
   })
     .then(num => {
       if (num == 1) {
@@ -98,7 +98,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Platform.destroy({
-    where: { Platform_ID: id }
+    where: { platform_id: id }
   })
     .then(num => {
       if (num == 1) {

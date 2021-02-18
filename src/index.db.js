@@ -45,8 +45,13 @@ db.classService = require("./models/class_service")(sequelize, Sequelize, DataTy
 db.envType = require("./models/env_type")(sequelize, Sequelize, DataTypes);
 db.pserverType = require("./models/pserver_type")(sequelize, Sequelize, DataTypes);
 db.storageType = require("./models/storage_type")(sequelize, Sequelize, DataTypes);
+db.ci = require("./models/ci")(sequelize, Sequelize, DataTypes);
 
-
+/*  db.platforms.hasMany(db.ci, { as: "ci" });
+db.ci.belongsTo(db.platforms, {
+  foreignKey: ".platform_id",
+  as: "platform",
+});  */
 
 
 

@@ -4,29 +4,29 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    PLATFORM_ID: {
+    platform_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "PLATFORM_ID",
+      field: "platform_id",
       references: {
-        key: "PLATFORM_ID",
+        key: "platform_id",
         model: "platform_model"
       }
     },
-    PROVIDER_ID: {
+    provider_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "PROVIDER_ID",
+      field: "provider_id",
       references: {
-        key: "PROVIDER_ID",
+        key: "provider_id",
         model: "provider_model"
       }
     }
@@ -35,10 +35,10 @@ module.exports = sequelize => {
     tableName: "provider_platform",
     comment: "",
     indexes: [{
-      name: "PROVIDER_ID",
+      name: "provider_id",
       unique: false,
       type: "BTREE",
-      fields: ["PROVIDER_ID"]
+      fields: ["provider_id"]
     }]
   };
   const ProviderPlatformModel = sequelize.define("provider_platform_model", attributes, options);

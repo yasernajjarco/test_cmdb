@@ -4,29 +4,29 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    CLIENT_ID: {
+    client_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "CLIENT_ID",
+      field: "client_id",
       references: {
-        key: "CLIENT_ID",
+        key: "client_id",
         model: "client_model"
       }
     },
-    ZLINUX_ID: {
+    zlinux_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "ZLINUX_ID",
+      field: "zlinux_id",
       references: {
-        key: "ZLINUX_ID",
+        key: "zlinux_id",
         model: "zlinux_model"
       }
     }
@@ -35,10 +35,10 @@ module.exports = sequelize => {
     tableName: "client_zlinux",
     comment: "",
     indexes: [{
-      name: "ZLINUX_ID",
+      name: "zlinux_id",
       unique: false,
       type: "BTREE",
-      fields: ["ZLINUX_ID"]
+      fields: ["zlinux_id"]
     }]
   };
   const ClientZlinuxModel = sequelize.define("client_zlinux_model", attributes, options);

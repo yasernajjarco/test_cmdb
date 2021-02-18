@@ -4,51 +4,51 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    SYSTEME_ID: {
+    systeme_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "SYSTEME_ID"
+      field: "systeme_id"
     },
-    ENV_TYPE_ID: {
+    env_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ENV_TYPE_ID",
+      field: "env_type_id",
       references: {
-        key: "ENV_TYPE_ID",
+        key: "env_type_id",
         model: "env_type_model"
       }
     },
-    LPAR_ID: {
+    lpar_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "LPAR_ID",
+      field: "lpar_id",
       references: {
-        key: "LPAR_ID",
+        key: "lpar_id",
         model: "lpar_model"
       }
     },
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_ID",
+      field: "ci_id",
       references: {
-        key: "CI_ID",
+        key: "ci_id",
         model: "ci_model"
       }
     }
@@ -57,20 +57,20 @@ module.exports = sequelize => {
     tableName: "systeme",
     comment: "",
     indexes: [{
-      name: "ENV_TYPE_ID",
+      name: "env_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["ENV_TYPE_ID"]
+      fields: ["env_type_id"]
     }, {
-      name: "LPAR_ID",
+      name: "lpar_id",
       unique: false,
       type: "BTREE",
-      fields: ["LPAR_ID"]
+      fields: ["lpar_id"]
     }, {
-      name: "CI_ID",
+      name: "ci_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_ID"]
+      fields: ["ci_id"]
     }]
   };
   const SystemeModel = sequelize.define("systeme_model", attributes, options);

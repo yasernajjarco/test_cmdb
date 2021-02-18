@@ -4,60 +4,60 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    STORAGE_ID: {
+    storage_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "STORAGE_ID"
+      field: "storage_id"
     },
-    SERIAL_NO: {
+    serial_no: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "SERIAL_NO"
+      field: "serial_no"
     },
-    ENV_TYPE_ID: {
+    env_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ENV_TYPE_ID",
+      field: "env_type_id",
       references: {
-        key: "ENV_TYPE_ID",
+        key: "env_type_id",
         model: "env_type_model"
       }
     },
-    STORAGE_TYPE_ID: {
+    storage_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "STORAGE_TYPE_ID",
+      field: "storage_type_id",
       references: {
-        key: "STORAGE_TYPE_ID",
+        key: "storage_type_id",
         model: "storage_type_model"
       }
     },
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_ID",
+      field: "ci_id",
       references: {
-        key: "CI_ID",
+        key: "ci_id",
         model: "ci_model"
       }
     }
@@ -66,20 +66,20 @@ module.exports = sequelize => {
     tableName: "storage",
     comment: "",
     indexes: [{
-      name: "ENV_TYPE_ID",
+      name: "env_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["ENV_TYPE_ID"]
+      fields: ["env_type_id"]
     }, {
-      name: "STORAGE_TYPE_ID",
+      name: "storage_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["STORAGE_TYPE_ID"]
+      fields: ["storage_type_id"]
     }, {
-      name: "CI_ID",
+      name: "ci_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_ID"]
+      fields: ["ci_id"]
     }]
   };
   const StorageModel = sequelize.define("storage_model", attributes, options);

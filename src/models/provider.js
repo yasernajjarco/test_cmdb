@@ -4,50 +4,50 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    PROVIDER_ID: {
+    provider_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "PROVIDER_ID"
+      field: "provider_id"
     },
-    NAME: {
+    name: {
       type: DataTypes.STRING(300),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "NAME"
+      field: "name"
     },
-    ADDRESS: {
+    address: {
       type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ADDRESS"
+      field: "address"
     },
-    VENDOR_CODE: {
+    vendor_code: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "VENDOR_CODE"
+      field: "vendor_code"
     },
-    VENDOR: {
+    vendor: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "VENDOR"
+      field: "vendor"
     }
   };
   const options = {

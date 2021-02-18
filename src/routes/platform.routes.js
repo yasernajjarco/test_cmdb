@@ -1,12 +1,15 @@
 import { Router } from 'express';
 
-const db = require("../index");
+const db = require("../index.db");
 const platform = require("../controllers/platform.controller");
 const router = Router();
+const { authJwt } = require("../middleware");
+
 
 
   // Create a new Platform
-  router.post("/", platform.create);
+  router.post("/", [authJwt.verifyToken, authJwt.isAdmin], platform.create );
+
 
   // Retrieve all Platform
   router.get("/", platform.findAll);

@@ -2,9 +2,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 const initial = require("./initial");
-
-
-import routes from './routes';
+import routes from './routes/index.routes';
 
 const app = express();
 
@@ -22,6 +20,10 @@ initial.seed();
 
 
 app.use('/platforms', routes.platform);
+app.use('/users', routes.Auth);
+
+app.use('/', routes.User);
+
 
 
 app.listen(process.env.PORT, () =>

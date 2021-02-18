@@ -4,32 +4,32 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    CLIENT_ID: {
+    client_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "CLIENT_ID"
+      field: "client_id"
     },
-    COMPANYNAME: {
+    companyname: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "COMPANYNAME"
+      field: "companyname"
     },
-    ADDRESS: {
+    address: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ADDRESS"
+      field: "address"
     }
   };
   const options = {

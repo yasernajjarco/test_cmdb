@@ -4,83 +4,83 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    ZLINUX_ID: {
+    zlinux_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "ZLINUX_ID"
+      field: "zlinux_id"
     },
-    DOMAINE: {
+    domaine: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "DOMAINE"
+      field: "domaine"
     },
-    OS_VERSION: {
+    os_version: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "OS_VERSION"
+      field: "os_version"
     },
-    CPU_TYPE: {
+    cpu_type: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CPU_TYPE"
+      field: "cpu_type"
     },
-    CPU_NUMBER: {
+    cpu_number: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CPU_NUMBER"
+      field: "cpu_number"
     },
-    PHYSICAL_MEM_TOTAL: {
+    physical_mem_total: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "PHYSICAL_MEM_TOTAL"
+      field: "physical_mem_total"
     },
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_ID",
+      field: "ci_id",
       references: {
-        key: "CI_ID",
+        key: "ci_id",
         model: "ci_model"
       }
     },
-    SYSTEME_ID: {
+    systeme_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "SYSTEME_ID",
+      field: "systeme_id",
       references: {
-        key: "SYSTEME_ID",
+        key: "systeme_id",
         model: "systeme_model"
       }
     }
@@ -89,15 +89,15 @@ module.exports = sequelize => {
     tableName: "zlinux",
     comment: "",
     indexes: [{
-      name: "CI_ID",
+      name: "ci_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_ID"]
+      fields: ["ci_id"]
     }, {
-      name: "SYSTEME_ID",
+      name: "systeme_id",
       unique: false,
       type: "BTREE",
-      fields: ["SYSTEME_ID"]
+      fields: ["systeme_id"]
     }]
   };
   const ZlinuxModel = sequelize.define("zlinux_model", attributes, options);

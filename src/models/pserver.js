@@ -4,60 +4,60 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    PSERVER_ID: {
+    pserver_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "PSERVER_ID"
+      field: "pserver_id"
     },
-    SERIAL_NO: {
+    serial_no: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "SERIAL_NO"
+      field: "serial_no"
     },
-    ENV_TYPE_ID: {
+    env_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ENV_TYPE_ID",
+      field: "env_type_id",
       references: {
-        key: "ENV_TYPE_ID",
+        key: "env_type_id",
         model: "env_type_model"
       }
     },
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_ID",
+      field: "ci_id",
       references: {
-        key: "CI_ID",
+        key: "ci_id",
         model: "ci_model"
       }
     },
-    PSERVER_TYPE_ID: {
+    pserver_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "PSERVER_TYPE_ID",
+      field: "pserver_type_id",
       references: {
-        key: "PSERVER_TYPE_ID",
+        key: "pserver_type_id",
         model: "pserver_type_model"
       }
     }
@@ -66,20 +66,20 @@ module.exports = sequelize => {
     tableName: "pserver",
     comment: "",
     indexes: [{
-      name: "ENV_TYPE_ID",
+      name: "env_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["ENV_TYPE_ID"]
+      fields: ["env_type_id"]
     }, {
-      name: "CI_ID",
+      name: "ci_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_ID"]
+      fields: ["ci_id"]
     }, {
-      name: "PSERVER_TYPE_ID",
+      name: "pserver_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["PSERVER_TYPE_ID"]
+      fields: ["pserver_type_id"]
     }]
   };
   const PserverModel = sequelize.define("pserver_model", attributes, options);

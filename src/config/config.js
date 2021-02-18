@@ -21,7 +21,8 @@ module.exports = {
 
   /** AUTH KEY */
   auth: {
-    secret: "our-secret-key"
+    secret: "jllgshllWEUJHGHYJkjsfjds90",
+    expiresIn: 86400
   }
 };
 

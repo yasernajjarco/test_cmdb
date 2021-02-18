@@ -4,56 +4,56 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    INSTANCE_ID: {
+    instance_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "INSTANCE_ID"
+      field: "instance_id"
     },
-    ISOCCURENCIABLE: {
+    isoccurenciable: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "ISOCCURENCIABLE"
+      field: "isoccurenciable"
     },
-    NAME: {
+    name: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "NAME"
+      field: "name"
     },
-    SYSTEME_ID: {
+    systeme_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "SYSTEME_ID",
+      field: "systeme_id",
       references: {
-        key: "SYSTEME_ID",
+        key: "systeme_id",
         model: "systeme_model"
       }
     },
-    CI_APPLICATION_ID: {
+    ci_application_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CI_APPLICATION_ID",
+      field: "ci_application_id",
       references: {
-        key: "CI_APPLICATION_ID",
+        key: "ci_application_id",
         model: "ci_application_model"
       }
     }
@@ -62,15 +62,15 @@ module.exports = sequelize => {
     tableName: "instance",
     comment: "",
     indexes: [{
-      name: "SYSTEME_ID",
+      name: "systeme_id",
       unique: false,
       type: "BTREE",
-      fields: ["SYSTEME_ID"]
+      fields: ["systeme_id"]
     }, {
-      name: "CI_APPLICATION_ID",
+      name: "ci_application_id",
       unique: false,
       type: "BTREE",
-      fields: ["CI_APPLICATION_ID"]
+      fields: ["ci_application_id"]
     }]
   };
   const InstanceModel = sequelize.define("instance_model", attributes, options);

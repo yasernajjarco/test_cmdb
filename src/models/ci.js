@@ -4,96 +4,96 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    CI_ID: {
+    ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "CI_ID"
+      field: "ci_id"
     },
-    LOGICAL_NAME: {
+    logical_name: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "LOGICAL_NAME"
+      field: "logical_name"
     },
-    COMPANY: {
+    company: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "COMPANY"
+      field: "company"
     },
-    NRB_MANAGED_BY: {
+    nrb_managed_by: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "NRB_MANAGED_BY"
+      field: "nrb_managed_by"
     },
-    DESCRIPTION: {
+    description: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "DESCRIPTION"
+      field: "description"
     },
-    NAME: {
+    name: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "NAME"
+      field: "name"
     },
-    CLASS_SERVICE_ID: {
+    class_service_id: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "CLASS_SERVICE_ID",
+      field: "class_service_id",
       references: {
-        key: "CLASS_SERVICE_ID",
+        key: "class_service_id",
         model: "class_service_model"
       }
     },
-    PLATFORM_ID: {
+    platform_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "PLATFORM_ID",
+      field: "platform_id",
       references: {
-        key: "PLATFORM_ID",
+        key: "platform_id",
         model: "platform_model"
       }
     },
-    STATUS_ID: {
+    status_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "STATUS_ID",
+      field: "status_id",
       references: {
-        key: "STATUS_ID",
+        key: "status_id",
         model: "status_model"
       }
     }
@@ -102,20 +102,20 @@ module.exports = sequelize => {
     tableName: "ci",
     comment: "",
     indexes: [{
-      name: "CLASS_SERVICE_ID",
+      name: "class_service_id",
       unique: false,
       type: "BTREE",
-      fields: ["CLASS_SERVICE_ID"]
+      fields: ["class_service_id"]
     }, {
-      name: "PLATFORM_ID",
+      name: "platform_id",
       unique: false,
       type: "BTREE",
-      fields: ["PLATFORM_ID"]
+      fields: ["platform_id"]
     }, {
-      name: "STATUS_ID",
+      name: "status_id",
       unique: false,
       type: "BTREE",
-      fields: ["STATUS_ID"]
+      fields: ["status_id"]
     }]
   };
   const CiModel = sequelize.define("ci_model", attributes, options);

@@ -4,23 +4,23 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    AUDITACTION_ID: {
+    auditaction_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "AUDITACTION_ID"
+      field: "auditaction_id"
     },
-    NAME: {
+    name: {
       type: DataTypes.STRING(150),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "NAME"
+      field: "name"
     }
   };
   const options = {
