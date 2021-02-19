@@ -22,6 +22,8 @@ initial.seed();
 
 app.use('/platforms', routes.platform);
 app.use('/users', routes.Auth);
+app.use('/cis', routes.Ci);
+
 
 app.use('/', routes.User);
 

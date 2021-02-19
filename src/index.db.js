@@ -29,14 +29,6 @@ db.Sequelize = Sequelize;
 db.Op = Op;
 db.sequelize = sequelize;
 
-// db.persons = require("./persons.js")(sequelize, Sequelize, DataTypes);
-// db.orders = require("./orders.js")(sequelize, Sequelize, DataTypes);
-
-// db.persons.hasMany(db.orders, { as: "orders" });
-// db.orders.belongsTo(db.persons, {
-//   foreignKey: "PersonID",
-//   as: "persons",
-// });
 
 
 db.platforms = require("./models/platform")(sequelize, Sequelize, DataTypes);
@@ -46,18 +38,31 @@ db.envType = require("./models/env_type")(sequelize, Sequelize, DataTypes);
 db.pserverType = require("./models/pserver_type")(sequelize, Sequelize, DataTypes);
 db.storageType = require("./models/storage_type")(sequelize, Sequelize, DataTypes);
 db.ci = require("./models/ci")(sequelize, Sequelize, DataTypes);
+db.provider = require("./models/provider")(sequelize, Sequelize, DataTypes);
+db.application = require("./models/ci_application")(sequelize, Sequelize, DataTypes);
+db.instance = require("./models/instance")(sequelize, Sequelize, DataTypes);
 
 
 
 db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as : "ci"});
 db.ci.belongsTo(db.platforms, {foreignKey: 'platform_id', as: "platforms"});
 
+db.status.hasMany(db.ci, { foreignKey: 'status_id', as : "ci"});
+db.ci.belongsTo(db.status, {foreignKey: 'status_id', as: "status"});
+
+db.classService.hasMany(db.ci, { foreignKey: 'class_service_id', as : "ci"});
+db.ci.belongsTo(db.classService, {foreignKey: 'class_service_id', as: "classService"});
+
+db.provider.hasMany(db.application, { foreignKey: 'provider_id', as : "application"});
+db.application.belongsTo(db.provider, {foreignKey: 'provider_id', as: "provider"});
 
 
+db.ci.hasMany(db.application, { foreignKey: 'ci_id', as : "application"});
+db.application.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
 
-
- 
-
-
+db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as : "instance"});
+db.instance.belongsTo(db.application, {foreignKey: 'ci_application_id', as: "application"});
 
 module.exports = db;
+
+
