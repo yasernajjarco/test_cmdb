@@ -27,11 +27,18 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to CMDB API service." });
 });
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+var options = {
+  swaggerOptions: {
+    authAction :{ JWT: {name: "JWT", schema: {type: "apiKey", in: "header", name: "Authorization", description: ""}, value: "Bearer <JWT>"} }
+  }
+};
 
-initial.seed();
-load.test();
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,options));
 
+
+ initial.seed().then(() => {
+  load.test();
+});
 
 app.use('/api', routes);
 

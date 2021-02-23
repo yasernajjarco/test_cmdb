@@ -8,7 +8,6 @@ const reader = require('xlsx')
 
 function insertVendors(vendors,namePlatform){
 
-console.log(namePlatform)
     for (var i = 0; i < vendors.length; i++) { 
         
 
@@ -32,7 +31,7 @@ console.log(namePlatform)
         
                 Provider_Platform.findOrCreate({
                 where: { 
-                    [db.Op.or]: [ {platform_id: platform_id}, {provider_id  : res[0].dataValues.provider_id } ]    
+                    [db.Op.and]: [ {platform_id: platform_id}, {provider_id  : res[0].dataValues.provider_id } ]    
                  },
                 defaults: {
                     platform_id : platform_id,
@@ -71,11 +70,15 @@ function insertSofts(softs){
             EOS : softs[i]["EOS"], 
             EOSPlus : softs[i]["EOS+"],
             NameCmdb : softs[i]["Nom CMDB"],
-            key:softs[i]["Clé"]
+            key:softs[i]["Clé"],
+            keyProvider : softs[i]["Clé"].substring(0,softs[i]["Clé"].lastIndexOf("-")).trim(),
+            product_code : softs[i]["Clé"].substring(softs[i]["Clé"].lastIndexOf("-")+1,softs[i]["Clé"].lastIndexOf(" ") ).trim(),
+            version : softs[i]["Clé"].substring(softs[i]["Clé"].lastIndexOf(" ")).trim(),
+
             
           }; 
 
-         console.log(provider)
+       //  console.log(provider)
 
           /*
 
@@ -119,9 +122,9 @@ export function insertProvidersB(fileName,namePlatform){
          insertVendors(temp,namePlatform);
           break;
 
-          case 'Soft':
+         /*  case 'Soft':
          insertSofts(temp);
-          break;
+          break; */
       }
 
     } 
@@ -131,3 +134,6 @@ export function insertProvidersB(fileName,namePlatform){
        
 
 }
+
+
+

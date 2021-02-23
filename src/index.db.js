@@ -64,6 +64,12 @@ db.application.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as : "instance"});
 db.instance.belongsTo(db.application, {foreignKey: 'ci_application_id', as: "application"});
 
+
+db.provider.belongsToMany(db.platforms, { through: "provider_platform", as: "platforms", foreignKey: "provider_id" });
+db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "providers", foreignKey: "platform_id" });
+
+
+
 module.exports = db;
 
 

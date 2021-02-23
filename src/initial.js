@@ -14,12 +14,11 @@ const Application = db.application;
 
 
 
-exports.seed = () => {
-
+export async  function seed(callback) {
 
         // Insert Platforms initial
 
-    Platform.findAll()
+        await  Platform.findAll()
     .then(platform => {
         if (platform.length === 0) {
 
@@ -28,7 +27,7 @@ exports.seed = () => {
               });
         
               Platform.create({
-                name: "Bull"
+                name: "B"
               }); 
         }
     });
@@ -36,7 +35,7 @@ exports.seed = () => {
 
         // Insert PserverType initial
 
-    PserverType.findAll()
+        await  PserverType.findAll()
     .then(pserver => {
         if (pserver.length === 0) {
 
@@ -53,7 +52,7 @@ exports.seed = () => {
 
             // Insert StorageType initial
 
-    StorageType.findAll()
+            await  StorageType.findAll()
     .then(storage => {
         if (storage.length === 0) {
 
@@ -76,11 +75,16 @@ exports.seed = () => {
 
     // Insert Status initial
 
-    Status.findAll()
+    await   Status.findAll()
     .then(status => {
         if (status.length === 0) {
-            
-            Status.create({
+          
+          
+             Status.create({
+             name: "Available"
+              });
+
+             Status.create({
                 name: "Operational"
               });
             
@@ -96,6 +100,7 @@ exports.seed = () => {
               Status.create({
                 name: "Pre-retired"
               });
+             
           
         }
     });
@@ -103,7 +108,7 @@ exports.seed = () => {
         // Insert ClassService initial
 
 
-    ClassService.findAll()
+        await   ClassService.findAll()
     .then(classServ => {
         if (classServ.length === 0) {
 
@@ -129,7 +134,7 @@ exports.seed = () => {
             // Insert EnvType initial
 
 
-    EnvType.findAll()
+            await  EnvType.findAll()
     .then(env_type => {
         if (env_type.length === 0) {
 
@@ -153,64 +158,6 @@ exports.seed = () => {
               });
         }
     });
-
-   /*  Ci.findAll()
-    .then(ci => {
-        if (ci.length === 0) {
-
-
-          Ci.create({
-                name: "Drive",
-                logical_name:"test", 
-                company:"test",
-                nrb_managed_by:"test",
-                description:"test dec",
-                class_service_id:1,
-                platform_id:1,
-                status_id:1
-              });
-        
-            
-        }
-    });
-
-    Provider.findAll()
-    .then(pro => {
-        if (pro.length === 0) {
-
-          Provider.create({
-                name: "IBM",
-                address:"rue de la cité", 
-                vendor_code:"IBM001",
-                vendor:"IMB Company",
-               
-              });
-        
-            
-        }
-    });
-
-
-    Application.findAll()
-    .then(app => {
-        if (app.length === 0) {
-
-          Application.create({
-            itservice: "IT serv",
-            product_code:"SSO009ID", 
-            version:"1.1",
-            is_valid:1,
-            end_of_support_date:Sequelize.fn('NOW'),
-            end_extended_support:Sequelize.fn('NOW'),
-            provider_id:1,
-            ci_id:1
-               
-              });
-        
-            
-        }
-    }); */
-
 
    
   };

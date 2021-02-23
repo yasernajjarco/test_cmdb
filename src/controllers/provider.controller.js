@@ -1,32 +1,49 @@
 const db = require("../index.db");
 const Provider = db.provider;
 const Op = db.Sequelize.Op;
+const { Sequelize, DataTypes } = require("sequelize");
 
-  // Create a Platform
-  const provider = {
-    name: req.body.name
-  };
 
-  // Save Platform in the database
-  Provider.create(provider)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Platform."
-      });
-    });
 
+exports.findAll = (req, res) => {
+  // const title = req.query.title;
+  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+ //{ include: ["application"] }
+ Provider.findAll()
+     .then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.status(500).send({
+         message:
+           err.message || "Some error occurred while retrieving Platforms."
+       });
+     });
+ };
+ 
   
+ exports.findByPlatform = (req, res) => {
+  // const title = req.query.title;
+  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+ //{ include: ["application"] }
+ const id = req.params.id;
+
+ Provider.findAll({ 
+   include: [{ model: db.platforms, as: 'platforms' , where: { platform_id: id }, attributes: ['platform_id'] 
+  }]} )
+     .then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.status(500).send({
+         message:
+           err.message || "Some error occurred while retrieving Platforms."
+       });
+     });
+ };
 
 
-
-
-
-
-// Update a Platform by the id in the request
+// Update a Provider by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -40,19 +57,19 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Platform with id=${id}. Maybe Platform was not found or req.body is empty!`
+          message: `Cannot update Provider with id=${id}. Maybe Provider was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Platform with id=" + id
+        message: "Error updating Provider with id=" + id
       });
     });
 };
 
 
-// Delete a Platform with the specified id in the request
+// Delete a Provider with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -62,17 +79,17 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Platform was deleted successfully!"
+          message: "Provider was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Platform with id=${id}. Maybe Platform was not found!`
+          message: `Cannot delete Provider with id=${id}. Maybe Provider was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Platform with id=" + id
+        message: "Could not delete Provider with id=" + id
       });
     });
 };

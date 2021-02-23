@@ -2,11 +2,16 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0",
-      "title": "Yet Another Node.js Blogg Application API",
-      "description": "Yet Another Node.js Blogg Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+      "title": "CMDB Mainframe for NRB",
+      "description": "this application allows the management of CMDB Mainframe internally via a REST API service"
+    
+    },
+    
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "in": "authorization-header",
+         "authenticationScheme": "Bearer"
       }
     },
     "host": "localhost:3000",
@@ -14,15 +19,15 @@
     "tags": [
       {
         "name": "Users",
-        "description": "API for users in the system"
+        "description": "connection management, for users"
       },
       {
         "name": "Platforms",
-        "description": "API for users in the system"
+        "description": "platform management (world) in system"
       }
     ],
     "schemes": [
-      "http"
+      "http","https"
     ],
     "consumes": [
       "application/json"
@@ -52,7 +57,7 @@
           ],
           "responses": {
             "200": {
-              "description": "New user is created",
+              "description": "user is connected",
               "schema": {
                 "$ref": "#/definitions/User"
               }
@@ -70,7 +75,7 @@
             {
               "name": "platform",
               "in": "body",
-              "description": "User that we want to create platform",
+              "description": "create a platform",
               "schema": {
                 "$ref": "#/definitions/Platform"
               }
@@ -81,10 +86,10 @@
           ],
           "responses": {
             "200": {
-              "description": "New user is created"
+              "description": "New platform is created"
             },
             "403": {
-                "description": "not possible for you"
+                "description": "you are authorized to create a platform, please contact the administrator"
               }
           }
         },
@@ -98,7 +103,7 @@
               "description": "OK"
             },
             "403":{
-                "description": "not possible"
+                "description": "you are authorized to create a platform, please contact the administrator"
 
             }
           }
