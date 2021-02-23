@@ -2,7 +2,12 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 const initial = require("./initial");
+const load = require("./loadFiles/index");
+
 import routes from './routes/index.routes';
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
+
 
 const app = express();
 
@@ -12,24 +17,29 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
+
+
+
+
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to CMDB API service." });
 });
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 initial.seed();
+load.test();
+
+
+app.use('/api', routes);
 
 
 
-app.use('/platforms', routes.platform);
-app.use('/users', routes.Auth);
-app.use('/cis', routes.Ci);
 
-
-app.use('/', routes.User);
-
-
-
-app.listen(process.env.PORT, () =>
+app.listen(process.env.PORT, () => 
+  app.use('/api/v1', app),
   console.log(`Example app listening on port ${process.env.PORT}!`),
 );
 

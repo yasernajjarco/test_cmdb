@@ -154,7 +154,7 @@ exports.seed = () => {
         }
     });
 
-    Ci.findAll()
+   /*  Ci.findAll()
     .then(ci => {
         if (ci.length === 0) {
 
@@ -203,13 +203,13 @@ exports.seed = () => {
             end_of_support_date:Sequelize.fn('NOW'),
             end_extended_support:Sequelize.fn('NOW'),
             provider_id:1,
-            ci_id:2
+            ci_id:1
                
               });
         
             
         }
-    });
+    }); */
 
 
    

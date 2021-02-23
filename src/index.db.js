@@ -41,6 +41,7 @@ db.ci = require("./models/ci")(sequelize, Sequelize, DataTypes);
 db.provider = require("./models/provider")(sequelize, Sequelize, DataTypes);
 db.application = require("./models/ci_application")(sequelize, Sequelize, DataTypes);
 db.instance = require("./models/instance")(sequelize, Sequelize, DataTypes);
+db.provider_platform = require("./models/provider_platform")(sequelize, Sequelize, DataTypes);
 
 
 

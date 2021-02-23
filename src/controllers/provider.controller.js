@@ -1,40 +1,14 @@
 const db = require("../index.db");
-const Platform = db.platforms;
+const Provider = db.provider;
 const Op = db.Sequelize.Op;
 
-exports.findAll = (req, res) => {
- // const title = req.query.title;
- // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-//{ include: ["ci"] }
-  Platform.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Platforms."
-      });
-    });
-};
-
-// Create and Save a new Platform
-exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
   // Create a Platform
-  const platform = {
+  const provider = {
     name: req.body.name
   };
 
   // Save Platform in the database
-  Platform.create(platform)
+  Provider.create(provider)
     .then(data => {
       res.send(data);
     })
@@ -44,24 +18,9 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the Platform."
       });
     });
-};
 
+  
 
-// Find a single Platform with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-console.log(id)
-  Platform.findOne({ where: {  platform_id: id  } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Platform with id=" + id
-      });
-    });
-};
 
 
 
