@@ -23,14 +23,13 @@ exports.findAll = (req, res) => {
  
   
  exports.findByPlatform = (req, res) => {
-  // const title = req.query.title;
-  // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
- //{ include: ["application"] }
  const id = req.params.id;
 
  Provider.findAll({ 
-   include: [{ model: db.platforms, as: 'platforms' , where: { platform_id: id }, attributes: ['platform_id'] 
-  }]} )
+   include: [{ model: db.platforms, as: 'platforms' , attributes: ['name'], where: { platform_id: id } }],
+   attributes: ['provider_id', 'name','address','vendor' ]
+  
+  } )
      .then(data => {
        res.send(data);
      })
