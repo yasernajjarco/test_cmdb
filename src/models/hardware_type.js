@@ -4,18 +4,18 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    storage_type_id: {
+    hardware_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "storage_type_id"
+      field: "hardware_type_id"
     },
     name: {
-      type: DataTypes.STRING(150),
-      allowNull: true,
+      type: DataTypes.STRING(300),
+      allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -24,10 +24,10 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "storage_type",
+    tableName: "hardware_type",
     comment: "",
     indexes: []
   };
-  const StorageTypeModel = sequelize.define("storage_type_model", attributes, options);
-  return StorageTypeModel;
+  const HardwareTypeModel = sequelize.define("hardware_type_model", attributes, options);
+  return HardwareTypeModel;
 };

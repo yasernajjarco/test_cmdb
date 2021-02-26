@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "lpar_id"
     },
     host_ci: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "host_ci"
     },
     host_type: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -31,17 +31,17 @@ module.exports = sequelize => {
       comment: null,
       field: "host_type"
     },
-    pserver_id: {
+    partition_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "pserver_id",
+      field: "partition_type_id",
       references: {
-        key: "pserver_id",
-        model: "pserver_model"
+        key: "partition_type_id",
+        model: "partition_type_model"
       }
     },
     env_type_id: {
@@ -75,10 +75,10 @@ module.exports = sequelize => {
     tableName: "lpar",
     comment: "",
     indexes: [{
-      name: "pserver_id",
+      name: "partition_type_id",
       unique: false,
       type: "BTREE",
-      fields: ["pserver_id"]
+      fields: ["partition_type_id"]
     }, {
       name: "env_type_id",
       unique: false,

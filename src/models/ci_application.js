@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "ci_application_id"
     },
     itservice: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "itservice"
     },
     product_code: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "product_code"
     },
     version: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

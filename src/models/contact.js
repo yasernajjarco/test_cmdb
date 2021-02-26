@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "contact_id"
     },
     lastname: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "lastname"
     },
     firstname: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "firstname"
     },
     telephone: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -41,7 +41,7 @@ module.exports = sequelize => {
       field: "telephone"
     },
     email: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

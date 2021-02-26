@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "address"
     },
     vendor_code: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -41,7 +41,7 @@ module.exports = sequelize => {
       field: "vendor_code"
     },
     vendor: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

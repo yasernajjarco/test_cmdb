@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "audit_id"
     },
     role: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "role"
     },
     audittimestamp: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "audittimestamp"
     },
     audituser: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -41,7 +41,7 @@ module.exports = sequelize => {
       field: "audituser"
     },
     auditdescription: {
-      type: DataTypes.STRING(1500),
+      type: DataTypes.STRING(3000),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

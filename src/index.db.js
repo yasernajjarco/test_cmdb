@@ -35,13 +35,17 @@ db.platforms = require("./models/platform")(sequelize, Sequelize, DataTypes);
 db.status = require("./models/status")(sequelize, Sequelize, DataTypes);
 db.classService = require("./models/class_service")(sequelize, Sequelize, DataTypes);
 db.envType = require("./models/env_type")(sequelize, Sequelize, DataTypes);
-db.pserverType = require("./models/pserver_type")(sequelize, Sequelize, DataTypes);
-db.storageType = require("./models/storage_type")(sequelize, Sequelize, DataTypes);
 db.ci = require("./models/ci")(sequelize, Sequelize, DataTypes);
 db.provider = require("./models/provider")(sequelize, Sequelize, DataTypes);
 db.application = require("./models/ci_application")(sequelize, Sequelize, DataTypes);
 db.instance = require("./models/instance")(sequelize, Sequelize, DataTypes);
 db.provider_platform = require("./models/provider_platform")(sequelize, Sequelize, DataTypes);
+db.lpars = require("./models/lpar")(sequelize, Sequelize, DataTypes);
+db.partitionType = require("./models/partition_type")(sequelize, Sequelize, DataTypes);
+db.hardwares = require("./models/hardware")(sequelize, Sequelize, DataTypes);
+db.hardwaresType = require("./models/hardware_type")(sequelize, Sequelize, DataTypes);
+db.hardwareSubtype = require("./models/subtype_hardware")(sequelize, Sequelize, DataTypes);
+db.hardware_lpar = require("./models/hardware_lpar")(sequelize, Sequelize, DataTypes);
 
 
 
@@ -61,6 +65,10 @@ db.application.belongsTo(db.provider, {foreignKey: 'provider_id', as: "provider"
 db.ci.hasMany(db.application, { foreignKey: 'ci_id', as : "application"});
 db.application.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
 
+db.partitionType.hasMany(db.lpars, { foreignKey: 'partition_type_id', as : "lpars"});
+db.lpars.belongsTo(db.partitionType, {foreignKey: 'partition_type_id', as: "partitionType"});
+
+
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as : "instance"});
 db.instance.belongsTo(db.application, {foreignKey: 'ci_application_id', as: "application"});
 
@@ -68,6 +76,16 @@ db.instance.belongsTo(db.application, {foreignKey: 'ci_application_id', as: "app
 db.provider.belongsToMany(db.platforms, { through: "provider_platform", as: "platforms", foreignKey: "provider_id" });
 db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "providers", foreignKey: "platform_id" });
 
+
+
+ db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as : "hardwares"});
+db.hardwares.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
+
+
+/*
+
+db.ci.hasMany(db.storages, { foreignKey: 'ci_id', as : "storage"});
+db.storages.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"}); */
 
 
 module.exports = db;

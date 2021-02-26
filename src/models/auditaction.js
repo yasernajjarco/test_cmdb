@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "auditaction_id"
     },
     name: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "ci_id"
     },
     logical_name: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "logical_name"
     },
     company: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "company"
     },
     nrb_managed_by: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -41,7 +41,7 @@ module.exports = sequelize => {
       field: "nrb_managed_by"
     },
     description: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -49,8 +49,17 @@ module.exports = sequelize => {
       comment: null,
       field: "description"
     },
+    subname: {
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "subname"
+    },
     name: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(200),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

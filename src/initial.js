@@ -1,16 +1,14 @@
+
 const db = require("./index.db");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 const Platform = db.platforms;
+
 const Status = db.status;
 const ClassService = db.classService;
 const EnvType = db.envType;
-const PserverType = db.pserverType;
-const StorageType = db.storageType;
+const LparType = db.partitionType;
 const Ci = db.ci;
-const Provider = db.provider;
-const Application = db.application;
-
 
 
 
@@ -34,42 +32,36 @@ export async  function seed(callback) {
 
 
         // Insert PserverType initial
+        //Mainframe IBM, Appliance, Mainframe Bull, Mainframe Appliance Console, Switch
 
-        await  PserverType.findAll()
+/*         await  PserverType.findAll()
     .then(pserver => {
         if (pserver.length === 0) {
 
             PserverType.create({
-                name: "Appliance SKLM"
+                name: "Mainframe IBM"
+              });
+
+              PserverType.create({
+                name: "Appliance"
+              });
+
+              PserverType.create({
+                name: "Mainframe Bull"
               });
         
               PserverType.create({
-                name: "Console SE"
+                name: "Mainframe Appliance Console"
+              }); 
+
+              PserverType.create({
+                name: "Switch"
               }); 
         }
     });
+ */
 
 
-            // Insert StorageType initial
-
-            await  StorageType.findAll()
-    .then(storage => {
-        if (storage.length === 0) {
-
-
-            StorageType.create({
-                name: "Drive"
-              });
-        
-              StorageType.create({
-                name: "VTS"
-              }); 
-
-              StorageType.create({
-                name: "Tape Libray"
-              }); 
-        }
-    });
 
 
 
@@ -156,9 +148,98 @@ export async  function seed(callback) {
               EnvType.create({
                 name: "Unknown"
               });
+              EnvType.create({
+                name: "Production"
+              });
+              
         }
     });
 
+    await  LparType.findAll()
+    .then(lpar => {
+        if (lpar.length === 0) {
+
+          LparType.create({
+                name: "Mainframe LGP"
+              });
+        
+              LparType.create({
+                name: "Mainframe LPAR"
+              }); 
+        }
+    });
+
+                // Insert StorageType initial
+            //Mainframe Tape Library, Mainframe VTS, Mainframe Drive Enclosure
+
+            await  db.hardwaresType.findAll()
+            .then(hardType => {
+                if (hardType.length === 0) {
+        
+        
+                  db.hardwaresType.create({
+                        name: "pserver"
+                      });
+                
+                      db.hardwaresType.create({
+                        name: "storage"
+                      }); 
+        
+                      db.hardwaresType.create({
+                        name: "netcomponent"
+                      }); 
+                }
+            }); 
+
+
+            await  db.hardwareSubtype.findAll()
+            .then(hardTypeSub => {
+                if (hardTypeSub.length === 0) {
+        
+        
+                  db.hardwareSubtype.create({
+                        name: "Mainframe Appliance Console"
+                      });
+                      db.hardwareSubtype.create({
+                        name: "Switch"
+                      });
+
+                      db.hardwareSubtype.create({
+                        name: "Mainframe Drive Enclosure"
+                      });
+
+                      db.hardwareSubtype.create({
+                        name: "Mainframe VTS"
+                      });
+
+                      db.hardwareSubtype.create({
+                        name: "Mainframe Tape Library"
+                      });
+
+                      db.hardwareSubtype.create({
+                        name: "Mainframe IBM"
+                      });
+
+                      db.hardwareSubtype.create({
+                        name: "Mainframe Bull"
+                      });
+
+
+                      
+                }
+            }); 
+
+
    
   };
-   
+/*    
+  pserver storage netcomponent
+
+  Mainframe Appliance Console 
+  Switch
+  Mainframe Drive Enclosure
+  Mainframe VTS
+  Mainframe Tape Library
+  Mainframe IBM
+ */
+

@@ -4,23 +4,36 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    pserver_id: {
+    hardware_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "pserver_id"
+      field: "hardware_id"
     },
     serial_no: {
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
       field: "serial_no"
+    },
+    subtype_hardware_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "subtype_hardware_id",
+      references: {
+        key: "subtype_hardware_id",
+        model: "subtype_hardware_model"
+      }
     },
     env_type_id: {
       type: DataTypes.INTEGER(11),
@@ -35,6 +48,19 @@ module.exports = sequelize => {
         model: "env_type_model"
       }
     },
+    hardware_type_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "hardware_type_id",
+      references: {
+        key: "hardware_type_id",
+        model: "hardware_type_model"
+      }
+    },
     ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -47,41 +73,33 @@ module.exports = sequelize => {
         key: "ci_id",
         model: "ci_model"
       }
-    },
-    pserver_type_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "pserver_type_id",
-      references: {
-        key: "pserver_type_id",
-        model: "pserver_type_model"
-      }
     }
   };
   const options = {
-    tableName: "pserver",
+    tableName: "hardware",
     comment: "",
     indexes: [{
+      name: "subtype_hardware_id",
+      unique: false,
+      type: "BTREE",
+      fields: ["subtype_hardware_id"]
+    }, {
       name: "env_type_id",
       unique: false,
       type: "BTREE",
       fields: ["env_type_id"]
     }, {
+      name: "hardware_type_id",
+      unique: false,
+      type: "BTREE",
+      fields: ["hardware_type_id"]
+    }, {
       name: "ci_id",
       unique: false,
       type: "BTREE",
       fields: ["ci_id"]
-    }, {
-      name: "pserver_type_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["pserver_type_id"]
     }]
   };
-  const PserverModel = sequelize.define("pserver_model", attributes, options);
-  return PserverModel;
+  const HardwareModel = sequelize.define("hardware_model", attributes, options);
+  return HardwareModel;
 };

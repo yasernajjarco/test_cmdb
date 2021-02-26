@@ -36,9 +36,9 @@ var options = {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,options));
 
 
- initial.seed().then(() => {
+  initial.seed().then(() => {
   load.test();
-});
+}); 
 
 app.use('/api', routes);
 
