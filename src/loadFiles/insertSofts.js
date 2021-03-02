@@ -1,8 +1,4 @@
-const csvtojson = require('csvtojson'); 
 const db = require("../index.db");
-const Provider = db.provider;
-const Provider_Platform = db.provider_platform;
-import { Sequelize } from "sequelize";
 import moment from 'moment';
 
 
@@ -10,7 +6,7 @@ import moment from 'moment';
 const reader = require('xlsx') 
  
 
-export function insertApplication(fileName,namePlatform){
+export async function insertApplication(fileName,namePlatform){
 
     const file = reader.readFile(fileName,{cellDates: true}) 
     let data = new Array();
@@ -26,13 +22,8 @@ export function insertApplication(fileName,namePlatform){
 
        switch (sheets[i]) {
         case 'application|Mainframe Software':
-         //   console.log(temp);
-         insertApplications(temp,namePlatform);
+         await insertApplications(temp,namePlatform);
           break;
-
-         /*  case 'Soft':
-         insertSofts(temp);
-          break; */
       }
 
     } 
@@ -42,7 +33,7 @@ export function insertApplication(fileName,namePlatform){
 }
 
 
-function insertApplications(apps,namePlatform){
+async function insertApplications(apps,namePlatform){
 
     for (var i = 1; i < apps.length; i++) { 
         
@@ -84,10 +75,12 @@ function insertApplications(apps,namePlatform){
 
           }
 
-          asyncFunction().then(app=>{
+         await asyncFunction().then(async app=>{
 
 
-             db.ci.create({
+            await db.ci.findOrCreate({
+                where: { name: app.product_code },
+                defaults: {
                 name: app.product_code,
                 logical_name:app.logicalname, 
                 company:app.company,
@@ -95,9 +88,12 @@ function insertApplications(apps,namePlatform){
                 description:app.description,
                 platform_id:app.platform_id,
                 status_id:app.status_id
-              }).then(function(res){
+                }
+              }).then(async function(res){
 
-                    db.application.create({
+                await  db.application.findOrCreate({
+                        where: { product_code:app.product_code, version:app.version},
+                     defaults: {
                         itservice: app.itservice,
                         product_code:app.product_code, 
                         version:app.version,
@@ -105,7 +101,8 @@ function insertApplications(apps,namePlatform){
                         end_of_support_date:app.end_of_support_date,
                         end_extended_support:app.end_of_extend_date ,
                         provider_id:app.provider_id,
-                        ci_id:res.dataValues.ci_id
+                        ci_id:res[0].dataValues.ci_id
+                     }
                            
                           });
 
@@ -116,44 +113,6 @@ function insertApplications(apps,namePlatform){
 
           });
 
-
-              /* db.status.findOne({where: {name: 'Available'} , attributes: ['status_id']}).then(status =>{
-                    app.status_id = status.dataValues.status_id;
-              }) */
-
-
-             // db.provider.findOne({where: {vendor_code: app.vendor_code} , attributes: ['provider_id']}).then(res =>{ app.provider_id = res.dataValues.provider_id;
-         
-
-
-
-         /*  Provider.findOrCreate({
-            where: { vendor_code: provider.vendor_code.trim() },
-            defaults: {
-                name : provider.name,
-                address:provider.address,
-                vendor_code :provider.vendor_code, 
-                vendor : provider.vendor
-            }
-            }).then(function(res){
-                const platform_id = (namePlatform === 'Z') ? 1 : 2;
-        
-                Provider_Platform.findOrCreate({
-                where: { 
-                    [db.Op.and]: [ {platform_id: platform_id}, {provider_id  : res[0].dataValues.provider_id } ]    
-                 },
-                defaults: {
-                    platform_id : platform_id,
-                    provider_id  : res[0].dataValues.provider_id
-                  }
-                })
-
-            }).catch(err => {
-                console.log( err);
-            });  */
-      
-
- 
 }
 
 

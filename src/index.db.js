@@ -46,6 +46,9 @@ db.hardwares = require("./models/hardware")(sequelize, Sequelize, DataTypes);
 db.hardwaresType = require("./models/hardware_type")(sequelize, Sequelize, DataTypes);
 db.hardwareSubtype = require("./models/subtype_hardware")(sequelize, Sequelize, DataTypes);
 db.hardware_lpar = require("./models/hardware_lpar")(sequelize, Sequelize, DataTypes);
+db.zLinux = require("./models/zlinux")(sequelize, Sequelize, DataTypes);
+db.systems = require("./models/systeme")(sequelize, Sequelize, DataTypes);
+db.hardwares_relations = require("./models/hardware_relation")(sequelize, Sequelize, DataTypes);
 
 
 

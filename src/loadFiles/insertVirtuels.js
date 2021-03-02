@@ -35,7 +35,7 @@ export async function insert(fileName,namePlatform){
           break; 
 
           case 'lserver|zVM Linux':
-           await  insertzLinux(temp,namePlatform);
+          // await  insertzLinux(temp,namePlatform);
           break; 
       }
 
@@ -43,7 +43,7 @@ export async function insert(fileName,namePlatform){
 }
 
 
-function insertlserver(lserver,namePlatform,nameType){
+async function insertlserver(lserver,namePlatform,nameType){
 
     for (var i = 1; i < lserver.length; i++) { 
         
@@ -54,7 +54,7 @@ function insertlserver(lserver,namePlatform,nameType){
           host_type : lserver[i]["__EMPTY_1"],
           system_ci : lserver[i]["__EMPTY_2"],
           system_ci_subtype : lserver[i]["__EMPTY_3"],
-          
+    
 
 
             type : lserver[i]["TYPE"],
@@ -103,32 +103,45 @@ function insertlserver(lserver,namePlatform,nameType){
  
 
 
-            asyncFunction().then(lserver=>{
+           await asyncFunction().then(async lserver=>{
  
-               db.ci.create({
-                name: lserver.logicalName,
+              await db.ci.findOrCreate({
+                where: {  logical_name: lserver.logicalName },
+                defaults: {
+                logical_name: lserver.logicalName ,
+               // name: lserver.logicalName,
                 company:lserver.company,
                 nrb_managed_by:lserver.nrb_managed_by,
                 description:lserver.description,
                 platform_id:lserver.platform_id,
                 status_id:lserver.status_id,
                 class_service_id : lserver.class_service_id
-              }).then(function(res){
+                }
+              }).then(async function(res){
 
-                    db.lpars.create({
+                   await db.lpars.findOrCreate({
                     //  hardware_id: lserver.hardware_id,
+                    where: { ci_id:res[0].dataValues.ci_id },
+                    defaults: {
                         env_type_id:lserver.env_type_id, 
                         host_ci:lserver.host_ci,
                         host_type:lserver.host_type,
-                        ci_id:res.dataValues.ci_id,
+                        ci_id:res[0].dataValues.ci_id,
                         partition_type_id : lserver.partition_type_id
-                           
-                          }).then(function(res){
-                            db.hardware_lpar.create({
+                    }
+                          }).then(async function(res){
+                            await db.hardware_lpar.findOrCreate({
+                              where: {  [db.Op.and]: [ { hardware_id: lserver.hardware_id , lpar_id:res[0].dataValues.lpar_id} ]},
+                              defaults: {
                               hardware_id: lserver.hardware_id,
-                              lpar_id:res.dataValues.lpar_id,
-                                  }); 
-                            }); ;
+                              lpar_id:res[0].dataValues.lpar_id,
+                              }
+                            }).then(async function(res){
+                             // console.log(res)
+                               await insertSystem (lserver,res[0].dataValues.lpar_id);
+  
+                            }); 
+                          });
 
               })
 
@@ -137,7 +150,9 @@ function insertlserver(lserver,namePlatform,nameType){
  
  
 
-          });  
+          }); 
+
+          
  
 }
 
@@ -145,7 +160,36 @@ function insertlserver(lserver,namePlatform,nameType){
 }
 
 
-function insertzLinux(lserver,namePlatform){
+async function insertSystem(lserver,lpar_id){
+
+
+            await db.ci.create({
+              name: lserver.logicalName,
+              company:lserver.company,
+              nrb_managed_by:lserver.nrb_managed_by,
+              description:lserver.description,
+              platform_id:lserver.platform_id,
+              status_id:lserver.status_id,
+              class_service_id : lserver.class_service_id
+            
+          }).then(async function(res){
+
+                 await db.systems.create({
+                      env_type_id:lserver.env_type_id, 
+                      ci_id:res.dataValues.ci_id,
+                      lpar_id : lpar_id
+                  
+                        }) 
+            })
+
+
+
+        
+
+}
+
+
+/* async function insertzLinux(lserver,namePlatform){
 
   for (var i = 1; i < lserver.length; i++) { 
       
@@ -181,7 +225,7 @@ function insertzLinux(lserver,namePlatform){
        // console.log(ciLserver)
 
       
-     /*     const asyncFunction = async () => {
+          const asyncFunction = async () => {
            let step1 = await db.status.findOne({where: {name: ciLserver.status} , attributes: ['status_id']});
           ciLserver.status_id = step1.dataValues.status_id;
          
@@ -196,21 +240,18 @@ function insertzLinux(lserver,namePlatform){
           ciLserver.env_type_id = step1.dataValues.env_type_id; 
 
 
-           step1 = await db.pservers.findOne( { include: {   model: db.ci,  as: 'ci',    where: {    name:ciLserver.host_ci  } }  }) 
-          ciLserver.pserver_id = step1.dataValues.pserver_id; 
-
-
           return ciLserver;
 
 
          }
- */
 
 
-/*           asyncFunction().then(lserver=>{
+           await asyncFunction().then(async lserver=>{
 
-            console.log(lserver.pserver_id)
-             db.ci.create({
+             await db.ci.findOrCreate({
+              where: { logical_name: lserver.logicalName  },
+              defaults: {
+              logical_name: lserver.logicalName ,
               name: lserver.logicalName,
               company:lserver.company,
               nrb_managed_by:lserver.nrb_managed_by,
@@ -218,15 +259,20 @@ function insertzLinux(lserver,namePlatform){
               platform_id:lserver.platform_id,
               status_id:lserver.status_id,
               class_service_id : lserver.class_service_id
-            }).then(function(res){
+              }
+            }).then(async function(res){
 
-                  db.lpars.create({
-                     pserver_id: lserver.pserver_id,
-                      env_type_id:lserver.env_type_id, 
-                      host_ci:lserver.host_ci,
-                      host_type:lserver.host_type,
-                      ci_id:res.dataValues.ci_id
-                         
+                  await db.zLinux.findOrCreate({
+                    where: { ci_id:res[0].dataValues.ci_id },
+                    defaults: {
+                      ci_id:res[0].dataValues.ci_id,
+                      domaine :lserver.domaine,
+                      os_version : lserver.os_version,
+                      cpu_type : lserver.cpu_type,
+                      cpu_number : lserver.cpu_number,
+                      physical_mem_total : lserver.physical_mem_total,
+
+                    }
                         });
 
 
@@ -234,9 +280,9 @@ function insertzLinux(lserver,namePlatform){
 
 
 
-        }); */  
+        });   
 
 }
 
 
-}
+} */

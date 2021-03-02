@@ -1,245 +1,124 @@
+import { hardwareSubtype } from "./index.db";
 
 const db = require("./index.db");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 const Platform = db.platforms;
-
 const Status = db.status;
 const ClassService = db.classService;
 const EnvType = db.envType;
 const LparType = db.partitionType;
-const Ci = db.ci;
+
+
+const platforms = [{name:'Z'}, {name:'B'}];
+const status = [{name:'Available'}, {name:'Operational'}, {name:'Retired'}, {name:'Under construction'}, {name:'Pre-Operation'}, {name:'Pre-retired'}];
+const classServices = [ {name:'SAAS'}, {name:'PAAS'}, {name:'IAAS'}, {name:'Housing'}, {name:'Not applicable'}];
+const envTypes = [ {name:'Laboratoire'}, {name:'Développement'}, {name:'Homologation'}, {name:'Acceptance'}, {name:'Not Production'}, {name:'Unknown'}, {name:'Production'}];
+const hardTypeSubs = [ {name:'Mainframe Appliance Console'}, {name:'Switch'},{name:'Mainframe Drive Enclosure'},{name:'Mainframe VTS'},{name:'Mainframe IBM'},{name:'Mainframe Tape Library'},{name:'Mainframe Bull'}];
+const lparTypes = [ {name:'Mainframe LGP'}, {name:'Mainframe LPAR'}];
+const hardwaresTypes = [ {name:'pserver'}, {name:'storage'},{name:'netcomponent'}];
 
 
 
-export async  function seed(callback) {
+export async  function seed() {
 
         // Insert Platforms initial
-
-        await  Platform.findAll()
-    .then(platform => {
-        if (platform.length === 0) {
-
-            Platform.create({
-                name: "Z"
-              });
-        
-              Platform.create({
-                name: "B"
-              }); 
-        }
-    });
-
-
-        // Insert PserverType initial
-        //Mainframe IBM, Appliance, Mainframe Bull, Mainframe Appliance Console, Switch
-
-/*         await  PserverType.findAll()
-    .then(pserver => {
-        if (pserver.length === 0) {
-
-            PserverType.create({
-                name: "Mainframe IBM"
-              });
-
-              PserverType.create({
-                name: "Appliance"
-              });
-
-              PserverType.create({
-                name: "Mainframe Bull"
-              });
-        
-              PserverType.create({
-                name: "Mainframe Appliance Console"
-              }); 
-
-              PserverType.create({
-                name: "Switch"
-              }); 
-        }
-    });
- */
-
-
-
-
-
+       
+        await Promise.all(platforms.map(async (item) => {
+          await Platform.findOrCreate({
+            where: {
+               name: item.name 
+              },
+            default: { 
+              name:item.name
+             }
+        })
+        }));
+    
     // Insert Status initial
 
-    await   Status.findAll()
-    .then(status => {
-        if (status.length === 0) {
-          
-          
-             Status.create({
-             name: "Available"
-              });
-
-             Status.create({
-                name: "Operational"
-              });
-            
-              Status.create({
-                name: "Retired"
-              });
-              Status.create({
-                name: "Under construction"
-              });
-              Status.create({
-                name: "Pre-Operation"
-              });
-              Status.create({
-                name: "Pre-retired"
-              });
-             
-          
-        }
-    });
+        await Promise.all(status.map(async (item) => {
+          await Status.findOrCreate({
+            where: {
+               name: item.name 
+              },
+            default: { 
+              name:item.name
+             }
+        })
+        }));
 
         // Insert ClassService initial
+        await Promise.all(classServices.map(async (item) => {
+          await ClassService.findOrCreate({
+            where: {
+               name: item.name 
+              },
+            default: { 
+              name:item.name
+             }
+        })
+        }));
 
-
-        await   ClassService.findAll()
-    .then(classServ => {
-        if (classServ.length === 0) {
-
-            ClassService.create({
-                name: "SAAS"
-              });
-        
-              ClassService.create({
-                name: "PAAS"
-              }); 
-              ClassService.create({
-                name: "IAAS"
-              });
-              ClassService.create({
-                name: "Housing"
-              });
-              ClassService.create({
-                name: "Not applicable"
-              });
-        }
-    });
 
             // Insert EnvType initial
 
 
-            await  EnvType.findAll()
-    .then(env_type => {
-        if (env_type.length === 0) {
-
-            EnvType.create({
-                name: "Laboratoire"
-              });
-              EnvType.create({
-                name: "Développement"
-              }); 
-              EnvType.create({
-                name: "Homologation"
-              });
-              EnvType.create({
-                name: "Acceptance"
-              });
-              EnvType.create({
-                name: "Not Production"
-              });
-              EnvType.create({
-                name: "Unknown"
-              });
-              EnvType.create({
-                name: "Production"
-              });
-              
-        }
-    });
-
-    await  LparType.findAll()
-    .then(lpar => {
-        if (lpar.length === 0) {
-
-          LparType.create({
-                name: "Mainframe LGP"
-              });
-        
-              LparType.create({
-                name: "Mainframe LPAR"
-              }); 
-        }
-    });
-
-                // Insert StorageType initial
-            //Mainframe Tape Library, Mainframe VTS, Mainframe Drive Enclosure
-
-            await  db.hardwaresType.findAll()
-            .then(hardType => {
-                if (hardType.length === 0) {
-        
-        
-                  db.hardwaresType.create({
-                        name: "pserver"
-                      });
-                
-                      db.hardwaresType.create({
-                        name: "storage"
-                      }); 
-        
-                      db.hardwaresType.create({
-                        name: "netcomponent"
-                      }); 
-                }
-            }); 
+            await Promise.all(envTypes.map(async (item) => {
+              await EnvType.findOrCreate({
+                where: {
+                   name: item.name 
+                  },
+                default: { 
+                  name:item.name
+                 }
+            })
+            }));
 
 
-            await  db.hardwareSubtype.findAll()
-            .then(hardTypeSub => {
-                if (hardTypeSub.length === 0) {
-        
-        
-                  db.hardwareSubtype.create({
-                        name: "Mainframe Appliance Console"
-                      });
-                      db.hardwareSubtype.create({
-                        name: "Switch"
-                      });
-
-                      db.hardwareSubtype.create({
-                        name: "Mainframe Drive Enclosure"
-                      });
-
-                      db.hardwareSubtype.create({
-                        name: "Mainframe VTS"
-                      });
-
-                      db.hardwareSubtype.create({
-                        name: "Mainframe Tape Library"
-                      });
-
-                      db.hardwareSubtype.create({
-                        name: "Mainframe IBM"
-                      });
-
-                      db.hardwareSubtype.create({
-                        name: "Mainframe Bull"
-                      });
+              // Insert lparType initial
 
 
-                      
-                }
-            }); 
+              await Promise.all(lparTypes.map(async (item) => {
+                await LparType.findOrCreate({
+                  where: {
+                     name: item.name 
+                    },
+                  default: { 
+                    name:item.name
+                   }
+              })
+              }));
 
+
+
+                // Insert hardwaresType initial
+
+            await Promise.all(hardwaresTypes.map(async (item) => {
+                await db.hardwaresType.findOrCreate({
+                  where: {
+                     name: item.name 
+                    },
+                  default: { 
+                    name:item.name
+                   }
+              })
+              }));
+
+              // Insert hardwaresType initial
+
+            await Promise.all(hardTypeSubs.map(async (item) => {
+              await db.hardwareSubtype.findOrCreate({
+                where: {
+                   name: item.name 
+                  },
+                default: { 
+                  name:item.name
+                 }
+            })
+            }));
 
    
   };
-/*    
-  pserver storage netcomponent
-
-  Mainframe Appliance Console 
-  Switch
-  Mainframe Drive Enclosure
-  Mainframe VTS
-  Mainframe Tape Library
-  Mainframe IBM
- */
+  
 
