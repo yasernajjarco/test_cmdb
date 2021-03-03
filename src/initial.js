@@ -14,9 +14,16 @@ const platforms = [{name:'Z'}, {name:'B'}];
 const status = [{name:'Available'}, {name:'Operational'}, {name:'Retired'}, {name:'Under construction'}, {name:'Pre-Operation'}, {name:'Pre-retired'}];
 const classServices = [ {name:'SAAS'}, {name:'PAAS'}, {name:'IAAS'}, {name:'Housing'}, {name:'Not applicable'}];
 const envTypes = [ {name:'Laboratoire'}, {name:'Développement'}, {name:'Homologation'}, {name:'Acceptance'}, {name:'Not Production'}, {name:'Unknown'}, {name:'Production'}];
-const hardTypeSubs = [ {name:'Mainframe Appliance Console'}, {name:'Switch'},{name:'Mainframe Drive Enclosure'},{name:'Mainframe VTS'},{name:'Mainframe IBM'},{name:'Mainframe Tape Library'},{name:'Mainframe Bull'}];
-const lparTypes = [ {name:'Mainframe LGP'}, {name:'Mainframe LPAR'}];
-const hardwaresTypes = [ {name:'pserver'}, {name:'storage'},{name:'netcomponent'}];
+
+//const lparTypes = [ {name:'Mainframe LGP'}, {name:'Mainframe LPAR'}];
+
+const ciTypes = [ {name:'pserver'}, {name:'storage'},{name:'netcomponent'},{name:'lserver'},{name:'application'},{name:'occurence'}];
+const ciSubtypes = [{name:'Mainframe LGP'},{name:'Mainframe LPAR'},{name:'Mainframe Software'},{name:'Mainframe Subsystem'},{name:'zVM Linux'},{name:'Mainframe System'}, {name:'Mainframe Appliance Console'}, {name:'Switch'},{name:'Mainframe Drive Enclosure'},{name:'Mainframe VTS'},{name:'Mainframe IBM'},{name:'Mainframe Tape Library'},{name:'Mainframe Bull'}];
+
+
+
+
+
 
 
 
@@ -76,26 +83,11 @@ export async  function seed() {
             }));
 
 
-              // Insert lparType initial
 
+                 // Insert hardwaresType initial
 
-              await Promise.all(lparTypes.map(async (item) => {
-                await LparType.findOrCreate({
-                  where: {
-                     name: item.name 
-                    },
-                  default: { 
-                    name:item.name
-                   }
-              })
-              }));
-
-
-
-                // Insert hardwaresType initial
-
-            await Promise.all(hardwaresTypes.map(async (item) => {
-                await db.hardwaresType.findOrCreate({
+            await Promise.all(ciTypes.map(async (item) => {
+                await db.ciType.findOrCreate({
                   where: {
                      name: item.name 
                     },
@@ -107,8 +99,8 @@ export async  function seed() {
 
               // Insert hardwaresType initial
 
-            await Promise.all(hardTypeSubs.map(async (item) => {
-              await db.hardwareSubtype.findOrCreate({
+            await Promise.all(ciSubtypes.map(async (item) => {
+              await db.ciSubtype.findOrCreate({
                 where: {
                    name: item.name 
                   },
@@ -116,7 +108,7 @@ export async  function seed() {
                   name:item.name
                  }
             })
-            }));
+            })); 
 
    
   };

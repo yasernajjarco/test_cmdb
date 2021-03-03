@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "isoccurenciable"
     },
     name: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

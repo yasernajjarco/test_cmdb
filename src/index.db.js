@@ -41,19 +41,26 @@ db.application = require("./models/ci_application")(sequelize, Sequelize, DataTy
 db.instance = require("./models/instance")(sequelize, Sequelize, DataTypes);
 db.provider_platform = require("./models/provider_platform")(sequelize, Sequelize, DataTypes);
 db.lpars = require("./models/lpar")(sequelize, Sequelize, DataTypes);
-db.partitionType = require("./models/partition_type")(sequelize, Sequelize, DataTypes);
 db.hardwares = require("./models/hardware")(sequelize, Sequelize, DataTypes);
-db.hardwaresType = require("./models/hardware_type")(sequelize, Sequelize, DataTypes);
-db.hardwareSubtype = require("./models/subtype_hardware")(sequelize, Sequelize, DataTypes);
+
 db.hardware_lpar = require("./models/hardware_lpar")(sequelize, Sequelize, DataTypes);
 db.zLinux = require("./models/zlinux")(sequelize, Sequelize, DataTypes);
 db.systems = require("./models/systeme")(sequelize, Sequelize, DataTypes);
 db.hardwares_relations = require("./models/hardware_relation")(sequelize, Sequelize, DataTypes);
+db.ciType = require("./models/ci_type")(sequelize, Sequelize, DataTypes);
+db.ciSubtype = require("./models/ci_subtype")(sequelize, Sequelize, DataTypes);
 
 
 
 db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as : "ci"});
 db.ci.belongsTo(db.platforms, {foreignKey: 'platform_id', as: "platforms"});
+
+db.ciType.hasMany(db.ci, { foreignKey: 'ci_type_id', as : "ci"});
+db.ci.belongsTo(db.ciType, {foreignKey: 'ci_type_id', as: "ciType"});
+
+db.ciSubtype.hasMany(db.ci, { foreignKey: 'ci_subtype_id', as : "ci"});
+db.ci.belongsTo(db.ciSubtype, {foreignKey: 'ci_subtype_id', as: "ciSubtype"});
+
 
 db.status.hasMany(db.ci, { foreignKey: 'status_id', as : "ci"});
 db.ci.belongsTo(db.status, {foreignKey: 'status_id', as: "status"});
@@ -68,8 +75,11 @@ db.application.belongsTo(db.provider, {foreignKey: 'provider_id', as: "provider"
 db.ci.hasMany(db.application, { foreignKey: 'ci_id', as : "application"});
 db.application.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
 
-db.partitionType.hasMany(db.lpars, { foreignKey: 'partition_type_id', as : "lpars"});
-db.lpars.belongsTo(db.partitionType, {foreignKey: 'partition_type_id', as: "partitionType"});
+db.ci.hasMany(db.lpars, { foreignKey: 'ci_id', as : "lpars"});
+db.lpars.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
+
+db.ci.hasMany(db.systems, { foreignKey: 'ci_id', as : "systems"});
+db.systems.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
 
 
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as : "instance"});

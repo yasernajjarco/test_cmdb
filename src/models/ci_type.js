@@ -4,17 +4,17 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    partition_type_id: {
+    ci_type_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "partition_type_id"
+      field: "ci_type_id"
     },
     name: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -24,10 +24,10 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "partition_type",
+    tableName: "ci_type",
     comment: "",
     indexes: []
   };
-  const PartitionTypeModel = sequelize.define("partition_type_model", attributes, options);
-  return PartitionTypeModel;
+  const CiTypeModel = sequelize.define("ci_type_model", attributes, options);
+  return CiTypeModel;
 };

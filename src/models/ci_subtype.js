@@ -4,18 +4,18 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    hardware_type_id: {
+    ci_subtype_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "hardware_type_id"
+      field: "ci_subtype_id"
     },
     name: {
-      type: DataTypes.STRING(300),
-      allowNull: false,
+      type: DataTypes.STRING(50),
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -24,10 +24,10 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "hardware_type",
+    tableName: "ci_subtype",
     comment: "",
     indexes: []
   };
-  const HardwareTypeModel = sequelize.define("hardware_type_model", attributes, options);
-  return HardwareTypeModel;
+  const CiSubtypeModel = sequelize.define("ci_subtype_model", attributes, options);
+  return CiSubtypeModel;
 };

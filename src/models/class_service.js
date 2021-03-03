@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "class_service_id"
     },
     name: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

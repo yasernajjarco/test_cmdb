@@ -14,26 +14,13 @@ module.exports = sequelize => {
       field: "hardware_id"
     },
     serial_no: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
       field: "serial_no"
-    },
-    subtype_hardware_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "subtype_hardware_id",
-      references: {
-        key: "subtype_hardware_id",
-        model: "subtype_hardware_model"
-      }
     },
     env_type_id: {
       type: DataTypes.INTEGER(11),
@@ -46,19 +33,6 @@ module.exports = sequelize => {
       references: {
         key: "env_type_id",
         model: "env_type_model"
-      }
-    },
-    hardware_type_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "hardware_type_id",
-      references: {
-        key: "hardware_type_id",
-        model: "hardware_type_model"
       }
     },
     ci_id: {
@@ -79,20 +53,10 @@ module.exports = sequelize => {
     tableName: "hardware",
     comment: "",
     indexes: [{
-      name: "subtype_hardware_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["subtype_hardware_id"]
-    }, {
       name: "env_type_id",
       unique: false,
       type: "BTREE",
       fields: ["env_type_id"]
-    }, {
-      name: "hardware_type_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["hardware_type_id"]
     }, {
       name: "ci_id",
       unique: false,

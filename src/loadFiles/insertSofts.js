@@ -1,5 +1,7 @@
 const db = require("../index.db");
 import moment from 'moment';
+const logger = require('../logger');
+let compt = 0;
 
 
 
@@ -8,7 +10,7 @@ const reader = require('xlsx')
 
 export async function insertApplication(fileName,namePlatform){
 
-    const file = reader.readFile(fileName,{cellDates: true}) 
+    const file = reader.readFile(fileName,{type: "string", cellDates: false}) 
     let data = new Array();
     const sheets = file.SheetNames 
     sheets.forEach((res) => { 
@@ -17,16 +19,21 @@ export async function insertApplication(fileName,namePlatform){
 
     for(let i = 0; i < sheets.length; i++) 
     {
-       const temp = reader.utils.sheet_to_json(  file.Sheets[file.SheetNames[i]]) 
+       const temp = reader.utils.sheet_to_json(  file.Sheets[file.SheetNames[i]],{
+        raw: false,
+      }) 
        data[sheets[i]] = (temp);
 
        switch (sheets[i]) {
         case 'application|Mainframe Software':
          await insertApplications(temp,namePlatform);
+        // console.log('softs => ' ,temp)
+
           break;
       }
 
     } 
+    logger.info(compt ,' softs de monnde ' , namePlatform ,' a été ajoutés');
 
      
 
@@ -51,16 +58,17 @@ async function insertApplications(apps,namePlatform){
             status : apps[i]["ISTATUS"],
             description : apps[i]["DESCRIPTION"],
             vendor : apps[i]["VENDOR"],
-            itservice : apps[i]["__EMPTY_4"]
+            itservice : apps[i]["__EMPTY_4"],
+
+            end_of_support_date : apps[i]["END_OF_SUPPORT_DATE"],
+            end_of_extend_date : apps[i]["END_EXTENDED_SUPPORT"]
             
           };
 
-          let dateSupport = moment(apps[i]["END_OF_SUPPORT_DATE"], "DD-MM-YYYY") ;
-          if(dateSupport.isValid()) app.end_of_support_date = dateSupport.toDate();
+          console.log(app)
 
-          let extendDate = moment(apps[i]["END_EXTENDED_SUPPORT"], "DD-MM-YYYY") ;
-          if(extendDate.isValid()) app.end_of_extend_date = extendDate.toDate();
-          
+           try {
+  
           const asyncFunction = async () => {
             let step1 = await db.status.findOne({where: {name: app.status} , attributes: ['status_id']});
             app.status_id = step1.dataValues.status_id;
@@ -70,6 +78,15 @@ async function insertApplications(apps,namePlatform){
 
             step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
             app.platform_id = step1.dataValues.platform_id;
+
+
+
+
+            step1 = await db.ciType.findOne({where: {name: app.type} , attributes: ['ci_type_id']})
+            app.ci_type_id = step1.dataValues.ci_type_id;
+
+            step1 = await db.ciSubtype.findOne({where: {name: app.subtype} , attributes: ['ci_subtype_id']})
+            app.ci_subtype_id = step1.dataValues.ci_subtype_id;
 
             return app;
 
@@ -87,11 +104,13 @@ async function insertApplications(apps,namePlatform){
                 nrb_managed_by:app.nrb_managed_by,
                 description:app.description,
                 platform_id:app.platform_id,
-                status_id:app.status_id
+                status_id:app.status_id,
+                ci_subtype_id: app.ci_subtype_id,
+                ci_type_id: app.ci_type_id
                 }
               }).then(async function(res){
-
-                await  db.application.findOrCreate({
+                  compt++;
+                 await  db.application.findOrCreate({
                         where: { product_code:app.product_code, version:app.version},
                      defaults: {
                         itservice: app.itservice,
@@ -104,7 +123,7 @@ async function insertApplications(apps,namePlatform){
                         ci_id:res[0].dataValues.ci_id
                      }
                            
-                          });
+                          }); 
 
 
               });
@@ -112,8 +131,13 @@ async function insertApplications(apps,namePlatform){
 
 
           });
+          } catch (error) {
+            logger.error('can\'t insert soft ', app, 'Error => ', error )
+
+          } 
+
+
 
 }
-
 
 }

@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "zlinux_id"
     },
     domaine: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "domaine"
     },
     os_version: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "os_version"
     },
     cpu_type: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -41,7 +41,7 @@ module.exports = sequelize => {
       field: "cpu_type"
     },
     cpu_number: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -50,7 +50,7 @@ module.exports = sequelize => {
       field: "cpu_number"
     },
     physical_mem_total: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "ci_application_id"
     },
     itservice: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "itservice"
     },
     product_code: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "product_code"
     },
     version: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -50,7 +50,7 @@ module.exports = sequelize => {
       field: "is_valid"
     },
     end_of_support_date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -59,7 +59,7 @@ module.exports = sequelize => {
       field: "end_of_support_date"
     },
     end_extended_support: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

@@ -2,9 +2,10 @@ const csvtojson = require('csvtojson');
 const db = require("../index.db");
 const Provider = db.provider;
 const Provider_Platform = db.provider_platform;
+const logger = require('../logger');
 
 const reader = require('xlsx') 
- 
+let compt = 0;
 
 
 export async function insertProvidersB(fileName,namePlatform){
@@ -21,14 +22,17 @@ export async function insertProvidersB(fileName,namePlatform){
      const temp = reader.utils.sheet_to_json(  file.Sheets[file.SheetNames[i]]) 
      data[sheets[i]] = (temp);
 
+  
+       
      switch (sheets[i]) {
       case 'Vendeurs':
-       await insertVendors(temp,namePlatform);
+      await insertVendors(temp,namePlatform);
+       console.log('vendors => ' ,temp)
         break;
     }
 
   }      
-
+    logger.info(compt ,' Vendeurs de monnde ' , namePlatform ,' a été ajoutés');
 }
 
 
@@ -36,15 +40,15 @@ export async function insertProvidersB(fileName,namePlatform){
 async function insertVendors(vendors,namePlatform){
 
     for (var i = 0; i < vendors.length; i++) { 
-        
+      const provider = {
+        name : vendors[i]["Vendeur"],
+        address:"",
+        vendor_code : vendors[i]["Code"], 
+        vendor : vendors[i]["Vendeur"]
+      }; 
 
-         const provider = {
-            name : vendors[i]["Vendeur"],
-            address:"address non known",
-            vendor_code : vendors[i]["Code"], 
-            vendor : vendors[i]["Vendeur"]
-          }; 
-
+        try {
+         
           const asyncFunction = async () => {
             let step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']});
             provider.platform_id = step1.dataValues.platform_id;
@@ -54,7 +58,7 @@ async function insertVendors(vendors,namePlatform){
 
           await asyncFunction().then(async provider=>{ 
             await Provider.findOrCreate({
-              where: { vendor_code: provider.vendor_code.trim() },
+              where: { vendor_code: provider.vendor_code },
               defaults: {
                   name : provider.name,
                   address:provider.address,
@@ -63,7 +67,6 @@ async function insertVendors(vendors,namePlatform){
               }
               }).then(async function(res){
   
-          
                 await  Provider_Platform.findOrCreate({
                   where: { 
                       [db.Op.and]: [ {platform_id: provider.platform_id}, {provider_id  : res[0].dataValues.provider_id } ]    
@@ -74,10 +77,20 @@ async function insertVendors(vendors,namePlatform){
                     }
                   })
   
+              }).then(()=>{
+                compt++;
+
               }).catch(err => {
                   console.log( err);
               }); 
           });
+          
+        } catch (error) {
+          
+          logger.error('can\'t insert provider ', provider , 'Error => ', error )
+
+        }
+     
 
          
       

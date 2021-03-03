@@ -6,6 +6,8 @@ import { Sequelize } from "sequelize";
 import moment from 'moment';
 const csv = require('csv-parser');
 const fs = require('fs');
+const logger = require('../logger');
+let compt = 0;
 
 
 const reader = require('xlsx') 
@@ -25,35 +27,12 @@ export async function insert(fileName,namePlatform){
        const temp = reader.utils.sheet_to_json(  file.Sheets[file.SheetNames[i]]) 
        data[sheets[i]] = (temp);
 
-       switch (sheets[i]) {
-        
-        case 'pserver|Mainframe Bull':
+            compt =0;
            await insertpserver(temp,namePlatform);
-          break;
-
-           case 'pserver|Appliance':
-            await insertpserver(temp,namePlatform);
-          break; 
-
-          case 'pserver|Mainframe IBM':
-            await insertpserver(temp,namePlatform);
-          break; 
-
-          case 'storage|M. Drive Enclosure':
-            
-            await insertpserver(temp,namePlatform);
-          break;
-
-          case 'storage|Mainframe VTS & TL':
-            await insertpserver(temp,namePlatform);
-          break;
-
-          case 'storage|Mainframe VTS':
-            await insertpserver(temp,namePlatform);
-          break;
-      }
-
+           logger.info(compt ,' hardwares de monnde ' , namePlatform , ' de type ', sheets[i],  ' a été ajoutés ');
     } 
+
+
 }
 
 
@@ -77,223 +56,137 @@ async function  insertpserver(pservers,namePlatform){
             
           };
 
-          if(ciPserver.serial_no !==undefined){
-
-            ciPserver.nrb_env_type = (pservers[i]["NRB_ENV_TYPE"]).substring((pservers[i]["NRB_ENV_TYPE"]).lastIndexOf(".")+1).trim();
-
-        
-          const asyncFunction = async () => {
-            let step1 = await db.status.findOne({where: {name: ciPserver.status} , attributes: ['status_id']});
-            ciPserver.status_id = step1.dataValues.status_id;
-           
-
-            step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
-            ciPserver.platform_id = step1.dataValues.platform_id;
-
-            step1 = await db.classService.findOne({where: {name: ciPserver.nrb_class_service} , attributes: ['class_service_id']})
-            ciPserver.class_service_id = step1.dataValues.class_service_id;
-
-            step1 = await db.envType.findOne({where: {name:ciPserver.nrb_env_type} , attributes: ['env_type_id']})
-            ciPserver.env_type_id = step1.dataValues.env_type_id;
-
-            step1 = await db.hardwaresType.findOne({where: {name:ciPserver.type} , attributes: ['hardware_type_id']})
-            ciPserver.hardware_type_id = step1.dataValues.hardware_type_id;
-
-            step1 = await db.hardwareSubtype.findOne({where: {name:ciPserver.subtype} , attributes: ['subtype_hardware_id']})
-            ciPserver.subtype_hardware_id = step1.dataValues.subtype_hardware_id;
-
-            return ciPserver;
-
-
-
-          }
-
-
-
-          await asyncFunction().then(app=>{
-
-              db.ci.create({
-                name: app.our_name,
-                company:app.company,
-                nrb_managed_by:app.nrb_managed_by,
-                description:app.description,
-                platform_id:app.platform_id,
-                status_id:app.status_id,
-                class_service_id : app.class_service_id
-              }).then(function(res){
-
-                    db.hardwares.create({
-                        serial_no: app.serial_no,
-                        env_type_id:app.env_type_id, 
-                        hardware_type_id:app.hardware_type_id,
-                        subtype_hardware_id:app.subtype_hardware_id,
-                        ci_id:res.dataValues.ci_id
-                           
-                          });
-
-
-              }); 
- 
- 
-
-          }); 
-
-        }
- 
-}
-
-
-}
-
-async function insertStorage(pservers,namePlatform){
-
-    for (var i = 1; i < pservers.length; i++) { 
-        
-         const ciPserver = {
-
-             our_name : pservers[i]["__EMPTY"],
-            type : pservers[i]["TYPE"],
-            subtype : pservers[i]["SUBTYPE"],
-            disblay_name : pservers[i]["DISPLAY_NAME"],
-            company : pservers[i]["COMPANY"],
-            nrb_managed_by : pservers[i]["NRB_MANAGED_BY"], 
-            assignment : pservers[i]["ASSIGNMENT"],
-            nrb_class_service : pservers[i]["NRB_CLASS_SERVICE"],
-            status : pservers[i]["ISTATUS"],
-            description : pservers[i]["DESCRIPTION"],
-            serial_no : pservers[i]["SERIAL_NO"],
+          try {
             
-          };
+            if(ciPserver.serial_no !==undefined){
 
-          if(ciPserver.serial_no !==undefined){
+              ciPserver.nrb_env_type = (pservers[i]["NRB_ENV_TYPE"]).substring((pservers[i]["NRB_ENV_TYPE"]).lastIndexOf(".")+1).trim();
+  
+          
+            const asyncFunction = async () => {
+              let step1 = await db.status.findOne({where: {name: ciPserver.status} , attributes: ['status_id']});
+              ciPserver.status_id = step1.dataValues.status_id;
+             
+  
+              step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
+              ciPserver.platform_id = step1.dataValues.platform_id;
+  
+              step1 = await db.classService.findOne({where: {name: ciPserver.nrb_class_service} , attributes: ['class_service_id']})
+              ciPserver.class_service_id = step1.dataValues.class_service_id;
+  
+              step1 = await db.envType.findOne({where: {name:ciPserver.nrb_env_type} , attributes: ['env_type_id']})
+              ciPserver.env_type_id = step1.dataValues.env_type_id;
+  
+              step1 = await db.ciType.findOne({where: {name: ciPserver.type} , attributes: ['ci_type_id']})
+              ciPserver.ci_type_id = step1.dataValues.ci_type_id;
+  
+              step1 = await db.ciSubtype.findOne({where: {name: ciPserver.subtype} , attributes: ['ci_subtype_id']})
+              ciPserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
 
-            ciPserver.nrb_env_type = (pservers[i]["NRB_ENV_TYPE"]).substring((pservers[i]["NRB_ENV_TYPE"]).lastIndexOf(".")+1).trim();
-
-        
-          const asyncFunction = async () => {
-            let step1 = await db.status.findOne({where: {name: ciPserver.status} , attributes: ['status_id']});
-            ciPserver.status_id = step1.dataValues.status_id;
-           
-
-            step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
-            ciPserver.platform_id = step1.dataValues.platform_id;
-
-            step1 = await db.classService.findOne({where: {name: ciPserver.nrb_class_service} , attributes: ['class_service_id']})
-            ciPserver.class_service_id = step1.dataValues.class_service_id;
-
-            step1 = await db.storageType.findOne({where: {name:ciPserver.subtype} , attributes: ['storage_type_id']})
-            ciPserver.storage_type_id = step1.dataValues.storage_type_id;
-
-            step1 = await db.envType.findOne({where: {name:ciPserver.nrb_env_type} , attributes: ['env_type_id']})
-            ciPserver.env_type_id = step1.dataValues.env_type_id;
-
-            return ciPserver;
-
-
-
+  
+              return ciPserver;
+  
+  
+  
+            }
+  
+  
+  
+            await asyncFunction().then(async ciHardware=>{
+  
+                await db.ci.findOrCreate({
+                  where: {  name: ciHardware.our_name},
+                  defaults: {
+  
+                  name: ciHardware.our_name,
+                  company:ciHardware.company,
+                  nrb_managed_by:ciHardware.nrb_managed_by,
+                  description:ciHardware.description,
+                  platform_id:ciHardware.platform_id,
+                  status_id:ciHardware.status_id,
+                  class_service_id : ciHardware.class_service_id,
+                  ci_subtype_id: ciHardware.ci_subtype_id,
+                  ci_type_id: ciHardware.ci_type_id
+                  }
+                }).then(async function(res){
+                      compt++;
+                     await  db.hardwares.findOrCreate({
+                        where: {  serial_no: ciHardware.serial_no},
+                        defaults: {
+                          serial_no: ciHardware.serial_no,
+                          env_type_id:ciHardware.env_type_id, 
+                          hardware_type_id:ciHardware.hardware_type_id,
+                          subtype_hardware_id:ciHardware.subtype_hardware_id,
+                          ci_id:res[0].dataValues.ci_id
+                        }
+                            });
+  
+  
+                }); 
+   
+   
+  
+            }); 
+  
           }
 
+          } catch (error) {
+                      logger.error('can\'t insert hardware ', ciPserver , 'Error => ', error )
 
-
-          await asyncFunction().then(app=>{
-
-              db.ci.create({
-                name: app.our_name,
-                company:app.company,
-                nrb_managed_by:app.nrb_managed_by,
-                description:app.description,
-                platform_id:app.platform_id,
-                status_id:app.status_id,
-                class_service_id : app.class_service_id
-              }).then(function(res){
-
-                    db.storages.create({
-                        serial_no: app.serial_no,
-                        env_type_id:app.env_type_id, 
-                        storage_type_id:app.storage_type_id,
-                        ci_id:res.dataValues.ci_id
-                           
-                          });
-
-
-              }); 
- 
- 
-
-          }); 
-
-        }
+          }
  
 }
-
-
 }
 
 
 export async function insertRelation(fileName,namePlatform){
-    extractData(fileName).then(data=>{
-    
-    Object.keys(data).forEach(async function(key, index) {
+    extractData(fileName).then(async data=>{
+
+     await Object.keys(data).forEach(async function(key, index) {
       let step1;
-      let pserver_ids=[];
 
      const asyncFunction = async () => {
-
-      let elementToInsert;
-
       
-       step1 = await db.storages.findOne( { include: {   model: db.ci,  as: 'ci',    where: {    name:key } }  }) 
-      
-      if(step1 ===null){
-         step1 = await db.pservers.findOne( { include: {   model: db.ci,  as: 'ci',    where: {    name:key } }  }) 
-      }
+       step1 = await db.hardwares.findOne( { include: {   model: db.ci,  as: 'ci',    where: {    name:key } }  }) 
+       
 
-      const forLoop = async () => {
+
         for (let index = 0; index < data[key].length; index++) {
 
-          console.log('=> ' ,data[key][index])
-           if(data[key][index] != 'CEC02B' || data[key][index] != 'CEC03B'  ){
-          let setp2 = await db.pservers.findOne( { include: {   model: db.ci,  as: 'ci',    where: {    name:data[key][index].replace(/\s/g,"") } }  });
-           pserver_ids.push(setp2.dataValues.pserver_id)
-          } 
-        }
+           try {
+            let step2 = await db.hardwares.findOne( { include: {   model: db.ci,  as: 'ci',    where: {    name:data[key][index] } }  });
         
-      }
-    
-      await forLoop();
+            await db.hardwares_relations.findOrCreate({
+             where: {  hardware_id: step1.dataValues.hardware_id,  hardware_id_1: step2.dataValues.hardware_id  },
+             defaults: {
+               hardware_id: step1.dataValues.hardware_id,
+               hardware_id_1: step2.dataValues.hardware_id
+ 
+             }
+           });
+          } catch (error) {
+            console.log('cant found refrence for relation ' , key , ' X ' ,  data[key][index]);
+            logger.error('cant found refrence for relation ' , key , ' X ' ,  data[key][index] , ' Error => ', error.toString())
 
+          } 
+
+
+        }
        
-      
-
-      return elementToInsert;
 
     } 
 
-    try {
 
-      await asyncFunction().then(elementToInsert=>{
-        if(step1 !== null && step1.dataValues.storage_id !== null &&step1.dataValues.storage_id ){
-          console.log(step1.dataValues.storage_id);
-          
-          console.log(pserver_ids);
-
-        }else{
-          console.log(step1.dataValues.pserver_id);
-  
-        }
-      });
-      
-    } catch (error) {
-      console.log(error)
-    }
+    await asyncFunction();
 
 
 
+  }); 
 
-  });
 
 
  });
+ 
 }
 
 

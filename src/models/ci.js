@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "ci_id"
     },
     logical_name: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "logical_name"
     },
     company: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -32,7 +32,7 @@ module.exports = sequelize => {
       field: "company"
     },
     nrb_managed_by: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -41,22 +41,13 @@ module.exports = sequelize => {
       field: "nrb_managed_by"
     },
     description: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
       field: "description"
-    },
-    subname: {
-      type: DataTypes.STRING(300),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "subname"
     },
     name: {
       type: DataTypes.STRING(200),
@@ -66,6 +57,32 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "name"
+    },
+    ci_subtype_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "ci_subtype_id",
+      references: {
+        key: "ci_subtype_id",
+        model: "ci_subtype_model"
+      }
+    },
+    ci_type_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "ci_type_id",
+      references: {
+        key: "ci_type_id",
+        model: "ci_type_model"
+      }
     },
     class_service_id: {
       type: DataTypes.INTEGER(11),
@@ -111,6 +128,16 @@ module.exports = sequelize => {
     tableName: "ci",
     comment: "",
     indexes: [{
+      name: "ci_subtype_id",
+      unique: false,
+      type: "BTREE",
+      fields: ["ci_subtype_id"]
+    }, {
+      name: "ci_type_id",
+      unique: false,
+      type: "BTREE",
+      fields: ["ci_type_id"]
+    }, {
       name: "class_service_id",
       unique: false,
       type: "BTREE",

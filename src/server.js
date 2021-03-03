@@ -9,6 +9,9 @@ const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
 
 
+
+
+
 const app = express();
 
 //./node_modules/.bin/sequelize-automate -t js -h localhost -d cmdb -u root -p rootroot -o ./src/models
@@ -36,7 +39,7 @@ var options = {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,options));
 
 
-  initial.seed().then(() => {
+initial.seed().then(() => {
   load.test();
 }); 
 
@@ -49,5 +52,4 @@ app.listen(process.env.PORT, () =>
   app.use('/api/v1', app),
   console.log(`Example app listening on port ${process.env.PORT}!`),
 );
-
 

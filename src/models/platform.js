@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "platform_id"
     },
     name: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(100),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
