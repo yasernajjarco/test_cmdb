@@ -49,6 +49,7 @@ db.systems = require("./models/systeme")(sequelize, Sequelize, DataTypes);
 db.hardwares_relations = require("./models/hardware_relation")(sequelize, Sequelize, DataTypes);
 db.ciType = require("./models/ci_type")(sequelize, Sequelize, DataTypes);
 db.ciSubtype = require("./models/ci_subtype")(sequelize, Sequelize, DataTypes);
+db.client = require("./models/client")(sequelize, Sequelize, DataTypes);
 
 
 

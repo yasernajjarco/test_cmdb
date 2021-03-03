@@ -30,16 +30,16 @@ export async function insert(fileName,namePlatform){
         
         case 'lserver|Mainframe LPAR':
           compt=0;
-         //  await insertlserver(temp,namePlatform,'Mainframe LPAR');
-         //  await insertSystem(temp,namePlatform,'Mainframe LPAR');
+           await insertlserver(temp,namePlatform,'Mainframe LPAR');
+           await insertSystem(temp,namePlatform,'Mainframe LPAR');
 
            logger.info(compt ,' virtuels de monnde ' , namePlatform , ' de type ', sheets[i],  ' a été ajoutés ');
 
           break;
 
            case 'lserver|Mainframe LGP':
-           // await insertlserver(temp,namePlatform,'Mainframe LGP');
-           // await insertSystem(temp,namePlatform,'Mainframe LGP');
+            await insertlserver(temp,namePlatform,'Mainframe LGP');
+            await insertSystem(temp,namePlatform,'Mainframe LGP');
 
           break; 
 

@@ -65,7 +65,6 @@ async function insertApplications(apps,namePlatform){
             
           };
 
-          console.log(app)
 
            try {
   

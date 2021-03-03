@@ -1,35 +1,33 @@
-2021-03-03 13:12:26.491 INFO  6 Vendeurs de monnde B a été ajoutés 
-2021-03-03 13:12:29.221 INFO  42 Vendeurs de monnde Z a été ajoutés 
-2021-03-03 13:12:29.880 INFO  8 softs de monnde B a été ajoutés 
-2021-03-03 13:12:57.982 INFO  337 softs de monnde Z a été ajoutés 
-2021-03-03 13:12:58.418 INFO  4 hardwares de monnde B de type pserver|Mainframe Bull a été ajoutés  
-2021-03-03 13:12:59.593 INFO  17 hardwares de monnde B de type pserver|Appliance a été ajoutés  
-2021-03-03 13:12:59.753 INFO  2 hardwares de monnde B de type storage|M. Drive Enclosure a été ajoutés  
-2021-03-03 13:13:00.399 INFO  9 hardwares de monnde B de type storage|Mainframe VTS & TL a été ajoutés  
-2021-03-03 13:13:00.787 INFO  5 hardwares de monnde Z de type pserver|Mainframe IBM a été ajoutés  
-2021-03-03 13:13:01.188 INFO  4 hardwares de monnde Z de type pserver|Appliance a été ajoutés  
-2021-03-03 13:13:01.905 INFO  8 hardwares de monnde Z de type storage|M. Drive Enclosure a été ajoutés  
-2021-03-03 13:13:03.023 INFO  12 hardwares de monnde Z de type storage|Mainframe VTS a été ajoutés  
-2021-03-03 13:13:36.430 INFO  163 virtuels de monnde Z de type lserver|Mainframe LPAR a été ajoutés  
-2021-03-03 13:13:37.361 ERROR cant found refrence for relation DS8886 75CBP20 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.372 ERROR cant found refrence for relation DS8886 75BZZ00 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.436 ERROR cant found refrence for relation DS8886 75HKT20 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.437 ERROR cant found refrence for relation DS8886 75HKF20 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.455 ERROR cant found refrence for relation VTS 7760 78H8884 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.508 ERROR cant found refrence for relation VTS 7720 78H7498 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.568 ERROR cant found refrence for relation HMC PUP X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.583 ERROR cant found refrence for relation HMC B10 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:37.584 ERROR cant found refrence for relation HMC BDC X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.206 ERROR cant found refrence for relation DS8886 75CBP20 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.232 ERROR cant found refrence for relation DS8886 75BZZ00 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.312 ERROR cant found refrence for relation DS8886 75HKT20 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.320 ERROR cant found refrence for relation DS8886 75HKF20 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.337 ERROR cant found refrence for relation VTS 7760 78H8884 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.408 ERROR cant found refrence for relation VTS 7720 78H7498 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.518 ERROR cant found refrence for relation HMC PUP X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.555 ERROR cant found refrence for relation HMC B10 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:13:38.616 ERROR cant found refrence for relation HMC BDC X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
-2021-03-03 13:24:37.690 INFO   virtuels de monnde Z de type lserver|Mainframe LPAR a été ajoutés  
-2021-03-03 13:27:33.527 INFO   virtuels de monnde Z de type lserver|Mainframe LPAR a été ajoutés  
-2021-03-03 13:28:21.244 INFO   virtuels de monnde Z de type lserver|Mainframe LPAR a été ajoutés  
-2021-03-03 13:30:35.812 INFO   virtuels de monnde Z de type lserver|Mainframe LPAR a été ajoutés  
+2021-03-03 15:20:55.463 INFO  6 Vendeurs de monnde B a été ajoutés 
+2021-03-03 15:20:57.562 INFO  42 Vendeurs de monnde Z a été ajoutés 
+2021-03-03 15:20:58.463 INFO  8 softs de monnde B a été ajoutés 
+2021-03-03 15:21:33.420 INFO  337 softs de monnde Z a été ajoutés 
+2021-03-03 15:21:33.849 INFO  4 hardwares de monnde B de type pserver|Mainframe Bull a été ajoutés  
+2021-03-03 15:21:35.799 INFO  17 hardwares de monnde B de type pserver|Appliance a été ajoutés  
+2021-03-03 15:21:35.881 INFO  2 hardwares de monnde B de type storage|M. Drive Enclosure a été ajoutés  
+2021-03-03 15:21:38.733 INFO  9 hardwares de monnde B de type storage|Mainframe VTS & TL a été ajoutés  
+2021-03-03 15:21:39.402 INFO  5 hardwares de monnde Z de type pserver|Mainframe IBM a été ajoutés  
+2021-03-03 15:21:39.780 INFO  4 hardwares de monnde Z de type pserver|Appliance a été ajoutés  
+2021-03-03 15:21:40.520 INFO  8 hardwares de monnde Z de type storage|M. Drive Enclosure a été ajoutés  
+2021-03-03 15:21:41.598 INFO  12 hardwares de monnde Z de type storage|Mainframe VTS a été ajoutés  
+2021-03-03 15:22:20.354 INFO  163 virtuels de monnde Z de type lserver|Mainframe LPAR a été ajoutés  
+2021-03-03 15:22:25.235 ERROR cant found refrence for relation DS8886 75CBP20 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.290 ERROR cant found refrence for relation DS8886 75BZZ00 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.372 ERROR cant found refrence for relation DS8886 75HKT20 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.374 ERROR cant found refrence for relation DS8886 75HKF20 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.375 ERROR cant found refrence for relation VTS 7760 78H8884 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.487 ERROR cant found refrence for relation VTS 7720 78H7498 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.516 ERROR cant found refrence for relation HMC PUP X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.519 ERROR cant found refrence for relation HMC B10 X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:25.520 ERROR cant found refrence for relation HMC BDC X CEC03 Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.043 ERROR cant found refrence for relation DS8886 75CBP20 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.076 ERROR cant found refrence for relation DS8886 75BZZ00 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.242 ERROR cant found refrence for relation DS8886 75HKT20 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.275 ERROR cant found refrence for relation DS8886 75HKF20 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.291 ERROR cant found refrence for relation VTS 7760 78H8884 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.401 ERROR cant found refrence for relation VTS 7720 78H7498 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.473 ERROR cant found refrence for relation HMC PUP X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.508 ERROR cant found refrence for relation HMC B10 X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:26.524 ERROR cant found refrence for relation HMC BDC X CEC02B Error => TypeError: Cannot read property 'dataValues' of null 
+2021-03-03 15:22:29.597 INFO  8 instances de monnde B a été ajoutés 
+2021-03-03 15:23:05.287 INFO  485 instances de monnde Z a été ajoutés 
