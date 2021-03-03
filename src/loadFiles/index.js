@@ -49,6 +49,7 @@ async function test() {
                    await insertVirtuels.insert(file,file.substring(file.lastIndexOf(" ")).trim().charAt(0)); 
   
  
+                   
              /*       
                     file = path.resolve( __dirname, "Documents/" + 'REL hardware Z pserver.csv' )
                    await insertHardwares.insertRelation(file,file.substring(file.lastIndexOf(" ")).trim().charAt(0));
