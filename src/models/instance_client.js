@@ -4,29 +4,11 @@ const {
 
 module.exports = sequelize => {
   const attributes = {
-    occurencesoft_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: true,
-      autoIncrement: true,
-      comment: null,
-      field: "occurencesoft_id"
-    },
-    name: {
-      type: DataTypes.STRING(300),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "name"
-    },
     client_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
-      primaryKey: false,
+      primaryKey: true,
       autoIncrement: false,
       comment: null,
       field: "client_id",
@@ -39,7 +21,7 @@ module.exports = sequelize => {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
-      primaryKey: false,
+      primaryKey: true,
       autoIncrement: false,
       comment: null,
       field: "instance_id",
@@ -50,20 +32,15 @@ module.exports = sequelize => {
     }
   };
   const options = {
-    tableName: "occurencesoft",
+    tableName: "instance_client",
     comment: "",
     indexes: [{
-      name: "client_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["client_id"]
-    }, {
       name: "instance_id",
       unique: false,
       type: "BTREE",
       fields: ["instance_id"]
     }]
   };
-  const OccurencesoftModel = sequelize.define("occurencesoft_model", attributes, options);
-  return OccurencesoftModel;
+  const InstanceClientModel = sequelize.define("instance_client_model", attributes, options);
+  return InstanceClientModel;
 };

@@ -2,24 +2,23 @@ const config = require("./config/config");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 const sequelize = new Sequelize(
-  config.DB,
-  config.USER,
-  config.PASSWORD,
-  {
-    host: config.HOST,
-    dialect: config.dialect,
-    operatorsAliases: 0,
-    define: {
-      timestamps: false
-    },
+    config.DB,
+    config.USER,
+    config.PASSWORD, {
+        host: config.HOST,
+        dialect: config.dialect,
+        operatorsAliases: 0,
+        define: {
+            timestamps: false
+        },
 
-    poll: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
+        poll: {
+            max: config.pool.max,
+            min: config.pool.min,
+            acquire: config.pool.acquire,
+            idle: config.pool.idle
+        }
     }
-  }
 );
 
 
@@ -50,41 +49,44 @@ db.hardwares_relations = require("./models/hardware_relation")(sequelize, Sequel
 db.ciType = require("./models/ci_type")(sequelize, Sequelize, DataTypes);
 db.ciSubtype = require("./models/ci_subtype")(sequelize, Sequelize, DataTypes);
 db.client = require("./models/client")(sequelize, Sequelize, DataTypes);
+db.instance_client = require("./models/instance_client")(sequelize, Sequelize, DataTypes);
+db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes);
 
 
 
-db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as : "ci"});
-db.ci.belongsTo(db.platforms, {foreignKey: 'platform_id', as: "platforms"});
 
-db.ciType.hasMany(db.ci, { foreignKey: 'ci_type_id', as : "ci"});
-db.ci.belongsTo(db.ciType, {foreignKey: 'ci_type_id', as: "ciType"});
+db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as: "ci" });
+db.ci.belongsTo(db.platforms, { foreignKey: 'platform_id', as: "platforms" });
 
-db.ciSubtype.hasMany(db.ci, { foreignKey: 'ci_subtype_id', as : "ci"});
-db.ci.belongsTo(db.ciSubtype, {foreignKey: 'ci_subtype_id', as: "ciSubtype"});
+db.ciType.hasMany(db.ci, { foreignKey: 'ci_type_id', as: "ci" });
+db.ci.belongsTo(db.ciType, { foreignKey: 'ci_type_id', as: "ciType" });
 
-
-db.status.hasMany(db.ci, { foreignKey: 'status_id', as : "ci"});
-db.ci.belongsTo(db.status, {foreignKey: 'status_id', as: "status"});
-
-db.classService.hasMany(db.ci, { foreignKey: 'class_service_id', as : "ci"});
-db.ci.belongsTo(db.classService, {foreignKey: 'class_service_id', as: "classService"});
-
-db.provider.hasMany(db.application, { foreignKey: 'provider_id', as : "application"});
-db.application.belongsTo(db.provider, {foreignKey: 'provider_id', as: "provider"});
+db.ciSubtype.hasMany(db.ci, { foreignKey: 'ci_subtype_id', as: "ci" });
+db.ci.belongsTo(db.ciSubtype, { foreignKey: 'ci_subtype_id', as: "ciSubtype" });
 
 
-db.ci.hasMany(db.application, { foreignKey: 'ci_id', as : "application"});
-db.application.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
+db.status.hasMany(db.ci, { foreignKey: 'status_id', as: "ci" });
+db.ci.belongsTo(db.status, { foreignKey: 'status_id', as: "status" });
 
-db.ci.hasMany(db.lpars, { foreignKey: 'ci_id', as : "lpars"});
-db.lpars.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
+db.classService.hasMany(db.ci, { foreignKey: 'class_service_id', as: "ci" });
+db.ci.belongsTo(db.classService, { foreignKey: 'class_service_id', as: "classService" });
 
-db.ci.hasMany(db.systems, { foreignKey: 'ci_id', as : "systems"});
-db.systems.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
+db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "application" });
+db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
 
 
-db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as : "instance"});
-db.instance.belongsTo(db.application, {foreignKey: 'ci_application_id', as: "application"});
+db.ci.hasMany(db.application, { foreignKey: 'ci_id', as: "application" });
+db.application.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.ci.hasMany(db.lpars, { foreignKey: 'ci_id', as: "lpars" });
+db.lpars.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.ci.hasMany(db.systems, { foreignKey: 'ci_id', as: "systems" });
+db.systems.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+
+db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as: "instance" });
+db.instance.belongsTo(db.application, { foreignKey: 'ci_application_id', as: "application" });
 
 
 db.provider.belongsToMany(db.platforms, { through: "provider_platform", as: "platforms", foreignKey: "provider_id" });
@@ -92,8 +94,8 @@ db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "pro
 
 
 
- db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as : "hardwares"});
-db.hardwares.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"});
+db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
+db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
 
 /*
@@ -103,5 +105,3 @@ db.storages.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"}); */
 
 
 module.exports = db;
-
-

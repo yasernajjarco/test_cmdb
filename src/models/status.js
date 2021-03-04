@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "status_id"
     },
     name: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

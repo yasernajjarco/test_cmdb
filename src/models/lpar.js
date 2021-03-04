@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "lpar_id"
     },
     host_ci: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -23,7 +23,7 @@ module.exports = sequelize => {
       field: "host_ci"
     },
     host_type: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,

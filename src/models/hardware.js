@@ -14,7 +14,7 @@ module.exports = sequelize => {
       field: "hardware_id"
     },
     serial_no: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
