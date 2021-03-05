@@ -30,7 +30,7 @@ export async function insert(fileName, namePlatform) {
         }
 
     }
-    logger.info(compt, ' occurence de monnde ', namePlatform, ' a été ajoutés');
+    logger.info(compt, ' occurences de monnde ', namePlatform, ' a été mis à jour ou ajoutés');
 
 
 
@@ -83,6 +83,7 @@ async function insertOccurences(apps, namePlatform) {
                 await db.occurence.findOrCreate({
                     where: { name: app.logicalname },
                     defaults: {
+                        our_name: app.ourName,
                         name: app.logicalname,
                         instance_id: app.instance_id,
                         client_id: app.client_id
@@ -93,7 +94,7 @@ async function insertOccurences(apps, namePlatform) {
 
             });
         } catch (error) {
-            logger.error('can\'t insert instance ', occu, 'Error => ', error)
+            logger.error('can\'t insert occurence ', occu)
 
         }
 

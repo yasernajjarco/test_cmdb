@@ -22,6 +22,15 @@ module.exports = sequelize => {
       comment: null,
       field: "name"
     },
+    our_name: {
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "our_name"
+    },
     client_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,

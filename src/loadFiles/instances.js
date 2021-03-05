@@ -33,7 +33,7 @@ export async function insertInstances(fileName, namePlatform) {
         }
 
     }
-    logger.info(compt, ' instances de monnde ', namePlatform, ' a été ajoutés');
+    logger.info(compt, ' instances de monnde ', namePlatform, ' a été mis à jour ou ajoutés');
 
 
 
@@ -106,6 +106,8 @@ async function insertInstance(instances, namePlatform) {
                     where: { name: app.logicalname },
                     defaults: {
                         name: app.logicalname,
+                        our_name: app.ourName,
+
                         logical_name: app.logicalname,
                         company: app.company,
                         nrb_managed_by: app.nrb_managed_by,
@@ -132,7 +134,6 @@ async function insertInstance(instances, namePlatform) {
                         }
 
                     }).then(async function(res) {
-                        compt++;
                         await db.instance_client.findOrCreate({
                             where: {
                                 [db.Op.and]: [{ client_id: app.client_id, instance_id: res[0].dataValues.instance_id }]
@@ -152,7 +153,7 @@ async function insertInstance(instances, namePlatform) {
 
             });
         } catch (error) {
-            logger.error('can\'t insert instance ', instance, 'Error => ', error)
+            logger.error('can\'t insert instance ', instance)
 
         }
 

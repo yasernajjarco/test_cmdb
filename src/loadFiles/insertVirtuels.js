@@ -1,4 +1,4 @@
-const csvtojson = require('csvtojson'); 
+const csvtojson = require('csvtojson');
 const db = require("../index.db");
 const Provider = db.provider;
 const Provider_Platform = db.provider_platform;
@@ -9,413 +9,419 @@ let compt = 0;
 
 
 
-const reader = require('xlsx') 
- 
+const reader = require('xlsx')
 
-export async function insert(fileName,namePlatform){
 
-    const file = reader.readFile(fileName,{cellDates: true}) 
+export async function insert(fileName, namePlatform) {
+
+    const file = reader.readFile(fileName, { cellDates: true })
     let data = new Array();
-    const sheets = file.SheetNames 
-    sheets.forEach((res) => { 
+    const sheets = file.SheetNames
+    sheets.forEach((res) => {
         data[res] = new Array();
-     })
+    })
 
-    for(let i = 0; i < sheets.length; i++) 
-    {
-       const temp = reader.utils.sheet_to_json(  file.Sheets[file.SheetNames[i]]) 
-       data[sheets[i]] = (temp);
+    for (let i = 0; i < sheets.length; i++) {
+        const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]])
+        data[sheets[i]] = (temp);
 
-       switch (sheets[i]) {
-        
-        case 'lserver|Mainframe LPAR':
-          compt=0;
-           await insertlserver(temp,namePlatform,'Mainframe LPAR');
-           await insertSystem(temp,namePlatform,'Mainframe LPAR');
+        switch (sheets[i]) {
 
-           logger.info(compt ,' virtuels de monnde ' , namePlatform , ' de type ', sheets[i],  ' a été ajoutés ');
+            case 'lserver|Mainframe LPAR':
+                compt = 0;
+                await insertlserver(temp, namePlatform, 'Mainframe LPAR');
+                await insertSystem(temp, namePlatform, 'Mainframe LPAR');
 
-          break;
+                logger.info(compt, ' virtuels de monnde ', namePlatform, ' de type ', sheets[i], ' a été mis à jour ou ajoutés');
 
-           case 'lserver|Mainframe LGP':
-            await insertlserver(temp,namePlatform,'Mainframe LGP');
-            await insertSystem(temp,namePlatform,'Mainframe LGP');
+                break;
 
-          break; 
+            case 'lserver|Mainframe LGP':
+                await insertlserver(temp, namePlatform, 'Mainframe LGP');
+                await insertSystem(temp, namePlatform, 'Mainframe LGP');
+                logger.info(compt, ' virtuels de monnde ', namePlatform, ' de type ', sheets[i], ' a été mis à jour ou ajoutés');
 
-          case 'lserver|zVM Linux':
-           await  insertzLinux(temp,namePlatform);
-          break; 
-      }
+                break;
 
-    } 
+            case 'lserver|zVM Linux':
+                await insertzLinux(temp, namePlatform);
+                logger.info(compt, ' virtuels de monnde ', namePlatform, ' de type ', sheets[i], ' a été mis à jour ou ajoutés');
+
+                break;
+        }
+
+    }
 }
 
 
-async function insertlserver(lserver,namePlatform,nameType){
+async function insertlserver(lserver, namePlatform, nameType) {
 
-    for (var i = 1; i < lserver.length; i++) { 
-        
-         const ciLserver = {
-          logicalName : lserver[i]["LOGICAL_NAME"],
+    for (var i = 1; i < lserver.length; i++) {
 
-          host_ci : lserver[i]["__EMPTY"],
-          host_type : lserver[i]["__EMPTY_1"],
-          system_ci : lserver[i]["__EMPTY_2"],
-          system_ci_subtype : lserver[i]["__EMPTY_3"],
-    
+        const ciLserver = {
+            logicalName: lserver[i]["LOGICAL_NAME"],
 
-
-            type : lserver[i]["TYPE"],
-            subtype : lserver[i]["SUBTYPE"],
-            disblay_name : lserver[i]["DISPLAY_NAME"],
-            company : lserver[i]["COMPANY"],
-            nrb_managed_by : lserver[i]["NRB_MANAGED_BY"], 
-            assignment : lserver[i]["ASSIGNMENT"],
-            nrb_class_service : lserver[i]["NRB_CLASS_SERVICE"],
-            nrb_env_type : (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".")+1).trim(),
-            status : lserver[i]["ISTATUS"],
-            description : lserver[i]["DESCRIPTION"],
-
-            unit : lserver[i]["Unit"]            
-          };
-
-
-            try {
-              
-                      
-           const asyncFunction = async () => {
-            let step1 = await db.status.findOne({where: {name: ciLserver.status} , attributes: ['status_id']});
-           ciLserver.status_id = step1.dataValues.status_id;
-          
-
-            step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
-            ciLserver.platform_id = step1.dataValues.platform_id;
-
-           step1 = await db.classService.findOne({where: {name: ciLserver.nrb_class_service} , attributes: ['class_service_id']})
-           ciLserver.class_service_id = step1.dataValues.class_service_id;
-
-           step1 = await db.envType.findOne({where: {name:ciLserver.nrb_env_type} , attributes: ['env_type_id']})
-           ciLserver.env_type_id = step1.dataValues.env_type_id; 
-
-
-            step1 = await db.hardwares.findOne( { include: {   model: db.ci,  as: 'ci',    where: {name:ciLserver.host_ci  } }  }) 
-           ciLserver.hardware_id = step1.dataValues.hardware_id; 
-
-           step1 = await db.ciType.findOne({where: {name: ciLserver.type} , attributes: ['ci_type_id']})
-           ciLserver.ci_type_id = step1.dataValues.ci_type_id;
-
-           step1 = await db.ciSubtype.findOne({where: {name: ciLserver.subtype} , attributes: ['ci_subtype_id']})
-           ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
-
-
-           return ciLserver;
-
-
-          }
+            host_ci: lserver[i]["__EMPTY"],
+            host_type: lserver[i]["__EMPTY_1"],
+            system_ci: lserver[i]["__EMPTY_2"],
+            system_ci_subtype: lserver[i]["__EMPTY_3"],
 
 
 
-          await asyncFunction().then(async lserver=>{
+            type: lserver[i]["TYPE"],
+            subtype: lserver[i]["SUBTYPE"],
+            disblay_name: lserver[i]["DISPLAY_NAME"],
+            company: lserver[i]["COMPANY"],
+            nrb_managed_by: lserver[i]["NRB_MANAGED_BY"],
+            assignment: lserver[i]["ASSIGNMENT"],
+            nrb_class_service: lserver[i]["NRB_CLASS_SERVICE"],
+            nrb_env_type: (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim(),
+            status: lserver[i]["ISTATUS"],
+            description: lserver[i]["DESCRIPTION"],
 
-             await db.ci.findOrCreate({
-               where: {  logical_name: lserver.logicalName },
-               defaults: {
-               logical_name: lserver.logicalName ,
-              // name: lserver.logicalName,
-               company:lserver.company,
-               nrb_managed_by:lserver.nrb_managed_by,
-               description:lserver.description,
-               platform_id:lserver.platform_id,
-               status_id:lserver.status_id,
-               class_service_id : lserver.class_service_id,
-               ci_subtype_id: lserver.ci_subtype_id,
-               ci_type_id: lserver.ci_type_id
-               }
-             }).then(async function(res){
-
-                  await db.lpars.findOrCreate({
-                   //  hardware_id: lserver.hardware_id,
-                   where: { ci_id:res[0].dataValues.ci_id },
-                   defaults: {
-                       env_type_id:lserver.env_type_id, 
-                       host_ci:lserver.host_ci,
-                       host_type:lserver.host_type,
-                       ci_id:res[0].dataValues.ci_id,
-                   }
-                         }).then(async function(res){
-                          compt++;
-                           await db.hardware_lpar.findOrCreate({
-                             where: {  [db.Op.and]: [ { hardware_id: lserver.hardware_id , lpar_id:res[0].dataValues.lpar_id} ]},
-                             defaults: {
-                             hardware_id: lserver.hardware_id,
-                             lpar_id:res[0].dataValues.lpar_id,
-                             }
-                           }).then(async function(res){
-                            // console.log(res)
-                           //   await insertSystem (lserver,res[0].dataValues.lpar_id);
- 
-                           }); 
-                         });
-
-             })
-
-
-             
-
-
-
-         }); 
-
-            } catch (error) {
-
-              logger.error('can\'t insert virtual ', lserver, 'Error => ', error )
-
-              
-            }
-
-
-          
- 
-}
-
-
-}
-
-
-async function insertSystem(lserver,namePlatform,nameType){
-
-  for (var i = 1; i < lserver.length; i++) { 
-      
-       const ciLserver = {
-        logicalName : lserver[i]["LOGICAL_NAME"],
-
-        host_ci : lserver[i]["__EMPTY"],
-        host_type : lserver[i]["__EMPTY_1"],
-        system_ci : lserver[i]["__EMPTY_2"],
-        system_ci_subtype : lserver[i]["__EMPTY_3"],
-  
-
-
-          type : lserver[i]["TYPE"],
-          subtype : lserver[i]["SUBTYPE"],
-          disblay_name : lserver[i]["DISPLAY_NAME"],
-          company : lserver[i]["COMPANY"],
-          nrb_managed_by : lserver[i]["NRB_MANAGED_BY"], 
-          assignment : lserver[i]["ASSIGNMENT"],
-          nrb_class_service : lserver[i]["NRB_CLASS_SERVICE"],
-          nrb_env_type : (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".")+1).trim(),
-          status : lserver[i]["ISTATUS"],
-          description : lserver[i]["DESCRIPTION"],
-
-          unit : lserver[i]["Unit"]            
+            unit: lserver[i]["Unit"]
         };
 
 
-          try {
-            
-                    
-         const asyncFunction = async () => {
-          let step1 = await db.status.findOne({where: {name: ciLserver.status} , attributes: ['status_id']});
-         ciLserver.status_id = step1.dataValues.status_id;
-        
-
-          step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
-          ciLserver.platform_id = step1.dataValues.platform_id;
-
-         step1 = await db.classService.findOne({where: {name: ciLserver.nrb_class_service} , attributes: ['class_service_id']})
-         ciLserver.class_service_id = step1.dataValues.class_service_id;
-
-         step1 = await db.envType.findOne({where: {name:ciLserver.nrb_env_type} , attributes: ['env_type_id']})
-         ciLserver.env_type_id = step1.dataValues.env_type_id; 
+        try {
 
 
-
-         step1 = await db.ciType.findOne({where: {name: ciLserver.type} , attributes: ['ci_type_id']})
-         ciLserver.ci_type_id = step1.dataValues.ci_type_id;
-
-         step1 = await db.ciSubtype.findOne({where: {name: ciLserver.subtype} , attributes: ['ci_subtype_id']})
-         ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
-
-         step1 = await db.lpars.findOne({
-           include: [{ model: db.ci, as: 'ci' , attributes: [], where: { logical_name: ciLserver.logicalName } }],
-          })
-         ciLserver.lpar_id = step1.dataValues.lpar_id;
+            const asyncFunction = async() => {
+                let step1 = await db.status.findOne({ where: { name: ciLserver.status }, attributes: ['status_id'] });
+                ciLserver.status_id = step1.dataValues.status_id;
 
 
+                step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
+                ciLserver.platform_id = step1.dataValues.platform_id;
 
-         return ciLserver;
+                step1 = await db.classService.findOne({ where: { name: ciLserver.nrb_class_service }, attributes: ['class_service_id'] })
+                ciLserver.class_service_id = step1.dataValues.class_service_id;
+
+                step1 = await db.envType.findOne({ where: { name: ciLserver.nrb_env_type }, attributes: ['env_type_id'] })
+                ciLserver.env_type_id = step1.dataValues.env_type_id;
+
+
+                step1 = await db.hardwares.findOne({ include: { model: db.ci, as: 'ci', where: { name: ciLserver.host_ci } } })
+                ciLserver.hardware_id = step1.dataValues.hardware_id;
+
+                step1 = await db.ciType.findOne({ where: { name: ciLserver.type }, attributes: ['ci_type_id'] })
+                ciLserver.ci_type_id = step1.dataValues.ci_type_id;
+
+                step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.subtype }, attributes: ['ci_subtype_id'] })
+                ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
+
+
+                return ciLserver;
+
+
+            }
+
+
+
+            await asyncFunction().then(async lserver => {
+
+                await db.ci.findOrCreate({
+                    where: { logical_name: lserver.logicalName },
+                    defaults: {
+                        logical_name: lserver.logicalName,
+                        our_name: lserver.logicalName,
+                        company: lserver.company,
+                        nrb_managed_by: lserver.nrb_managed_by,
+                        description: lserver.description,
+                        platform_id: lserver.platform_id,
+                        status_id: lserver.status_id,
+                        class_service_id: lserver.class_service_id,
+                        ci_subtype_id: lserver.ci_subtype_id,
+                        ci_type_id: lserver.ci_type_id
+                    }
+                }).then(async function(res) {
+
+                    await db.lpars.findOrCreate({
+                        //  hardware_id: lserver.hardware_id,
+                        where: { ci_id: res[0].dataValues.ci_id },
+                        defaults: {
+                            env_type_id: lserver.env_type_id,
+                            host_ci: lserver.host_ci,
+                            host_type: lserver.host_type,
+                            ci_id: res[0].dataValues.ci_id,
+                        }
+                    }).then(async function(res) {
+                        compt++;
+                        await db.hardware_lpar.findOrCreate({
+                            where: {
+                                [db.Op.and]: [{ hardware_id: lserver.hardware_id, lpar_id: res[0].dataValues.lpar_id }]
+                            },
+                            defaults: {
+                                hardware_id: lserver.hardware_id,
+                                lpar_id: res[0].dataValues.lpar_id,
+                            }
+                        }).then(async function(res) {
+                            // console.log(res)
+                            //   await insertSystem (lserver,res[0].dataValues.lpar_id);
+
+                        });
+                    });
+
+                })
+
+
+
+
+
+
+            });
+
+        } catch (error) {
+
+            logger.error('can\'t insert virtual ', lserver, 'Error => ', error)
 
 
         }
 
 
 
-        await asyncFunction().then(async lserver=>{
 
-          
-           if((lserver.company === 'SECUREX' && lserver.host_type ==='Secondary') || lserver.host_type ==='Primary'){
-            await db.ci.findOrCreate({
-              where: {  logical_name: lserver.system_ci },
-              defaults: {
-              logical_name: lserver.system_ci ,
-             // name: lserver.logicalName,
-              company:lserver.company,
-              nrb_managed_by:lserver.nrb_managed_by,
-              description:lserver.description,
-              platform_id:lserver.platform_id,
-              status_id:lserver.status_id,
-              class_service_id : lserver.class_service_id,
-              ci_subtype_id: lserver.ci_subtype_id,
-              ci_type_id: lserver.ci_type_id,
+    }
 
-              }
-            }).then(async function(res){
- 
-                 await db.systems.findOrCreate({
-                  //  hardware_id: lserver.hardware_id,
-                  where: { ci_id:res[0].dataValues.ci_id },
-                  defaults: {
-                      ci_id:res[0].dataValues.ci_id,
-                      lpar_id : lserver.lpar_id,
-                      env_type_id:lserver.env_type_id
-                  }
+
+}
+
+
+async function insertSystem(lserver, namePlatform, nameType) {
+
+    for (var i = 1; i < lserver.length; i++) {
+
+        const ciLserver = {
+            logicalName: lserver[i]["LOGICAL_NAME"],
+
+            host_ci: lserver[i]["__EMPTY"],
+            host_type: lserver[i]["__EMPTY_1"],
+            system_ci: lserver[i]["__EMPTY_2"],
+            system_ci_subtype: lserver[i]["__EMPTY_3"],
+
+
+
+            type: lserver[i]["TYPE"],
+            subtype: lserver[i]["SUBTYPE"],
+            disblay_name: lserver[i]["DISPLAY_NAME"],
+            company: lserver[i]["COMPANY"],
+            nrb_managed_by: lserver[i]["NRB_MANAGED_BY"],
+            assignment: lserver[i]["ASSIGNMENT"],
+            nrb_class_service: lserver[i]["NRB_CLASS_SERVICE"],
+            nrb_env_type: (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim(),
+            status: lserver[i]["ISTATUS"],
+            description: lserver[i]["DESCRIPTION"],
+
+            unit: lserver[i]["Unit"]
+        };
+
+
+        try {
+
+
+            const asyncFunction = async() => {
+                let step1 = await db.status.findOne({ where: { name: ciLserver.status }, attributes: ['status_id'] });
+                ciLserver.status_id = step1.dataValues.status_id;
+
+
+                step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
+                ciLserver.platform_id = step1.dataValues.platform_id;
+
+                step1 = await db.classService.findOne({ where: { name: ciLserver.nrb_class_service }, attributes: ['class_service_id'] })
+                ciLserver.class_service_id = step1.dataValues.class_service_id;
+
+                step1 = await db.envType.findOne({ where: { name: ciLserver.nrb_env_type }, attributes: ['env_type_id'] })
+                ciLserver.env_type_id = step1.dataValues.env_type_id;
+
+
+
+                step1 = await db.ciType.findOne({ where: { name: ciLserver.type }, attributes: ['ci_type_id'] })
+                ciLserver.ci_type_id = step1.dataValues.ci_type_id;
+
+                step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.subtype }, attributes: ['ci_subtype_id'] })
+                ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
+
+                step1 = await db.lpars.findOne({
+                    include: [{ model: db.ci, as: 'ci', attributes: [], where: { logical_name: ciLserver.logicalName } }],
+                })
+                ciLserver.lpar_id = step1.dataValues.lpar_id;
+
+
+
+                return ciLserver;
+
+
+            }
+
+
+
+            await asyncFunction().then(async lserver => {
+
+
+                if ((lserver.company === 'SECUREX' && lserver.host_type === 'Secondary') || lserver.host_type === 'Primary') {
+                    await db.ci.findOrCreate({
+                        where: { logical_name: lserver.system_ci },
+                        defaults: {
+                            logical_name: lserver.system_ci,
+                            // name: lserver.logicalName,
+                            company: lserver.company,
+                            nrb_managed_by: lserver.nrb_managed_by,
+                            description: lserver.description,
+                            platform_id: lserver.platform_id,
+                            status_id: lserver.status_id,
+                            class_service_id: lserver.class_service_id,
+                            ci_subtype_id: lserver.ci_subtype_id,
+                            ci_type_id: lserver.ci_type_id,
+
+                        }
+                    }).then(async function(res) {
+
+                        await db.systems.findOrCreate({
+                            //  hardware_id: lserver.hardware_id,
+                            where: { ci_id: res[0].dataValues.ci_id },
+                            defaults: {
+                                ci_id: res[0].dataValues.ci_id,
+                                lpar_id: lserver.lpar_id,
+                                env_type_id: lserver.env_type_id
+                            }
                         });
- 
-            }) 
-          } 
+
+                    })
+                }
 
 
 
-       }); 
+            });
 
-          } catch (error) {
+        } catch (error) {
 
-            logger.error('can\'t insert virtual ', lserver, 'Error => ', error )
-
-            
-          }
+            logger.error('can\'t insert virtual ', lserver, 'Error => ', error)
 
 
-        
+        }
+
+
+
+
+    }
+
 
 }
 
 
-}
+
+async function insertzLinux(lserver, namePlatform) {
+
+    for (var i = 1; i < lserver.length; i++) {
+
+        const ciLserver = {
+
+            ourname: lserver[i]["__EMPTY"],
+            supervisuer: lserver[i]["__EMPTY_1"],
 
 
 
- async function insertzLinux(lserver,namePlatform){
+            type: lserver[i]["TYPE"],
+            subtype: lserver[i]["SUBTYPE"],
+            logicalName: lserver[i]["LOGICAL_NAME"],
+            disblay_name: lserver[i]["DISPLAY_NAME"],
+            company: lserver[i]["COMPANY"],
+            nrb_managed_by: lserver[i]["NRB_MANAGED_BY"],
+            assignment: lserver[i]["ASSIGNMENT"],
+            nrb_class_service: lserver[i]["NRB_CLASS_SERVICE"],
+            nrb_env_type: (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim(),
+            status: lserver[i]["ISTATUS"],
+            description: lserver[i]["DESCRIPTION"],
 
-  for (var i = 1; i < lserver.length; i++) { 
-      
-       const ciLserver = {
-
-        ourname : lserver[i]["__EMPTY"],
-        supervisuer : lserver[i]["__EMPTY_1"],
-       
-        
-
-          type : lserver[i]["TYPE"],
-          subtype : lserver[i]["SUBTYPE"],
-          logicalName : lserver[i]["LOGICAL_NAME"],
-          disblay_name : lserver[i]["DISPLAY_NAME"],
-          company : lserver[i]["COMPANY"],
-          nrb_managed_by : lserver[i]["NRB_MANAGED_BY"], 
-          assignment : lserver[i]["ASSIGNMENT"],
-          nrb_class_service : lserver[i]["NRB_CLASS_SERVICE"],
-          nrb_env_type : (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".")+1).trim(),
-          status : lserver[i]["ISTATUS"],
-          description : lserver[i]["DESCRIPTION"],
-
-          domaine : lserver[i]["DOMAIN"],
-          os_version : lserver[i]["OS_VERSION"],
-          cpu_type : lserver[i]["CPU_TYPE"],
-          cpu_number : lserver[i]["CPU_NUMBER"],
-          physical_mem_total : lserver[i]["PHYSICAL_MEM_TOTAL"],
-          console_name : lserver[i]["CONSOLE_NAME"],
+            domaine: lserver[i]["DOMAIN"],
+            os_version: lserver[i]["OS_VERSION"],
+            cpu_type: lserver[i]["CPU_TYPE"],
+            cpu_number: lserver[i]["CPU_NUMBER"],
+            physical_mem_total: lserver[i]["PHYSICAL_MEM_TOTAL"],
+            console_name: lserver[i]["CONSOLE_NAME"],
 
         };
 
 
-       // console.log(ciLserver)
-
-      
-          const asyncFunction = async () => {
-           let step1 = await db.status.findOne({where: {name: ciLserver.status} , attributes: ['status_id']});
-          ciLserver.status_id = step1.dataValues.status_id;
-         
-
-           step1 = await db.platforms.findOne({where: {name: namePlatform} , attributes: ['platform_id']})
-           ciLserver.platform_id = step1.dataValues.platform_id;
-
-          step1 = await db.classService.findOne({where: {name: ciLserver.nrb_class_service} , attributes: ['class_service_id']})
-          ciLserver.class_service_id = step1.dataValues.class_service_id;
-
-          step1 = await db.envType.findOne({where: {name:ciLserver.nrb_env_type} , attributes: ['env_type_id']})
-          ciLserver.env_type_id = step1.dataValues.env_type_id; 
+        // console.log(ciLserver)
 
 
-          step1 = await db.ciType.findOne({where: {name: ciLserver.type} , attributes: ['ci_type_id']})
-          ciLserver.ci_type_id = step1.dataValues.ci_type_id;
- 
-          step1 = await db.ciSubtype.findOne({where: {name: ciLserver.subtype} , attributes: ['ci_subtype_id']})
-          ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
- 
-          step1 = await db.systems.findOne({
-            include: [{ model: db.ci, as: 'ci' , attributes: [], where: { logical_name: ciLserver.supervisuer } }],
-           })
-          ciLserver.systeme_id = step1.dataValues.systeme_id;
+        const asyncFunction = async() => {
+            let step1 = await db.status.findOne({ where: { name: ciLserver.status }, attributes: ['status_id'] });
+            ciLserver.status_id = step1.dataValues.status_id;
 
 
-          return ciLserver;
+            step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
+            ciLserver.platform_id = step1.dataValues.platform_id;
+
+            step1 = await db.classService.findOne({ where: { name: ciLserver.nrb_class_service }, attributes: ['class_service_id'] })
+            ciLserver.class_service_id = step1.dataValues.class_service_id;
+
+            step1 = await db.envType.findOne({ where: { name: ciLserver.nrb_env_type }, attributes: ['env_type_id'] })
+            ciLserver.env_type_id = step1.dataValues.env_type_id;
 
 
-         }
+            step1 = await db.ciType.findOne({ where: { name: ciLserver.type }, attributes: ['ci_type_id'] })
+            ciLserver.ci_type_id = step1.dataValues.ci_type_id;
+
+            step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.subtype }, attributes: ['ci_subtype_id'] })
+            ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
+
+            step1 = await db.systems.findOne({
+                include: [{ model: db.ci, as: 'ci', attributes: [], where: { logical_name: ciLserver.supervisuer } }],
+            })
+            ciLserver.systeme_id = step1.dataValues.systeme_id;
 
 
-           await asyncFunction().then(async lserver=>{
+            return ciLserver;
 
-             await db.ci.findOrCreate({
-              where: { logical_name: lserver.logicalName  },
-              defaults: {
-              logical_name: lserver.logicalName ,
-              name: lserver.logicalName,
-              company:lserver.company,
-              nrb_managed_by:lserver.nrb_managed_by,
-              description:lserver.description,
-              platform_id:lserver.platform_id,
-              status_id:lserver.status_id,
-              class_service_id : lserver.class_service_id,
-              ci_subtype_id: lserver.ci_subtype_id,
-              ci_type_id: lserver.ci_type_id,
-              }
-            }).then(async function(res){
 
-                  await db.zLinux.findOrCreate({
-                    where: { ci_id:res[0].dataValues.ci_id },
+        }
+
+
+        await asyncFunction().then(async lserver => {
+
+            await db.ci.findOrCreate({
+                where: { logical_name: lserver.logicalName },
+                defaults: {
+                    logical_name: lserver.logicalName,
+                    name: lserver.logicalName,
+                    our_name: lserver.ourname,
+
+                    company: lserver.company,
+                    nrb_managed_by: lserver.nrb_managed_by,
+                    description: lserver.description,
+                    platform_id: lserver.platform_id,
+                    status_id: lserver.status_id,
+                    class_service_id: lserver.class_service_id,
+                    ci_subtype_id: lserver.ci_subtype_id,
+                    ci_type_id: lserver.ci_type_id,
+                }
+            }).then(async function(res) {
+
+                await db.zLinux.findOrCreate({
+                    where: { ci_id: res[0].dataValues.ci_id },
                     defaults: {
-                      ci_id:res[0].dataValues.ci_id,
-                      domaine :lserver.domaine,
-                      os_version : lserver.os_version,
-                      cpu_type : lserver.cpu_type,
-                      cpu_number : lserver.cpu_number,
-                      physical_mem_total : lserver.physical_mem_total,
-                      systeme_id : lserver.systeme_id,
+                        ci_id: res[0].dataValues.ci_id,
+                        domaine: lserver.domaine,
+                        os_version: lserver.os_version,
+                        cpu_type: lserver.cpu_type,
+                        cpu_number: lserver.cpu_number,
+                        physical_mem_total: lserver.physical_mem_total,
+                        systeme_id: lserver.systeme_id,
 
 
                     }
-                        });
+                });
 
 
-            });  
+            });
 
 
 
-        });   
+        });
+
+    }
+
 
 }
-
-
-} 

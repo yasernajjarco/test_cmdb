@@ -6,7 +6,8 @@ const load = require("./loadFiles/index");
 
 import routes from './routes/index.routes';
 const swaggerUi = require('swagger-ui-express'),
-swaggerDocument = require('./swagger.json');
+    swaggerDocument = require('./swagger.json');
+const logger = require('./logger');
 
 
 
@@ -27,29 +28,39 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to CMDB API service." });
+    res.json({ message: "Welcome to CMDB API service." });
 });
 
 var options = {
-  swaggerOptions: {
-    authAction :{ JWT: {name: "JWT", schema: {type: "apiKey", in: "header", name: "Authorization", description: ""}, value: "Bearer <JWT>"} }
-  }
+    swaggerOptions: {
+        authAction: { JWT: { name: "JWT", schema: { type: "apiKey", in: "header", name: "Authorization", description: "" }, value: "Bearer <JWT>" } }
+    }
 };
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,options));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
+
+/* logger.setLevel('debug');
+logger.debug('this will be logged now');
+logger.fatal('this will be fatal now');
+logger.warn('this will be warn now'); */
+
+let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+logger.info('start at: ', time)
 
 initial.seed().then(() => {
-  load.test();
-}); 
+    load.test()
+});
+
+
+
 
 app.use('/api', routes);
 
 
 
 
-app.listen(process.env.PORT, () => 
-  app.use('/api/v1', app),
-  console.log(`Example app listening on port ${process.env.PORT}!`),
+app.listen(process.env.PORT, () =>
+    app.use('/api/v1', app),
+    console.log(`Example app listening on port ${process.env.PORT}!`),
 );
-
