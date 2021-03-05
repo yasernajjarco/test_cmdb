@@ -2,11 +2,13 @@ const db = require("../index.db");
 import moment from 'moment';
 const logger = require('../logger');
 let compt = 0;
-
-
+var fs = require('fs')
+const path = require('path');
 
 const reader = require('xlsx')
 
+
+let results = [];
 
 export async function insert(fileName, namePlatform) {
 
@@ -26,6 +28,7 @@ export async function insert(fileName, namePlatform) {
         switch (sheets[i]) {
             case 'occurence|Mainframe Subsystem':
                 await insertOccurences(temp, namePlatform);
+                return await results;
                 break;
         }
 
@@ -34,10 +37,12 @@ export async function insert(fileName, namePlatform) {
 
 
 
+
 }
 
 
 async function insertOccurences(apps, namePlatform) {
+
 
     var i = await insertClient(apps);
     for (var i = 1; i < apps.length; i++) {
@@ -64,6 +69,10 @@ async function insertOccurences(apps, namePlatform) {
 
         };
 
+        if (occu.company === 'PROD-NRB') {
+            results.push(apps[i])
+        }
+
         try {
 
             const asyncFunction = async() => {
@@ -73,6 +82,9 @@ async function insertOccurences(apps, namePlatform) {
 
                 step1 = await db.instance.findOne({ where: { name: occu.softinstance }, attributes: ['instance_id'] })
                 occu.instance_id = step1.dataValues.instance_id;
+
+                step1 = await db.application.findOne({ where: { product_code: occu.product_code, version: occu.version }, attributes: ['ci_application_id'] })
+                occu.ci_application_id = step1.dataValues.ci_application_id;
 
                 return occu;
 
@@ -91,6 +103,11 @@ async function insertOccurences(apps, namePlatform) {
                 }).then(async function(res) {
                     compt++;
                 });
+
+
+                await db.application.update({ isoccurenciable: 1 }, { where: { ci_application_id: occu.ci_application_id } });
+
+
 
             });
         } catch (error) {

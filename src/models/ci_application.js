@@ -49,6 +49,15 @@ module.exports = sequelize => {
       comment: null,
       field: "is_valid"
     },
+    isoccurenciable: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "isoccurenciable"
+    },
     end_of_support_date: {
       type: DataTypes.STRING(300),
       allowNull: true,

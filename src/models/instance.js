@@ -13,15 +13,6 @@ module.exports = sequelize => {
       comment: null,
       field: "instance_id"
     },
-    isoccurenciable: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "isoccurenciable"
-    },
     name: {
       type: DataTypes.STRING(50),
       allowNull: true,

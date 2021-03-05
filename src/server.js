@@ -12,19 +12,13 @@ const logger = require('./logger');
 
 
 
-
-const app = express();
+/* const app = express();
 
 //./node_modules/.bin/sequelize-automate -t js -h localhost -d cmdb -u root -p rootroot -o ./src/models
 app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
-
-
 
 
 app.get("/", (req, res) => {
@@ -37,7 +31,7 @@ var options = {
     }
 };
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options)); */
 
 
 /* logger.setLevel('debug');
@@ -53,14 +47,14 @@ initial.seed().then(() => {
 });
 
 
+/* 
+
+app.use('/api', routes); */
 
 
-app.use('/api', routes);
 
 
-
-
-app.listen(process.env.PORT, () =>
+/* app.listen(process.env.PORT, () =>
     app.use('/api/v1', app),
     console.log(`Example app listening on port ${process.env.PORT}!`),
-);
+); */

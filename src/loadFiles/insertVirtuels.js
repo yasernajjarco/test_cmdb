@@ -7,6 +7,7 @@ import moment from 'moment';
 const logger = require('../logger');
 let compt = 0;
 
+let results = [];
 
 
 const reader = require('xlsx')
@@ -46,9 +47,12 @@ export async function insert(fileName, namePlatform) {
             case 'lserver|zVM Linux':
                 await insertzLinux(temp, namePlatform);
                 logger.info(compt, ' virtuels de monnde ', namePlatform, ' de type ', sheets[i], ' a été mis à jour ou ajoutés');
-
+                return await results;
                 break;
+
         }
+
+
 
     }
 }
@@ -312,6 +316,8 @@ async function insertSystem(lserver, namePlatform, nameType) {
 
 async function insertzLinux(lserver, namePlatform) {
 
+    var i = await insertClient(lserver);
+
     for (var i = 1; i < lserver.length; i++) {
 
         const ciLserver = {
@@ -341,7 +347,9 @@ async function insertzLinux(lserver, namePlatform) {
             console_name: lserver[i]["CONSOLE_NAME"],
 
         };
-
+        if (ciLserver.company === 'PROD-NRB') {
+            results.push(lserver[i])
+        }
 
         // console.log(ciLserver)
 
@@ -366,6 +374,9 @@ async function insertzLinux(lserver, namePlatform) {
 
             step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.subtype }, attributes: ['ci_subtype_id'] })
             ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
+
+            step1 = await db.client.findOne({ where: { companyname: ciLserver.company }, attributes: ['client_id'] })
+            ciLserver.client_id = step1.dataValues.client_id;
 
             step1 = await db.systems.findOne({
                 include: [{ model: db.ci, as: 'ci', attributes: [], where: { logical_name: ciLserver.supervisuer } }],
@@ -412,10 +423,23 @@ async function insertzLinux(lserver, namePlatform) {
 
 
                     }
+                }).then(async function(res) {
+                    await db.client_zlinux.findOrCreate({
+                        where: {
+                            [db.Op.and]: [{ client_id: ciLserver.client_id, zlinux_id: res[0].dataValues.zlinux_id }]
+                        },
+                        defaults: {
+                            client_id: ciLserver.client_id,
+                            zlinux_id: res[0].dataValues.zlinux_id
+
+                        }
+                    })
+
+
                 });
 
 
-            });
+            })
 
 
 
@@ -424,4 +448,19 @@ async function insertzLinux(lserver, namePlatform) {
     }
 
 
+}
+
+async function insertClient(apps) {
+    for (var i = 1; i < apps.length; i++) {
+        const occu = { company: apps[i]["COMPANY"] };
+
+        await db.client.findOrCreate({
+            where: { companyname: occu.company },
+            defaults: {
+                companyname: occu.company,
+            }
+        });
+
+    }
+    return i;
 }

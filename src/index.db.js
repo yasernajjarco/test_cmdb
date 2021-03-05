@@ -50,6 +50,8 @@ db.ciType = require("./models/ci_type")(sequelize, Sequelize, DataTypes);
 db.ciSubtype = require("./models/ci_subtype")(sequelize, Sequelize, DataTypes);
 db.client = require("./models/client")(sequelize, Sequelize, DataTypes);
 db.instance_client = require("./models/instance_client")(sequelize, Sequelize, DataTypes);
+db.client_zlinux = require("./models/client_zlinux")(sequelize, Sequelize, DataTypes);
+
 db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes);
 
 

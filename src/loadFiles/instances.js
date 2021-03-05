@@ -3,8 +3,9 @@ import moment from 'moment';
 import ConsoleAppender from 'simple-node-logger/lib/ConsoleAppender';
 const logger = require('../logger');
 let compt = 0;
+let results = [];
 
-
+//zVM linux, occurence linux all sauf PROD-NRB
 
 const reader = require('xlsx')
 
@@ -27,7 +28,7 @@ export async function insertInstances(fileName, namePlatform) {
         switch (sheets[i]) {
             case 'sinstance|Mainframe Software':
                 await insertInstance(temp, namePlatform);
-                // console.log('softs => ' ,temp)
+                return await results;
 
                 break;
         }
@@ -66,6 +67,10 @@ async function insertInstance(instances, namePlatform) {
 
         };
 
+        if (instance.company === 'PROD-NRB') {
+            results.push(instances[i])
+        }
+
         try {
 
             const asyncFunction = async() => {
@@ -76,7 +81,6 @@ async function insertInstance(instances, namePlatform) {
 
                 step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
                 instance.platform_id = step1.dataValues.platform_id;
-
 
 
                 step1 = await db.ciType.findOne({ where: { name: instance.type }, attributes: ['ci_type_id'] })
@@ -129,7 +133,7 @@ async function insertInstance(instances, namePlatform) {
                             ci_application_id: app.ci_application_id,
                             systeme_id: app.systeme_id,
                             ci_id: res[0].dataValues.ci_id,
-                            isoccurenciable: 1,
+                            // isoccurenciable: 1,
 
                         }
 

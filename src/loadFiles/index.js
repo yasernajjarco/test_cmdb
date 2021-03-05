@@ -50,7 +50,11 @@ async function test() {
         await insertVirtuels.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "Documents/" + 'CI virtual Z.xlsx')
-        await insertVirtuels.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await insertVirtuels.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
+
+            if (data !== undefined) await fs.writeFile(path.resolve(__dirname, 'linux.txt'), JSON.stringify(data), function(err) {})
+        });
+
 
 
         file = path.resolve(__dirname, "Documents/" + 'REL hardware Z pserver.csv')
@@ -64,21 +68,43 @@ async function test() {
         await insertHardwares.insertRelation(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "Documents/" + 'CI sinstance B.xlsx')
-        await instances.insertInstances(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await instances.insertInstances(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
+            await fs.writeFile(path.resolve(__dirname, 'sinstances B.txt'), JSON.stringify(data), function(err) {
+                if (err) throw err;
+            })
+        });
 
         file = path.resolve(__dirname, "Documents/" + 'CI sinstance Z.xlsx')
-        await instances.insertInstances(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await instances.insertInstances(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
+            await fs.writeFile(path.resolve(__dirname, 'sinstances Z.txt'), JSON.stringify(data), function(err) {
+                if (err) throw err;
+            })
+        });
+
+
 
 
         file = path.resolve(__dirname, "Documents/" + 'CI software B.xlsx')
-        await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
+            await fs.writeFile(path.resolve(__dirname, 'occurences B.txt'), JSON.stringify(data), function(err) {
+                if (err) throw err;
+            })
+        });
 
 
         file = path.resolve(__dirname, "Documents/" + 'CI software Z.xlsx')
-        await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
+            await fs.writeFile(path.resolve(__dirname, 'occurences Z.txt'), JSON.stringify(data), function(err) {
+                if (err) throw err;
+            })
+        });
+
+
+
 
         let time = await new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
         await logger.info('End at: ', time)
+
 
     });
 
