@@ -39,3 +39,19 @@
 2021-03-07 21:29:00.060 ERROR can't insert occurence {"ourName":"ADABASD","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASD PAVLOV","displayName":"Z_ADABASD","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Développement Dieteren PAVLOV","client_id":3} 
 2021-03-07 21:29:00.069 ERROR can't insert occurence {"ourName":"ADABASE","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASE PAVLOV","displayName":"Z_ADABASE","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Educ Dieteren PAVLOV","client_id":3} 
 2021-03-07 21:29:06.185 INFO  End at: 2021-03-07 20:29:06 
+2021-03-07 21:36:30.211 INFO  start at: 2021-03-07 20:36:30 
+2021-03-07 21:37:14.613 INFO  start at: 2021-03-07 20:37:14 
+2021-03-07 21:37:49.347 INFO  start at: 2021-03-07 20:37:49 
+2021-03-07 21:37:50.065 INFO  6 Vendeurs de monnde B a été mis à jour ou ajoutés 
+2021-03-07 21:37:50.941 INFO  42 Vendeurs de monnde Z a été mis à jour ou ajoutés 
+2021-03-07 21:37:51.224 INFO  8 softs de monnde B a été mis à jour ou ajoutés 
+2021-03-07 21:38:05.389 INFO  337 softs de monnde Z a été mis à jour ou ajoutés 
+2021-03-07 21:38:05.761 INFO  4 hardwares de monnde B de type pserver|Mainframe Bull a été mis à jour ou ajoutés 
+2021-03-07 21:38:06.957 INFO  17 hardwares de monnde B de type pserver|Appliance a été mis à jour ou ajoutés 
+2021-03-07 21:38:07.058 INFO  2 hardwares de monnde B de type storage|M. Drive Enclosure a été mis à jour ou ajoutés 
+2021-03-07 21:38:07.305 INFO  9 hardwares de monnde B de type storage|Mainframe VTS & TL a été mis à jour ou ajoutés 
+2021-03-07 21:38:07.529 INFO  5 hardwares de monnde Z de type pserver|Mainframe IBM a été mis à jour ou ajoutés 
+2021-03-07 21:38:07.631 INFO  4 hardwares de monnde Z de type pserver|Appliance a été mis à jour ou ajoutés 
+2021-03-07 21:38:07.816 INFO  8 hardwares de monnde Z de type storage|M. Drive Enclosure a été mis à jour ou ajoutés 
+2021-03-07 21:38:08.098 INFO  12 hardwares de monnde Z de type storage|Mainframe VTS a été mis à jour ou ajoutés 
+2021-03-07 21:38:08.537 INFO  9 virtuels de monnde B de type lserver|Mainframe LGP a été mis à jour ou ajoutés 
