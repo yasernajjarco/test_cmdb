@@ -4,11 +4,24 @@ module.exports = {
     PORT: process.env.PORT,
 
     /** DATABASE */
+    /* 
+        HOST: "localhost",
+        USER: "root",
+        PASSWORD: "rootroot",
+        DB: "cmdb",
+        dialect: "mariadb",
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }, */
+
 
     HOST: "localhost",
-    USER: "root",
-    PASSWORD: "rootroot",
-    DB: "cmdb",
+    USER: "lsyalh",
+    PASSWORD: "lsyalh",
+    DB: "dbCMDBdev",
     dialect: "mariadb",
     pool: {
         max: 5,
@@ -17,19 +30,6 @@ module.exports = {
         idle: 10000
     },
 
-    /* 
-        HOST: "localhost",
-        USER: "lsyalh",
-        PASSWORD: "lsyalh",
-        DB: "dbCMDBdev",
-        dialect: "mariadb",
-        pool: {
-            max: 5,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        },
-     */
 
 
     /** AUTH KEY */
