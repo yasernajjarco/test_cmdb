@@ -18,6 +18,6 @@ router.use('/apps', App);
 
 
 
-router.use('/', User);  //pour test
+router.use('/', User); //pour test
 
 export default router;

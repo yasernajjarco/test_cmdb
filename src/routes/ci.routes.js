@@ -7,10 +7,10 @@ const { authJwt } = require("../middleware");
 
 
 
- 
-  // Retrieve all cis
-  router.get("/", ci.findAll);
-  router.get("/app", ci.findAllApp);
+
+// Retrieve all cis
+router.get("/", ci.findAll);
+router.get("/app", ci.findAllApp);
 
 
 
