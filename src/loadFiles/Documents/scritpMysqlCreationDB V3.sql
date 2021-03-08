@@ -152,6 +152,7 @@ create table ci_application(
    product_code varchar(300),
    version varchar(300),
    is_valid int,
+   isoccurenciable int,
    end_of_support_date varchar(300),
    end_extended_support varchar(300),
    provider_id int not null,
@@ -186,7 +187,6 @@ create table systeme(
 
 create table instance(
    instance_id int auto_increment,
-   isoccurenciable int,
    name varchar(50),
    ci_id int not null,
    systeme_id int not null,

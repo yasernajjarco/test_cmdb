@@ -86,30 +86,64 @@ async function insertOccurences(apps, namePlatform) {
                 step1 = await db.application.findOne({ where: { product_code: occu.product_code, version: occu.version }, attributes: ['ci_application_id'] })
                 occu.ci_application_id = step1.dataValues.ci_application_id;
 
+                step1 = await db.status.findOne({ where: { name: occu.status }, attributes: ['status_id'] });
+                occu.status_id = step1.dataValues.status_id;
+
+
+                step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
+                occu.platform_id = step1.dataValues.platform_id;
+
+
+                step1 = await db.ciType.findOne({ where: { name: occu.type }, attributes: ['ci_type_id'] })
+                occu.ci_type_id = step1.dataValues.ci_type_id;
+
+                step1 = await db.ciSubtype.findOne({ where: { name: occu.subtype }, attributes: ['ci_subtype_id'] })
+                occu.ci_subtype_id = step1.dataValues.ci_subtype_id;
+
                 return occu;
 
             }
 
             await asyncFunction().then(async app => {
 
-                await db.occurence.findOrCreate({
+                await db.ci.findOrCreate({
                     where: { name: app.logicalname },
                     defaults: {
-                        our_name: app.ourName,
                         name: app.logicalname,
-                        instance_id: app.instance_id,
-                        client_id: app.client_id
+                        our_name: app.ourName,
+
+                        logical_name: app.logicalname,
+                        company: app.company,
+                        nrb_managed_by: app.nrb_managed_by,
+                        description: app.description,
+                        platform_id: app.platform_id,
+                        status_id: app.status_id,
+                        ci_subtype_id: app.ci_subtype_id,
+                        ci_type_id: app.ci_type_id,
+
                     }
                 }).then(async function(res) {
                     compt++;
-                });
+                    await db.occurence.findOrCreate({
+                        where: { name: app.logicalname },
+                        defaults: {
+                            our_name: app.ourName,
+                            name: app.logicalname,
+                            instance_id: app.instance_id,
+                            client_id: app.client_id,
+                            ci_id: res[0].dataValues.ci_id,
 
+                        }
+                    });
+
+                });
 
                 await db.application.update({ isoccurenciable: 1 }, { where: { ci_application_id: occu.ci_application_id } });
 
 
 
             });
+
         } catch (error) {
             logger.error('can\'t insert occurence ', occu)
 

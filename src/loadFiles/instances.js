@@ -124,7 +124,6 @@ async function insertInstance(instances, namePlatform) {
                     }
                 }).then(async function(res) {
 
-                    console.log(res[0].dataValues.ci_id)
                     compt++;
                     await db.instance.findOrCreate({
                         where: { name: app.logicalname },
