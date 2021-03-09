@@ -3,6 +3,7 @@ const Provider = db.provider;
 const Provider_Platform = db.provider_platform;
 import { Sequelize } from "sequelize";
 import moment from 'moment';
+const csv = require('csv-parser');
 const fs = require('fs');
 const logger = require('../logger');
 let compt = 0;
