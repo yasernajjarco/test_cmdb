@@ -1,49 +1,30 @@
-DROP TABLE 
+	DROP TABLE 
 
-
-
-
-
- `cmdb`.`client_hardware`, 
- `cmdb`.`client_zlinux`,
-  `cmdb`.`hardware_relation`,
-  `cmdb`.`instance_client`,
-  `cmdb`.`provider_platform`,
-  `cmdb`.`hardware_lpar`,
-
-  `cmdb`.`occurencesoft`,
-      `cmdb`.`instance`,
- `cmdb`.`ci_application`,
-   `cmdb`.`zlinux`,
- `cmdb`.`systeme`,
-  `cmdb`.`contact`,
-
-  `cmdb`.`client`,
-  
-  `cmdb`.`lpar`,
-  
- `cmdb`.`hardware`,
-
+`cmdb`.`client_hardware`, 
+`cmdb`.`client_zlinux`,
+`cmdb`.`hardware_relation`,
+`cmdb`.`instance_client`,
+`cmdb`.`provider_platform`,
+`cmdb`.`hardware_lpar`,
+`cmdb`.`occurencesoft`,
+`cmdb`.`instance`,
+`cmdb`.`ci_application`,
+`cmdb`.`zlinux`,
+`cmdb`.`systeme`,
+`cmdb`.`contact`,
+`cmdb`.`client`,
+`cmdb`.`lpar`,
+`cmdb`.`hardware`,
 `cmdb`.`audit`, 
 `cmdb`.`auditaction`,
-
- `cmdb`.`ci`,
-
-
- `cmdb`.`provider`,
-
-
-  `cmdb`.`class_service`,
-
- `cmdb`.`ci_type`,
- `cmdb`.`env_type`,
- `cmdb`.`ci_subtype`, 
-
- `cmdb`.`status`,
- 
- 
- `cmdb`.`platform`;
-
+`cmdb`.`ci`,
+`cmdb`.`provider`,
+`cmdb`.`class_service`,
+`cmdb`.`ci_type`,
+`cmdb`.`env_type`,
+`cmdb`.`ci_subtype`, 
+`cmdb`.`status`,
+`cmdb`.`platform`;
 
 
 create table ci_type(
@@ -228,10 +209,12 @@ create table zlinux(
 create table occurencesoft(
    occurencesoft_id int auto_increment,
    name varchar(300),
+	ci_id int not null,
    	our_name varchar(300),
    client_id int not null,
    instance_id int not null,
    primary key(occurencesoft_id),
+	foreign key(ci_id) references ci(ci_id),
    foreign key(client_id) references client(client_id),
    foreign key(instance_id) references instance(instance_id)
 );

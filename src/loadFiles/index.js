@@ -8,6 +8,7 @@ const db = require("../index.db");
 const insertHardwares = require('./insertHardwares');
 const insertVirtuels = require('./insertVirtuels');
 const instances = require('./instances');
+const XLSX = require('xlsx');
 
 
 const logger = require('../logger');
@@ -52,9 +53,13 @@ async function test() {
         file = path.resolve(__dirname, "Documents/" + 'CI virtual Z.xlsx')
         await insertVirtuels.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
 
-            if (data !== undefined) await fs.writeFile(path.resolve(__dirname, 'linux.txt'), JSON.stringify(data), function(err) {})
+            if (data !== undefined) {
+                var ws = XLSX.utils.json_to_sheet(data);
+                var wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "CI Linux");
+                await XLSX.writeFile(wb, path.resolve(__dirname, 'linux_clients Z.xlsx'));
+            }
         });
-
 
 
         file = path.resolve(__dirname, "Documents/" + 'REL hardware Z pserver.csv')
@@ -69,34 +74,45 @@ async function test() {
 
         file = path.resolve(__dirname, "Documents/" + 'CI sinstance B.xlsx')
         await instances.insertInstances(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
-            await fs.writeFile(path.resolve(__dirname, 'sinstances B.txt'), JSON.stringify(data), function(err) {
-                if (err) throw err;
-            })
+            var ws = XLSX.utils.json_to_sheet(data);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "CI sinstance B");
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'sinstances_clients B.xlsx'));
+
         });
+
 
         file = path.resolve(__dirname, "Documents/" + 'CI sinstance Z.xlsx')
         await instances.insertInstances(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
-            await fs.writeFile(path.resolve(__dirname, 'sinstances Z.txt'), JSON.stringify(data), function(err) {
-                if (err) throw err;
-            })
+            var ws = XLSX.utils.json_to_sheet(data);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "CI sinstance Z");
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'sinstances_clients Z.xlsx'));
+
         });
+
+
+
+
 
 
 
 
         file = path.resolve(__dirname, "Documents/" + 'CI software B.xlsx')
         await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
-            await fs.writeFile(path.resolve(__dirname, 'occurences B.txt'), JSON.stringify(data), function(err) {
-                if (err) throw err;
-            })
+            var ws = XLSX.utils.json_to_sheet(data);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "CI occurence B");
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'occurences_clients B.xlsx'));
         });
 
 
         file = path.resolve(__dirname, "Documents/" + 'CI software Z.xlsx')
         await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
-            await fs.writeFile(path.resolve(__dirname, 'occurences Z.txt'), JSON.stringify(data), function(err) {
-                if (err) throw err;
-            })
+            var ws = XLSX.utils.json_to_sheet(data);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "CI occurence Z");
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'occurences_clients Z.xlsx'));
         });
 
 

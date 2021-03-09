@@ -22,19 +22,6 @@ module.exports = sequelize => {
       comment: null,
       field: "name"
     },
-    ci_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "ci_id",
-      references: {
-        key: "ci_id",
-        model: "ci_model"
-      }
-    },
     our_name: {
       type: DataTypes.STRING(300),
       allowNull: true,
@@ -75,11 +62,6 @@ module.exports = sequelize => {
     tableName: "occurencesoft",
     comment: "",
     indexes: [{
-      name: "ci_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["ci_id"]
-    }, {
       name: "client_id",
       unique: false,
       type: "BTREE",
