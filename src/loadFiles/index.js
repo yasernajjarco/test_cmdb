@@ -57,7 +57,7 @@ async function test() {
                 var ws = XLSX.utils.json_to_sheet(data);
                 var wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, "CI Linux");
-                await XLSX.writeFile(wb, path.resolve(__dirname, 'linux_clients Z.xlsx'));
+                await XLSX.writeFile(wb, path.resolve(__dirname, 'Exported_files/', 'linux_clients Z.xlsx'));
             }
         });
 
@@ -77,7 +77,7 @@ async function test() {
             var ws = XLSX.utils.json_to_sheet(data);
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "CI sinstance B");
-            await XLSX.writeFile(wb, path.resolve(__dirname, 'sinstances_clients B.xlsx'));
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'Exported_files/', 'sinstances_clients B.xlsx'));
 
         });
 
@@ -87,7 +87,7 @@ async function test() {
             var ws = XLSX.utils.json_to_sheet(data);
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "CI sinstance Z");
-            await XLSX.writeFile(wb, path.resolve(__dirname, 'sinstances_clients Z.xlsx'));
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'Exported_files/', 'sinstances_clients Z.xlsx'));
 
         });
 
@@ -103,7 +103,7 @@ async function test() {
             var ws = XLSX.utils.json_to_sheet(data);
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "CI occurence B");
-            await XLSX.writeFile(wb, path.resolve(__dirname, 'occurences_clients B.xlsx'));
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'Exported_files/', 'occurences_clients B.xlsx'));
         });
 
 
@@ -112,7 +112,7 @@ async function test() {
             var ws = XLSX.utils.json_to_sheet(data);
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "CI occurence Z");
-            await XLSX.writeFile(wb, path.resolve(__dirname, 'occurences_clients Z.xlsx'));
+            await XLSX.writeFile(wb, path.resolve(__dirname, 'Exported_files/', 'occurences_clients Z.xlsx'));
         });
 
 
