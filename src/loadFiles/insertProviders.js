@@ -1,4 +1,3 @@
-const csvtojson = require('csvtojson');
 const db = require("../index.db");
 const Provider = db.provider;
 const Provider_Platform = db.provider_platform;

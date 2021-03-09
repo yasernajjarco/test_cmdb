@@ -23,7 +23,7 @@ async function test() {
     await fs.readdir(directoryPath, async function(err, files) {
 
 
-        file = path.resolve(__dirname, "Documents/" + 'Refs B.xlsx')
+        /*  file = path.resolve(__dirname, "Documents/" + 'Refs B.xlsx')
         await insertProviders.insertProvidersB(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
 
@@ -96,7 +96,7 @@ async function test() {
 
 
 
-
+ */
 
         file = path.resolve(__dirname, "Documents/" + 'CI software B.xlsx')
         await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
