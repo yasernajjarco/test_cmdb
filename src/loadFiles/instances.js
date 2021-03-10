@@ -19,6 +19,9 @@ export async function insertInstances(fileName, namePlatform) {
         data[res] = new Array();
     })
 
+    logger.info('start processing this file : ', fileName);
+
+
     for (let i = 0; i < sheets.length; i++) {
         const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]], {
             raw: false,
@@ -28,13 +31,15 @@ export async function insertInstances(fileName, namePlatform) {
         switch (sheets[i]) {
             case 'sinstance|Mainframe Software':
                 await insertInstance(temp, namePlatform);
+                logger.info(compt, ' instances of  world  ', namePlatform, ' has been updated or added');
+
+                logger.info('end processing this file : ', fileName);
                 return await results;
 
                 break;
         }
 
     }
-    logger.info(compt, ' instances de monnde ', namePlatform, ' a été mis à jour ou ajoutés');
 
 
 

@@ -20,6 +20,7 @@ export async function insert(fileName, namePlatform) {
     sheets.forEach((res) => {
         data[res] = new Array();
     })
+    logger.info('start processing this file : ', fileName);
 
     for (let i = 0; i < sheets.length; i++) {
         const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]])
@@ -27,8 +28,12 @@ export async function insert(fileName, namePlatform) {
 
         compt = 0;
         await insertpserver(temp, namePlatform);
-        logger.info(compt, ' hardwares de monnde ', namePlatform, ' de type ', sheets[i], ' a été mis à jour ou ajoutés');
+        logger.info(compt, ' hardwares of  world  ', namePlatform, ' of type ', sheets[i], ' has been updated or added');
+
     }
+
+
+    logger.info('end processing this file : ', fileName);
 
 
 }
@@ -140,6 +145,8 @@ async function insertpserver(pservers, namePlatform) {
 
 
 export async function insertRelation(fileName, namePlatform) {
+    logger.info('start processing this file : ', fileName);
+
     extractData(fileName).then(async data => {
 
         await Object.keys(data).forEach(async function(key, index) {
@@ -165,7 +172,7 @@ export async function insertRelation(fileName, namePlatform) {
                             }
                         });
                     } catch (error) {
-                        logger.error('cant found refrence for relation ', key, ' X ', data[key][index])
+                        logger.error('can\'t find referenced for relation ', key, ' X ', data[key][index], ' to insert in the table (hardwares_relations)')
 
                     }
 
@@ -185,6 +192,7 @@ export async function insertRelation(fileName, namePlatform) {
 
 
     });
+    logger.info('end processing this file : ', fileName);
 
 }
 

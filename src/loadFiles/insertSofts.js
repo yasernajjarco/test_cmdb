@@ -17,6 +17,9 @@ export async function insertApplication(fileName, namePlatform) {
         data[res] = new Array();
     })
 
+    logger.info('start processing this file : ', fileName);
+
+
     for (let i = 0; i < sheets.length; i++) {
         const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]], {
             raw: false,
@@ -26,14 +29,13 @@ export async function insertApplication(fileName, namePlatform) {
         switch (sheets[i]) {
             case 'application|Mainframe Software':
                 await insertApplications(temp, namePlatform);
-                // console.log('softs => ' ,temp)
-
                 break;
         }
 
     }
-    logger.info(compt, ' softs de monnde ', namePlatform, ' a été mis à jour ou ajoutés');
+    logger.info(compt, ' softs of  world  ', namePlatform, ' has been updated or added');
 
+    logger.info('end processing this file : ', fileName);
 
 
 }

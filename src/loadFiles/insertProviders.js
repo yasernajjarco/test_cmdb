@@ -15,6 +15,8 @@ export async function insertProvidersB(fileName, namePlatform) {
     sheets.forEach((res) => {
         data[res] = new Array();
     })
+    logger.info('start processing this file : ', fileName);
+
 
     for (let i = 0; i < sheets.length; i++) {
         const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]])
@@ -30,7 +32,10 @@ export async function insertProvidersB(fileName, namePlatform) {
         }
 
     }
-    logger.info(compt, ' Vendeurs de monnde ', namePlatform, ' a été mis à jour ou ajoutés');
+    logger.info(compt, ' sellers of  world  ', namePlatform, ' has been updated or added');
+
+    logger.info('end processing this file : ', fileName);
+
 }
 
 
