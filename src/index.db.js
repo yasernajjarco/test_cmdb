@@ -54,7 +54,7 @@ db.client_zlinux = require("./models/client_zlinux")(sequelize, Sequelize, DataT
 
 db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes);
 
-
+db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize, DataTypes);
 
 
 db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as: "ci" });

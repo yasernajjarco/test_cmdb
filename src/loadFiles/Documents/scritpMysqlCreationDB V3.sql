@@ -4,6 +4,7 @@
 `cmdb`.`client_zlinux`,
 `cmdb`.`hardware_relation`,
 `cmdb`.`instance_client`,
+`cmdb`.`occurence_client`,
 `cmdb`.`provider_platform`,
 `cmdb`.`hardware_lpar`,
 `cmdb`.`occurencesoft`,
@@ -211,13 +212,12 @@ create table occurencesoft(
    name varchar(300),
 	ci_id int not null,
    	our_name varchar(300),
-   client_id int not null,
    instance_id int not null,
    primary key(occurencesoft_id),
 	foreign key(ci_id) references ci(ci_id),
-   foreign key(client_id) references client(client_id),
    foreign key(instance_id) references instance(instance_id)
 );
+
 
 create table provider_platform(
    platform_id int,
@@ -265,5 +265,13 @@ create table instance_client(
    primary key(client_id, instance_id),
    foreign key(client_id) references client(client_id),
    foreign key(instance_id) references instance(instance_id)
+);
+
+create table occurence_client(
+   client_id int,
+   occurencesoft_id int,
+   primary key(client_id, occurencesoft_id),
+   foreign key(client_id) references client(client_id),
+   foreign key(occurencesoft_id) references occurencesoft(occurencesoft_id)
 );
 

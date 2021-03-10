@@ -130,10 +130,23 @@ async function insertOccurences(apps, namePlatform) {
                             our_name: app.ourName,
                             name: app.logicalname,
                             instance_id: app.instance_id,
-                            client_id: app.client_id,
+                            //client_id: app.client_id,
                             ci_id: res[0].dataValues.ci_id,
 
                         }
+                    }).then(async function(res) {
+                        await db.occurence_client.findOrCreate({
+                            where: {
+                                [db.Op.and]: [{ client_id: app.client_id, occurencesoft_id: res[0].dataValues.occurencesoft_id }]
+                            },
+                            defaults: {
+                                client_id: app.client_id,
+                                occurencesoft_id: res[0].dataValues.occurencesoft_id
+
+                            }
+                        })
+
+
                     });
 
                 });
