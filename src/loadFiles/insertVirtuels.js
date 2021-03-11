@@ -67,6 +67,7 @@ export async function insert(fileName, namePlatform) {
 
 async function insertlserver(lserver, namePlatform, nameType) {
 
+
     for (var i = 1; i < lserver.length; i++) {
 
         const ciLserver = {
@@ -200,6 +201,8 @@ async function insertlserver(lserver, namePlatform, nameType) {
 
 async function insertSystem(lserver, namePlatform, nameType) {
 
+    var i = await insertClient(lserver);
+
     for (var i = 1; i < lserver.length; i++) {
 
         const ciLserver = {
@@ -244,7 +247,8 @@ async function insertSystem(lserver, namePlatform, nameType) {
                 step1 = await db.envType.findOne({ where: { name: ciLserver.nrb_env_type }, attributes: ['env_type_id'] })
                 ciLserver.env_type_id = step1.dataValues.env_type_id;
 
-
+                step1 = await db.client.findOne({ where: { companyname: ciLserver.company }, attributes: ['client_id'] })
+                ciLserver.client_id = step1.dataValues.client_id;
 
                 step1 = await db.ciType.findOne({ where: { name: ciLserver.type }, attributes: ['ci_type_id'] })
                 ciLserver.ci_type_id = step1.dataValues.ci_type_id;
@@ -287,13 +291,19 @@ async function insertSystem(lserver, namePlatform, nameType) {
                         }
                     }).then(async function(res) {
 
+                        let idClient = null;
+                        if (lserver.nrb_class_service === 'IAAS') {
+                            idClient = lserver.client_id;
+
+                        }
                         await db.systems.findOrCreate({
                             //  hardware_id: lserver.hardware_id,
                             where: { ci_id: res[0].dataValues.ci_id },
                             defaults: {
                                 ci_id: res[0].dataValues.ci_id,
                                 lpar_id: lserver.lpar_id,
-                                env_type_id: lserver.env_type_id
+                                env_type_id: lserver.env_type_id,
+                                client_id: idClient
                             }
                         });
 

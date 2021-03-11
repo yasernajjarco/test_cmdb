@@ -131,7 +131,8 @@ async function insertpserver(pservers, namePlatform) {
                             }
                         }).then(async function(res) {
 
-                            if (ciHardware.company === 'SECUREX' && ciHardware.client_id > 0) {
+
+                            if ((ciHardware.nrb_class_service === 'Housing' && ciHardware.client_id > 0) || (ciHardware.type === 'storage')) {
                                 await db.client_hardware.findOrCreate({
                                     where: {
                                         [db.Op.and]: [{ client_id: ciHardware.client_id, hardware_id: res[0].dataValues.hardware_id }]
@@ -151,7 +152,6 @@ async function insertpserver(pservers, namePlatform) {
 
 
                 });
-
             }
 
         } catch (error) {

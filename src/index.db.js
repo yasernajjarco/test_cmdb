@@ -107,7 +107,8 @@ db.hardwares.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" })
 db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares", foreignKey: "hardware_id" });
 db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares1", foreignKey: "hardware_id_1" });
 
-
+db.hardwares.belongsToMany(db.client, { through: "client_hardware", as: "clients", foreignKey: "hardware_id" });
+db.client.belongsToMany(db.hardwares, { through: "client_hardware", as: "hardwares", foreignKey: "client_id" });
 /*
 
 db.ci.hasMany(db.storages, { foreignKey: 'ci_id', as : "storage"});

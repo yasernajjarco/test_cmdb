@@ -35,6 +35,16 @@ exports.findAll = (req, res) => {
                         [Sequelize.col('serial_no'), 'serial_no']
                     ]
                 },
+                {
+                    model: db.client,
+                    required: false,
+                    as: 'clients',
+                    through: { attributes: [] },
+                    attributes: [
+                        [Sequelize.col('companyname'), 'client_name']
+
+                    ]
+                },
 
             ],
             attributes: [
