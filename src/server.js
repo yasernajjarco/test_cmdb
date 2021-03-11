@@ -34,11 +34,6 @@ var options = {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 
-/* logger.setLevel('debug');
-logger.debug('this will be logged now');
-logger.fatal('this will be fatal now');
-logger.warn('this will be warn now'); */
-
 let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 logger.info('start at: ', time)
 
@@ -48,13 +43,10 @@ initial.seed().then(() => {
 
 
 
-
 app.use('/api', routes);
-
-
 
 
 app.listen(process.env.PORT, () =>
     app.use('/api/v1', app),
-    console.log(`Example app listening on port ${process.env.PORT}!`),
+    console.log(`le server  listening on port ${process.env.PORT}!`),
 );
