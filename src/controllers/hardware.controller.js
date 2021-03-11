@@ -6,7 +6,7 @@ const { Sequelize, DataTypes, Op } = require("sequelize");
 
 exports.findAll = (req, res) => {
     const platform = req.body.platform;
-    let condition = { '$ci.platforms.name$': platform };
+    let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
 
     db.hardwares.findAll({
             where: condition,
