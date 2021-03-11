@@ -7,3 +7,8 @@ const opts = {
 const log = SimpleNodeLogger.createSimpleLogger(opts);
 
 module.exports = log;
+
+/* logger.setLevel('debug');
+logger.debug('this will be logged now');
+logger.fatal('this will be fatal now');
+logger.warn('this will be warn now'); */

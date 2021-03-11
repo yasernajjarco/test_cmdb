@@ -23,7 +23,6 @@ async function test() {
 
     await fs.readdir(directoryPath, async function(err, files) {
 
-
         file = path.resolve(__dirname, "Documents/" + 'Refs B.xlsx')
         await insertProviders.insertProvidersB(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 

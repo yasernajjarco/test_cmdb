@@ -41,6 +41,9 @@ export async function insert(fileName, namePlatform) {
 
 async function insertpserver(pservers, namePlatform) {
 
+    await insertClient(pservers);
+
+
     for (var i = 1; i < pservers.length; i++) {
 
         const ciPserver = {
@@ -73,6 +76,10 @@ async function insertpserver(pservers, namePlatform) {
 
                     step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
                     ciPserver.platform_id = step1.dataValues.platform_id;
+
+                    step1 = await db.client.findOne({ where: { companyname: ciPserver.company }, attributes: ['client_id'] })
+                    ciPserver.client_id = step1.dataValues.client_id;
+
 
                     step1 = await db.classService.findOne({ where: { name: ciPserver.nrb_class_service }, attributes: ['class_service_id'] })
                     ciPserver.class_service_id = step1.dataValues.class_service_id;
@@ -120,10 +127,22 @@ async function insertpserver(pservers, namePlatform) {
                             defaults: {
                                 serial_no: ciHardware.serial_no,
                                 env_type_id: ciHardware.env_type_id,
-                                hardware_type_id: ciHardware.hardware_type_id,
-                                subtype_hardware_id: ciHardware.subtype_hardware_id,
                                 ci_id: res[0].dataValues.ci_id
                             }
+                        }).then(async function(res) {
+
+                            if (ciHardware.company === 'SECUREX' && ciHardware.client_id > 0) {
+                                await db.client_hardware.findOrCreate({
+                                    where: {
+                                        [db.Op.and]: [{ client_id: ciHardware.client_id, hardware_id: res[0].dataValues.hardware_id }]
+                                    },
+                                    defaults: {
+                                        client_id: ciHardware.client_id,
+                                        hardware_id: res[0].dataValues.hardware_id,
+                                    }
+                                })
+                            }
+
                         });
 
 
@@ -143,6 +162,22 @@ async function insertpserver(pservers, namePlatform) {
     }
 }
 
+
+async function insertClient(apps) {
+    for (var i = 1; i < apps.length; i++) {
+        const occu = { company: apps[i]["COMPANY"] };
+        if (occu.company !== undefined) {
+            await db.client.findOrCreate({
+                where: { companyname: occu.company },
+                defaults: {
+                    companyname: occu.company,
+                }
+            });
+        }
+
+    }
+    return i;
+}
 
 export async function insertRelation(fileName, namePlatform) {
     logger.info('start processing this file : ', fileName);

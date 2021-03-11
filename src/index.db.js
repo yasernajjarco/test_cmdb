@@ -51,6 +51,7 @@ db.ciSubtype = require("./models/ci_subtype")(sequelize, Sequelize, DataTypes);
 db.client = require("./models/client")(sequelize, Sequelize, DataTypes);
 db.instance_client = require("./models/instance_client")(sequelize, Sequelize, DataTypes);
 db.client_zlinux = require("./models/client_zlinux")(sequelize, Sequelize, DataTypes);
+db.client_hardware = require("./models/client_hardware")(sequelize, Sequelize, DataTypes);
 
 db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes);
 
@@ -98,6 +99,13 @@ db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "pro
 
 db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
 db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+
+db.envType.hasMany(db.hardwares, { foreignKey: 'env_type_id', as: "hardwares" });
+db.hardwares.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" });
+
+db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares", foreignKey: "hardware_id" });
+db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares1", foreignKey: "hardware_id_1" });
 
 
 /*
