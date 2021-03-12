@@ -118,7 +118,9 @@ async function insertpserver(pservers, namePlatform) {
                             status_id: ciHardware.status_id,
                             class_service_id: ciHardware.class_service_id,
                             ci_subtype_id: ciHardware.ci_subtype_id,
-                            ci_type_id: ciHardware.ci_type_id
+                            ci_type_id: ciHardware.ci_type_id,
+                            env_type_id: ciHardware.env_type_id
+
                         }
                     }).then(async function(res) {
                         compt++;
@@ -126,7 +128,6 @@ async function insertpserver(pservers, namePlatform) {
                             where: { serial_no: ciHardware.serial_no },
                             defaults: {
                                 serial_no: ciHardware.serial_no,
-                                env_type_id: ciHardware.env_type_id,
                                 ci_id: res[0].dataValues.ci_id
                             }
                         }).then(async function(res) {
@@ -155,7 +156,7 @@ async function insertpserver(pservers, namePlatform) {
             }
 
         } catch (error) {
-            logger.error('can\'t insert hardware ', ciPserver)
+            logger.error('can\'t insert hardware ', ciPserver, ' =>', error)
 
         }
 

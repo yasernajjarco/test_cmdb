@@ -74,6 +74,9 @@ db.ci.belongsTo(db.status, { foreignKey: 'status_id', as: "status" });
 db.classService.hasMany(db.ci, { foreignKey: 'class_service_id', as: "ci" });
 db.ci.belongsTo(db.classService, { foreignKey: 'class_service_id', as: "classService" });
 
+db.envType.hasMany(db.ci, { foreignKey: 'env_type_id', as: "ci" });
+db.ci.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" });
+
 db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "application" });
 db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
 
@@ -101,8 +104,8 @@ db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
 db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
 
-db.envType.hasMany(db.hardwares, { foreignKey: 'env_type_id', as: "hardwares" });
-db.hardwares.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" });
+/* db.envType.hasMany(db.hardwares, { foreignKey: 'env_type_id', as: "hardwares" });
+db.hardwares.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" }); */
 
 db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares", foreignKey: "hardware_id" });
 db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares1", foreignKey: "hardware_id_1" });

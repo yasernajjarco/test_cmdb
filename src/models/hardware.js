@@ -22,19 +22,6 @@ module.exports = sequelize => {
       comment: null,
       field: "serial_no"
     },
-    env_type_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "env_type_id",
-      references: {
-        key: "env_type_id",
-        model: "env_type_model"
-      }
-    },
     ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -53,11 +40,6 @@ module.exports = sequelize => {
     tableName: "hardware",
     comment: "",
     indexes: [{
-      name: "env_type_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["env_type_id"]
-    }, {
       name: "ci_id",
       unique: false,
       type: "BTREE",

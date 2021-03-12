@@ -21,18 +21,19 @@ exports.findAll = (req, res) => {
                         { model: db.classService, required: false, as: 'classService', attributes: [], },
                         { model: db.ciType, required: false, as: 'ciType', attributes: [], },
                         { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                        { model: db.envType, required: false, as: 'envType', attributes: [] },
+
 
                     ]
 
                 },
-                { model: db.envType, required: false, as: 'envType', attributes: [] },
                 {
                     model: db.hardwares,
                     required: false,
                     as: 'hardwares',
                     through: { attributes: [] },
                     attributes: [
-                        [Sequelize.col('serial_no'), 'serial_no']
+                        //     [Sequelize.col('serial_no'), 'serial_no']
                     ]
                 },
                 {
@@ -41,25 +42,27 @@ exports.findAll = (req, res) => {
                     as: 'clients',
                     through: { attributes: [] },
                     attributes: [
-                        [Sequelize.col('companyname'), 'client_name']
+                        //   [Sequelize.col('companyname'), 'client_name']
 
                     ]
                 },
 
             ],
             attributes: [
-                ['hardware_id', 'id'],
-                [Sequelize.col('ci.ci_id'), 'ci_id'],
-                [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('ci.status.name'), 'status'],
-                [Sequelize.col('ci.classService.name'), 'classService'],
+                //  [Sequelize.col('ci.ci_id'), 'ci_id'],
+                ['hardware_id', 'Id'],
+                [Sequelize.col('ci.our_name'), 'Name'],
                 [Sequelize.col('ci.ciType.name'), 'Type'],
                 [Sequelize.col('ci.ciSubtype.name'), 'Subtype'],
-                [Sequelize.col('envType.name'), 'enveType'],
-                [Sequelize.col('ci.description'), 'description'],
-                [Sequelize.col('ci.our_name'), 'our_name'],
-                [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
-                [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.name"), '_', Sequelize.col("ci.our_name")), 'displayname']
+                [Sequelize.col('ci.envType.name'), 'Environnement'],
+                [Sequelize.col('ci.status.name'), 'Status'],
+                [Sequelize.col('ci.description'), 'Description'],
+
+                /*     [Sequelize.col('ci.platforms.name'), 'Platform'],
+                    [Sequelize.col('ci.classService.name'), 'Class Service'],
+                    [Sequelize.col('ci.nrb_managed_by'), 'Nrb_managed_by'],
+                    [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.name"), '_', Sequelize.col("ci.our_name")), 'Displayname']
+                */
 
             ]
 

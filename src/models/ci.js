@@ -67,6 +67,19 @@ module.exports = sequelize => {
       comment: null,
       field: "name"
     },
+    env_type_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "env_type_id",
+      references: {
+        key: "env_type_id",
+        model: "env_type_model"
+      }
+    },
     ci_subtype_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -151,6 +164,11 @@ module.exports = sequelize => {
       unique: false,
       type: "BTREE",
       fields: ["class_service_id"]
+    }, {
+      name: "env_type_id",
+      unique: false,
+      type: "BTREE",
+      fields: ["env_type_id"]
     }, {
       name: "platform_id",
       unique: false,

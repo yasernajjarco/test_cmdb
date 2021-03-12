@@ -13,19 +13,6 @@ module.exports = sequelize => {
       comment: null,
       field: "systeme_id"
     },
-    env_type_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "env_type_id",
-      references: {
-        key: "env_type_id",
-        model: "env_type_model"
-      }
-    },
     lpar_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -74,11 +61,6 @@ module.exports = sequelize => {
       unique: false,
       type: "BTREE",
       fields: ["client_id"]
-    }, {
-      name: "env_type_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["env_type_id"]
     }, {
       name: "lpar_id",
       unique: false,

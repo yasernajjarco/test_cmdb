@@ -144,7 +144,8 @@ async function insertlserver(lserver, namePlatform, nameType) {
                         status_id: lserver.status_id,
                         class_service_id: lserver.class_service_id,
                         ci_subtype_id: lserver.ci_subtype_id,
-                        ci_type_id: lserver.ci_type_id
+                        ci_type_id: lserver.ci_type_id,
+                        env_type_id: lserver.env_type_id
                     }
                 }).then(async function(res) {
 
@@ -152,7 +153,6 @@ async function insertlserver(lserver, namePlatform, nameType) {
                         //  hardware_id: lserver.hardware_id,
                         where: { ci_id: res[0].dataValues.ci_id },
                         defaults: {
-                            env_type_id: lserver.env_type_id,
                             host_ci: lserver.host_ci,
                             host_type: lserver.host_type,
                             ci_id: res[0].dataValues.ci_id,
@@ -287,6 +287,7 @@ async function insertSystem(lserver, namePlatform, nameType) {
                             class_service_id: lserver.class_service_id,
                             ci_subtype_id: lserver.ci_subtype_id,
                             ci_type_id: lserver.ci_type_id,
+                            env_type_id: lserver.env_type_id
 
                         }
                     }).then(async function(res) {
@@ -302,7 +303,6 @@ async function insertSystem(lserver, namePlatform, nameType) {
                             defaults: {
                                 ci_id: res[0].dataValues.ci_id,
                                 lpar_id: lserver.lpar_id,
-                                env_type_id: lserver.env_type_id,
                                 client_id: idClient
                             }
                         });
@@ -424,6 +424,7 @@ async function insertzLinux(lserver, namePlatform) {
                     class_service_id: lserver.class_service_id,
                     ci_subtype_id: lserver.ci_subtype_id,
                     ci_type_id: lserver.ci_type_id,
+                    env_type_id: lserver.env_type_id
                 }
             }).then(async function(res) {
 

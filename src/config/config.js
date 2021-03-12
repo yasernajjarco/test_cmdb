@@ -5,7 +5,7 @@ module.exports = {
 
     /** DATABASE */
 
-    HOST: "localhost",
+    /*  HOST: "localhost",
     USER: "root",
     PASSWORD: "rootroot",
     DB: "cmdb",
@@ -16,19 +16,19 @@ module.exports = {
         acquire: 30000,
         idle: 10000
     },
+ */
 
-
-    /*  HOST: "localhost",
-     USER: "lsyalh",
-     PASSWORD: "lsyalh",
-     DB: "dbCMDBdev",
-     dialect: "mariadb",
-     pool: {
-         max: 5,
-         min: 0,
-         acquire: 30000,
-         idle: 10000
-     }, */
+    HOST: "localhost",
+    USER: "lsyalh",
+    PASSWORD: "lsyalh",
+    DB: "dbCMDBdev",
+    dialect: "mariadb",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    },
 
 
 

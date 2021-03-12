@@ -105,6 +105,7 @@ create table ci(
    nrb_managed_by varchar(300),
    description varchar(300),
    name varchar(200),
+	env_type_id int ,
    ci_subtype_id int not null,
    ci_type_id int not null,
    class_service_id int ,
@@ -114,6 +115,8 @@ create table ci(
    foreign key(ci_subtype_id) references ci_subtype(ci_subtype_id),
    foreign key(ci_type_id) references ci_type(ci_type_id),
    foreign key(class_service_id) references class_service(class_service_id),
+	foreign key(env_type_id) references env_type(env_type_id),
+
    foreign key(platform_id) references platform(platform_id),
    foreign key(status_id) references status(status_id)
 );
@@ -121,10 +124,8 @@ create table ci(
 create table hardware(
    hardware_id int auto_increment,
    serial_no varchar(300),
-   env_type_id int not null,
    ci_id int not null,
    primary key(hardware_id),
-   foreign key(env_type_id) references env_type(env_type_id),
    foreign key(ci_id) references ci(ci_id)
 );
 
@@ -148,20 +149,18 @@ create table lpar(
    lpar_id int auto_increment,
    host_ci varchar(300),
    host_type varchar(300),
-   env_type_id int not null,
    ci_id int not null,
    primary key(lpar_id),
-   foreign key(env_type_id) references env_type(env_type_id),
    foreign key(ci_id) references ci(ci_id)
 );
 
 create table systeme(
    systeme_id int auto_increment,
-   env_type_id int not null,
    lpar_id int not null,
    ci_id int not null,
+	client_id int,
+   foreign key(client_id) references client(client_id),
    primary key(systeme_id),
-   foreign key(env_type_id) references env_type(env_type_id),
    foreign key(lpar_id) references lpar(lpar_id),
    foreign key(ci_id) references ci(ci_id)
 );
