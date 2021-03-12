@@ -4,7 +4,7 @@ module.exports = {
     PORT: process.env.PORT,
 
     /** DATABASE */
-/*
+
     HOST: "localhost",
     USER: "root",
     PASSWORD: "rootroot",
@@ -17,7 +17,7 @@ module.exports = {
         idle: 10000
     },
 
-*/
+/*
       HOST: "localhost",
      USER: "lsyalh",
      PASSWORD: "lsyalh",
@@ -29,7 +29,7 @@ module.exports = {
          acquire: 30000,
          idle: 10000
      }, 
-
+*/
 
 
     /** AUTH KEY */
