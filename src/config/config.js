@@ -18,7 +18,6 @@ module.exports = {
     },
  */
 
-<<<<<<< HEAD
     HOST: "localhost",
     USER: "lsyalh",
     PASSWORD: "lsyalh",
@@ -31,21 +30,6 @@ module.exports = {
         idle: 10000
     },
 
-=======
-/*
-      HOST: "localhost",
-     USER: "lsyalh",
-     PASSWORD: "lsyalh",
-     DB: "dbCMDBdev",
-     dialect: "mariadb",
-     pool: {
-         max: 5,
-         min: 0,
-         acquire: 30000,
-         idle: 10000
-     }, 
-*/
->>>>>>> f4d5f4cb5e1c0e448d205a3dc602b9f91bdfd9d3
 
 
     /** AUTH KEY */
