@@ -58,6 +58,8 @@ db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes
 db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize, DataTypes);
 
 
+
+                //=============== CI ================//
 db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as: "ci" });
 db.ci.belongsTo(db.platforms, { foreignKey: 'platform_id', as: "platforms" });
 
@@ -76,16 +78,39 @@ db.ci.belongsTo(db.classService, { foreignKey: 'class_service_id', as: "classSer
 
 db.envType.hasMany(db.ci, { foreignKey: 'env_type_id', as: "ci" });
 db.ci.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" });
-
-db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "application" });
-db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
+                  //===============================//
 
 
+
+                //=============== hardwares ================//
+db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
+db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares", foreignKey: "hardware_id" });
+db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares1", foreignKey: "hardware_id_1" });
+
+db.hardwares.belongsToMany(db.client, { through: "client_hardware", as: "clients", foreignKey: "hardware_id" });
+db.client.belongsToMany(db.hardwares, { through: "client_hardware", as: "hardwares", foreignKey: "client_id" });
+                //===============================//
+
+
+                //=============== LPAR ================//
+db.ci.hasMany(db.lpars, { foreignKey: 'ci_id', as: "lpars" });
+db.lpars.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.hardwares.belongsToMany(db.lpars, { through: "hardware_lpar", as: "lpars", foreignKey: "hardware_id" });
+db.lpars.belongsToMany(db.hardwares, { through: "hardware_lpar", as: "hardwares", foreignKey: "lpar_id" });
+
+                //===============================//
+
+
+                //=============== application ================//
 db.ci.hasMany(db.application, { foreignKey: 'ci_id', as: "application" });
 db.application.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
-db.ci.hasMany(db.lpars, { foreignKey: 'ci_id', as: "lpars" });
-db.lpars.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+                //===============================//
+
+
 
 db.ci.hasMany(db.systems, { foreignKey: 'ci_id', as: "systems" });
 db.systems.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
@@ -100,18 +125,13 @@ db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "pro
 
 
 
-db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
-db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "application" });
+db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
 
 
-/* db.envType.hasMany(db.hardwares, { foreignKey: 'env_type_id', as: "hardwares" });
-db.hardwares.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" }); */
 
-db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares", foreignKey: "hardware_id" });
-db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares1", foreignKey: "hardware_id_1" });
 
-db.hardwares.belongsToMany(db.client, { through: "client_hardware", as: "clients", foreignKey: "hardware_id" });
-db.client.belongsToMany(db.hardwares, { through: "client_hardware", as: "hardwares", foreignKey: "client_id" });
 /*
 
 db.ci.hasMany(db.storages, { foreignKey: 'ci_id', as : "storage"});
