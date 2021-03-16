@@ -10,7 +10,7 @@ const EnvType = db.envType;
 const LparType = db.partitionType;
 
 
-const platforms = [{ name: 'Z' }, { name: 'B' }];
+const platforms = [{ name: 'Z', prefixe: 'Z' }, { name: 'B', prefixe: 'MBULL' }];
 const status = [{ name: 'Available' }, { name: 'Operational' }, { name: 'Retired' }, { name: 'Under construction' }, { name: 'Pre-Operation' }, { name: 'Pre-retired' }];
 const classServices = [{ name: 'SAAS' }, { name: 'PAAS' }, { name: 'IAAS' }, { name: 'Housing' }, { name: 'Not applicable' }];
 const envTypes = [{ name: 'Laboratoire' }, { name: 'Développement' }, { name: 'Homologation' }, { name: 'Acceptance' }, { name: 'Not Production' }, { name: 'Unknown' }, { name: 'Production' }];
@@ -34,10 +34,13 @@ export async function seed() {
     await Promise.all(platforms.map(async(item) => {
         await Platform.findOrCreate({
             where: {
-                name: item.name
+                name: item.name,
+                prefixe: item.prefixe
             },
             default: {
-                name: item.name
+                name: item.name,
+                prefixe: item.prefixe
+
             }
         })
     }));

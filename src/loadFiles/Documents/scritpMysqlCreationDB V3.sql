@@ -6,7 +6,6 @@
 `cmdb`.`instance_client`,
 `cmdb`.`occurence_client`,
 `cmdb`.`provider_platform`,
-`cmdb`.`hardware_lpar`,
 `cmdb`.`occurencesoft`,
 `cmdb`.`instance`,
 `cmdb`.`ci_application`,
@@ -37,6 +36,7 @@ create table ci_type(
 create table platform(
    platform_id int auto_increment,
    name varchar(300) not null,
+   prefixe varchar(300) not null,
    primary key(platform_id)
 );
 
@@ -149,9 +149,12 @@ create table lpar(
    lpar_id int auto_increment,
    host_ci varchar(300),
    host_type varchar(300),
+	hardware_id int not null,
    ci_id int not null,
    primary key(lpar_id),
-   foreign key(ci_id) references ci(ci_id)
+   foreign key(ci_id) references ci(ci_id),
+	foreign key(hardware_id) references hardware(hardware_id)
+
 );
 
 create table systeme(
@@ -242,13 +245,6 @@ create table client_hardware(
    foreign key(client_id) references client(client_id)
 );
 
-create table hardware_lpar(
-   hardware_id int,
-   lpar_id int,
-   primary key(hardware_id, lpar_id),
-   foreign key(hardware_id) references hardware(hardware_id),
-   foreign key(lpar_id) references lpar(lpar_id)
-);
 
 create table hardware_relation(
    hardware_id int,

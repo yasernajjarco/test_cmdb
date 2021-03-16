@@ -1,0 +1,61 @@
+sudo mysql --host=localhost --user=lsyalh --password=lsyalh  -e "/home/createdb.sql"
+sudo mysql -u lsyalh -p lsyalh > /home/createdb.sql
+
+npm config set https-proxy "http://webproxynrb.nrb.be:8080"
+https-proxy=http://webproxynrb.nrb.be:8080
+
+
+  git config --global http.proxy http://webproxynrb.nrb.be:8080
+
+
+CREATE USER 'lsyalh'@'localhost' IDENTIFIED BY 'lsyalh';
+
+http://nrbnrx0020.nrb.be:80/users
+
+
+sudo mysql -u lsyalh -p 
+
+==> put password
+
+CREATE DATABASE dbCMDBtest;
+use dbCMDBtest;
+source /home/createdb.sql
+
+
+cd /home
+sudo vim createdb.sql
+
+DROP DATABASE dbCMDBdev;
+CREATE DATABASE dbCMDBdev;
+use dbCMDBdev;
+source /home/createdb.sql
+
+
+http://nrbnrx0020.nrb.be:80/platforms
+
+
+CREATE DATABASE dbCMDBprod;
+use dbCMDBprod;
+source /home/createdb.sql
+
+=========
+show databases;
+show tables;
+DROP DATABASE dbCMDBtest;
+
+
+sudo rm -r test_cmdb
+sudo git clone https://github.com/yasernajjarco/test_cmdb.git
+sudo npm i 
+
+sudo systemctl  restart node
+
+
+
+./node_modules/.bin/sequelize-automate -t js -h localhost -d cmdb -u root -p rootroot -o ./src/models
+./node_modules/.bin/sequelize-automate -t js -h localhost -d nodedb -u root -p rootroot -o ./src/models_test
+
+
+ sudo kill -9 $(ps aux | grep '\node10\s' | awk '{print $2}')
+ sudo ps aux | grep node
+ sudo kill -9 3654

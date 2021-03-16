@@ -1,17 +1,14 @@
 import { Router } from 'express';
 
 const db = require("../index.db");
-const ci = require("../controllers/ci.controller");
+const controller = require("../controllers/systems.controller");
 const router = Router();
 const { authJwt } = require("../middleware");
 
 
-
-
 // Retrieve all cis
-router.get("/", ci.findAll);
-router.get("/search", ci.findAllSearch);
-
+router.get("/", controller.findAll);
+router.get("/linux", controller.findLinux);
 
 
 

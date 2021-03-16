@@ -15,6 +15,8 @@ const logger = require('./logger');
 const app = express();
 
 //./node_modules/.bin/sequelize-automate -t js -h localhost -d cmdb -u root -p rootroot -o ./src/models
+// taskkill /f /im node.exe
+
 app.use(cors());
 
 app.use(express.json());
@@ -37,9 +39,9 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 logger.info('start at: ', time)
 
-/* initial.seed().then(() => {
+initial.seed().then(() => {
     load.test()
-}); */
+});
 
 
 

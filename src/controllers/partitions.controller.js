@@ -31,14 +31,9 @@ exports.findAll = (req, res) => {
                     model: db.hardwares,
                     required: false,
                     as: 'hardwares',
-                    through: { attributes: [] },
+                    attributes: [],
                     include: [
-                        { model: db.ci, required: false,as: 'ci', attributes: []  }
-                        ],
-
-                    attributes: [
-                            [Sequelize.col('serial_no'), 'Serial no'],
-                            [Sequelize.literal('ci.our_name'), 'Our name'],
+                        { model: db.ci, required: false, as: 'ci', attributes: [] }
 
                     ]
                 },
@@ -55,6 +50,8 @@ exports.findAll = (req, res) => {
                 [Sequelize.col('ci.description'), 'Description'],
                 [Sequelize.col('host_type'), 'Host Type'],
                 [Sequelize.col('host_ci'), 'Host Ci'],
+                [Sequelize.col('hardwares.ci.our_name'), 'Hardware our name'],
+
 
 
 

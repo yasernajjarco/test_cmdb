@@ -21,6 +21,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "name"
+    },
+    prefixe: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "prefixe"
     }
   };
   const options = {

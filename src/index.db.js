@@ -41,8 +41,6 @@ db.instance = require("./models/instance")(sequelize, Sequelize, DataTypes);
 db.provider_platform = require("./models/provider_platform")(sequelize, Sequelize, DataTypes);
 db.lpars = require("./models/lpar")(sequelize, Sequelize, DataTypes);
 db.hardwares = require("./models/hardware")(sequelize, Sequelize, DataTypes);
-
-db.hardware_lpar = require("./models/hardware_lpar")(sequelize, Sequelize, DataTypes);
 db.zLinux = require("./models/zlinux")(sequelize, Sequelize, DataTypes);
 db.systems = require("./models/systeme")(sequelize, Sequelize, DataTypes);
 db.hardwares_relations = require("./models/hardware_relation")(sequelize, Sequelize, DataTypes);
@@ -59,7 +57,7 @@ db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize,
 
 
 
-                //=============== CI ================//
+//=============== CI ================//
 db.platforms.hasMany(db.ci, { foreignKey: 'platform_id', as: "ci" });
 db.ci.belongsTo(db.platforms, { foreignKey: 'platform_id', as: "platforms" });
 
@@ -78,11 +76,11 @@ db.ci.belongsTo(db.classService, { foreignKey: 'class_service_id', as: "classSer
 
 db.envType.hasMany(db.ci, { foreignKey: 'env_type_id', as: "ci" });
 db.ci.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" });
-                  //===============================//
+//===============================//
 
 
 
-                //=============== hardwares ================//
+//=============== hardwares ================//
 db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
 db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
@@ -91,29 +89,53 @@ db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "ha
 
 db.hardwares.belongsToMany(db.client, { through: "client_hardware", as: "clients", foreignKey: "hardware_id" });
 db.client.belongsToMany(db.hardwares, { through: "client_hardware", as: "hardwares", foreignKey: "client_id" });
-                //===============================//
+//===============================//
 
 
-                //=============== LPAR ================//
+//=============== LPAR ================//
 db.ci.hasMany(db.lpars, { foreignKey: 'ci_id', as: "lpars" });
 db.lpars.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
-db.hardwares.belongsToMany(db.lpars, { through: "hardware_lpar", as: "lpars", foreignKey: "hardware_id" });
-db.lpars.belongsToMany(db.hardwares, { through: "hardware_lpar", as: "hardwares", foreignKey: "lpar_id" });
+db.hardwares.hasMany(db.lpars, { foreignKey: "hardware_id", as: "lpars" });
+db.lpars.belongsTo(db.hardwares, { foreignKey: "hardware_id", as: "hardwares" });
 
-                //===============================//
+//===============================//
 
 
-                //=============== application ================//
+//=============== application ================//
 db.ci.hasMany(db.application, { foreignKey: 'ci_id', as: "application" });
 db.application.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
-                //===============================//
+//===============================//
 
 
+//=============== systems ================//
 
 db.ci.hasMany(db.systems, { foreignKey: 'ci_id', as: "systems" });
 db.systems.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.lpars.hasMany(db.systems, { foreignKey: 'lpar_id', as: "systems" });
+db.systems.belongsTo(db.lpars, { foreignKey: 'lpar_id', as: "lpars" });
+
+//===============================//
+
+
+
+//=============== ZLinux ================//
+
+db.ci.hasMany(db.zLinux, { foreignKey: 'ci_id', as: "zLinux" });
+db.zLinux.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.systems.hasMany(db.zLinux, { foreignKey: 'systeme_id', as: "zLinux" });
+db.zLinux.belongsTo(db.systems, { foreignKey: 'systeme_id', as: "systems" });
+
+
+db.zLinux.belongsToMany(db.client, { through: "client_zlinux", as: "clients", foreignKey: "zlinux_id" });
+db.client.belongsToMany(db.zLinux, { through: "client_zlinux", as: "zLinux", foreignKey: "client_id" });
+
+//===============================//
+
+
 
 
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as: "instance" });

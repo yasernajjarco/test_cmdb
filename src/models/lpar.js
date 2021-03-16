@@ -31,6 +31,19 @@ module.exports = sequelize => {
       comment: null,
       field: "host_type"
     },
+    hardware_id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "hardware_id",
+      references: {
+        key: "hardware_id",
+        model: "hardware_model"
+      }
+    },
     ci_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -53,6 +66,11 @@ module.exports = sequelize => {
       unique: false,
       type: "BTREE",
       fields: ["ci_id"]
+    }, {
+      name: "hardware_id",
+      unique: false,
+      type: "BTREE",
+      fields: ["hardware_id"]
     }]
   };
   const LparModel = sequelize.define("lpar_model", attributes, options);

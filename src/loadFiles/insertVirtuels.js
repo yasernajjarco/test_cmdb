@@ -148,7 +148,7 @@ async function insertlserver(lserver, namePlatform, nameType) {
                         env_type_id: lserver.env_type_id
                     }
                 }).then(async function(res) {
-
+                    compt++;
                     await db.lpars.findOrCreate({
                         //  hardware_id: lserver.hardware_id,
                         where: { ci_id: res[0].dataValues.ci_id },
@@ -156,22 +156,8 @@ async function insertlserver(lserver, namePlatform, nameType) {
                             host_ci: lserver.host_ci,
                             host_type: lserver.host_type,
                             ci_id: res[0].dataValues.ci_id,
+                            hardware_id: lserver.hardware_id
                         }
-                    }).then(async function(res) {
-                        compt++;
-                        await db.hardware_lpar.findOrCreate({
-                            where: {
-                                [db.Op.and]: [{ hardware_id: lserver.hardware_id, lpar_id: res[0].dataValues.lpar_id }]
-                            },
-                            defaults: {
-                                hardware_id: lserver.hardware_id,
-                                lpar_id: res[0].dataValues.lpar_id,
-                            }
-                        }).then(async function(res) {
-                            // console.log(res)
-                            //   await insertSystem (lserver,res[0].dataValues.lpar_id);
-
-                        });
                     });
 
                 })
@@ -253,7 +239,7 @@ async function insertSystem(lserver, namePlatform, nameType) {
                 step1 = await db.ciType.findOne({ where: { name: ciLserver.type }, attributes: ['ci_type_id'] })
                 ciLserver.ci_type_id = step1.dataValues.ci_type_id;
 
-                step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.subtype }, attributes: ['ci_subtype_id'] })
+                step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.system_ci_subtype }, attributes: ['ci_subtype_id'] })
                 ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
 
                 step1 = await db.lpars.findOne({
@@ -278,7 +264,7 @@ async function insertSystem(lserver, namePlatform, nameType) {
                         where: { logical_name: lserver.system_ci },
                         defaults: {
                             logical_name: lserver.system_ci,
-                            // name: lserver.logicalName,
+                            our_name: lserver.system_ci,
                             company: lserver.company,
                             nrb_managed_by: lserver.nrb_managed_by,
                             description: lserver.description,

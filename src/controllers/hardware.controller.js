@@ -58,10 +58,14 @@ exports.findAll = (req, res) => {
                 [Sequelize.col('ci.status.name'), 'Status'],
                 [Sequelize.col('ci.description'), 'Description'],
 
-                /*     [Sequelize.col('ci.platforms.name'), 'Platform'],
+
+                /*  
+                    [Sequelize.col('ci.platforms.name'), 'Platform'],
                     [Sequelize.col('ci.classService.name'), 'Class Service'],
                     [Sequelize.col('ci.nrb_managed_by'), 'Nrb_managed_by'],
                     [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.name"), '_', Sequelize.col("ci.our_name")), 'Displayname']
+                    [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.prefixe"), '_', Sequelize.col("ci.our_name")), 'Displayname']
+
                 */
 
             ]
