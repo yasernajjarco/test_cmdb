@@ -42,8 +42,8 @@ logger.info('start at: ', time)
 /* initial.seed().then(() => {
     load.test()
 });
-
  */
+
 
 app.use('/api', routes);
 

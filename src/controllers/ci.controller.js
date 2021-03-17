@@ -2,6 +2,28 @@ const db = require("../index.db");
 
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
+const keyCloums = {
+
+    'name': 'ci.our_name',
+    'type': 'ci.ciType.name',
+    'subtype': 'ci.ciSubtype.name',
+    'environnement': 'ci.envType.name',
+    'status': 'ci.status.name',
+    'description': 'ci.description',
+    'logical_name': 'ci.logical_name',
+    'product_code': 'product_code',
+    'itservice': 'itservice',
+    'hardware_id': 'id',
+    'ci_application_id': 'id',
+    'serial_no': 'serial_no',
+    'version': 'version',
+
+
+
+
+}
+
+
 exports.findAll = (req, res) => {
     const platform = req.body.platform;
     const name = req.body.name;
@@ -75,26 +97,31 @@ function getCIs(req) {
 
             ]
         }, ],
-        attributes: [
-            ['hardware_id', 'Id'],
-            [Sequelize.col('ci.our_name'), 'Name'],
-            [Sequelize.col('ci.ciType.name'), 'Type'],
-            [Sequelize.col('ci.ciSubtype.name'), 'Subtype'],
-            [Sequelize.col('ci.envType.name'), 'Environnement'],
-            [Sequelize.col('ci.status.name'), 'Status'],
-            [Sequelize.col('ci.description'), 'Description'],
 
-        ]
 
     }
+
+    let reg = new RegExp("_id$");
+    query.attributes = new Array()
+    req.body.columns.forEach(column => {
+        if (reg.test(column))
+            query.attributes.push([column, keyCloums[column]])
+        else
+            query.attributes.push([Sequelize.col(keyCloums[column]), column])
+
+    });
+
+    console.log(query.attributes)
+
 
     return new Promise((resolve, reject) => {
         const type = req.body.type;
         if (type == 'pserver' || type == 'storage' || type == 'netcomponent')
-            getHardwares(query, subtype).then(data => resolve(data));
+            getHardwares(req, query, subtype).then(data => resolve(data));
         else if (type == 'lserver')
-            getVirtuels(query, subtype).then(data => resolve(data));
-
+            getVirtuels(req, query, subtype).then(data => resolve(data));
+        else if (type == 'application')
+            getApplications(req, query, subtype).then(data => resolve(data));
     });
 }
 
@@ -110,8 +137,12 @@ function buildCondition(platform, type, subtype) {
     return condition;
 }
 
-function getHardwares(query, subtype) {
+function getHardwares(req, query, subtype) {
 
+    /*     req.body.columns.forEach(column => {
+            query.attributes.push([Sequelize.col(column), column])
+
+        }); */
     return new Promise((resolve, reject) => {
         db.hardwares.findAll(query)
             .then(data => {
@@ -121,8 +152,23 @@ function getHardwares(query, subtype) {
 }
 
 
+function getApplications(req, query, subtype) {
 
-function getVirtuels(query, subtype) {
+
+
+
+    console.log(req.body.columns)
+    return new Promise((resolve, reject) => {
+        db.application.findAll(query)
+            .then(data => {
+                resolve(data);
+            })
+    });
+}
+
+
+
+function getVirtuels(req, query, subtype) {
 
     return new Promise((resolve, reject) => {
         if (subtype == 'Mainframe System')

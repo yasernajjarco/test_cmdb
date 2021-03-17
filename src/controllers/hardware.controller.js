@@ -50,7 +50,9 @@ exports.findAll = (req, res) => {
             ],
             attributes: [
                 //  [Sequelize.col('ci.ci_id'), 'ci_id'],
-                ['hardware_id', 'Id'],
+                // ['hardware_id', 'Id'],
+                ['serial_no', 'serial_no'],
+
                 [Sequelize.col('ci.our_name'), 'Name'],
                 [Sequelize.col('ci.ciType.name'), 'Type'],
                 [Sequelize.col('ci.ciSubtype.name'), 'Subtype'],
