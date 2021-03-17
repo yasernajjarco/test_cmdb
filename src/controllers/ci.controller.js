@@ -19,10 +19,10 @@ exports.findAll = (req, res) => {
                     { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
                 ],
                 attributes: [
-                    ['ci_id', 'Id'],
-                    [Sequelize.col('our_name'), 'Name'],
-                    [Sequelize.col('ciType.name'), 'Type'],
-                    [Sequelize.col('ciSubtype.name'), 'Subtype'],
+                    ['ci_id', 'id'],
+                    [Sequelize.col('our_name'), 'name'],
+                    [Sequelize.col('ciType.name'), 'type'],
+                    [Sequelize.col('ciSubtype.name'), 'subtype'],
                 ]
             }
 
