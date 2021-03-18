@@ -5,8 +5,13 @@ const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
 exports.findAll = (req, res) => {
+    //    const platform = req.query.id;
     const platform = req.body.platform;
-    let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
+    const type = req.body.type;
+    const subtype = req.body.subtype;
+
+    let condition = buildCondition(platform, type, subtype);
+    let attributes = (req.body.columns == undefined) ? [] : buildAttributes(req.body.columns);
 
     db.hardwares.findAll({
             where: condition,
@@ -48,29 +53,13 @@ exports.findAll = (req, res) => {
                 },
 
             ],
-            attributes: [
-                //  [Sequelize.col('ci.ci_id'), 'ci_id'],
-                // ['hardware_id', 'Id'],
-                ['serial_no', 'serial_no'],
-
-                [Sequelize.col('ci.our_name'), 'Name'],
-                [Sequelize.col('ci.ciType.name'), 'Type'],
-                [Sequelize.col('ci.ciSubtype.name'), 'Subtype'],
-                [Sequelize.col('ci.envType.name'), 'Environnement'],
-                [Sequelize.col('ci.status.name'), 'Status'],
-                [Sequelize.col('ci.description'), 'Description'],
-
-
-                /*  
-                    [Sequelize.col('ci.platforms.name'), 'Platform'],
-                    [Sequelize.col('ci.classService.name'), 'Class Service'],
-                    [Sequelize.col('ci.nrb_managed_by'), 'Nrb_managed_by'],
+            attributes: attributes
+                /*
                     [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.name"), '_', Sequelize.col("ci.our_name")), 'Displayname']
                     [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.prefixe"), '_', Sequelize.col("ci.our_name")), 'Displayname']
 
                 */
 
-            ]
 
         })
         .then(data => {
@@ -82,3 +71,62 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+function buildAttributes(columns) {
+    let attributes = [];
+    columns.forEach(element => {
+        switch (element) {
+            case 'serial_no':
+                attributes.push(['serial_no', 'serial_no']);
+                break;
+            case 'name':
+                attributes.push([Sequelize.col('ci.our_name'), 'name']);
+                break;
+            case 'type':
+                attributes.push([Sequelize.col('ci.ciType.name'), 'type']);
+                break;
+            case 'subtype':
+                attributes.push([Sequelize.col('ci.ciSubtype.name'), 'subtype']);
+                break;
+            case 'environnement':
+                attributes.push([Sequelize.col('ci.envType.name'), 'environnement']);
+                break;
+            case 'status':
+                attributes.push([Sequelize.col('ci.status.name'), 'status']);
+                break;
+            case 'description':
+                attributes.push([Sequelize.col('ci.description'), 'description']);
+                break;
+            case 'classService':
+                attributes.push([Sequelize.col('ci.classService.name'), 'classService']);
+                break;
+            case 'nrb_managed_by':
+                attributes.push([Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by']);
+                break;
+            case 'platform':
+                attributes.push([Sequelize.col('ci.platforms.name'), 'platform']);
+                break;
+            case 'id':
+                attributes.push(['hardware_id', 'id']);
+                break;
+
+        }
+
+    });
+
+    return attributes;
+
+}
+
+function buildCondition(platform, type, subtype) {
+    console.log(platform)
+    let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
+
+    (type !== undefined) ? condition['$ci.ciType.name$'] = {
+        [Op.like]: `%${type}%`
+    }: {};
+    (subtype !== undefined) ? condition['$ci.ciSubtype.name$'] = {
+        [Op.like]: `%${subtype}%`
+    }: {};
+    return condition;
+}
