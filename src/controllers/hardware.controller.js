@@ -52,6 +52,7 @@ exports.findAll = (req, res) => {
                     ]
                 },
 
+
             ],
             attributes: attributes
                 /*
@@ -130,3 +131,129 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
+
+
+exports.findById = (req, res) => {
+
+    const id = req.params.id;
+
+    db.hardwares.findAll({
+            where: { hardware_id: id },
+            include: [{
+                    model: db.ci,
+                    required: false,
+                    as: 'ci',
+                    attributes: [],
+                    include: [
+                        { model: db.platforms, required: false, as: 'platforms', attributes: [] },
+                        { model: db.status, required: false, as: 'status', attributes: [], },
+                        { model: db.classService, required: false, as: 'classService', attributes: [], },
+                        { model: db.ciType, required: false, as: 'ciType', attributes: [], },
+                        { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                        { model: db.envType, required: false, as: 'envType', attributes: [] },
+
+                    ]
+
+                },
+                {
+                    model: db.hardwares,
+                    required: false,
+                    as: 'hardwares',
+                    through: { attributes: [] },
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        attributes: []
+
+                    }],
+                    attributes: [
+                        ['hardware_id', 'id'],
+                        [Sequelize.col('serial_no'), 'serial_no'],
+                        [Sequelize.col('serial_no'), 'serial_no'],
+                        [Sequelize.literal('ci.description'), 'description'],
+                        [Sequelize.literal('ci.our_name'), 'our_name'],
+
+                    ]
+                },
+                {
+                    model: db.hardwares,
+                    required: false,
+                    as: 'hardwares1',
+                    through: { attributes: [] },
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        attributes: []
+
+                    }],
+                    attributes: [
+                        ['hardware_id', 'id'],
+                        [Sequelize.col('serial_no'), 'serial_no'],
+                        [Sequelize.col('serial_no'), 'serial_no'],
+                        [Sequelize.literal('ci.description'), 'description'],
+                        [Sequelize.literal('ci.our_name'), 'our_name'],
+
+                    ]
+                },
+
+                {
+                    model: db.client,
+                    required: false,
+                    as: 'clients',
+                    through: { attributes: [] },
+                    attributes: [
+                        [Sequelize.col('companyname'), 'client_name'],
+                        [Sequelize.col('client_id'), 'client_id']
+
+                    ]
+                },
+                {
+                    model: db.lpars,
+                    required: false,
+                    as: 'lpars',
+                    include: [{ model: db.ci, required: false, as: 'ci', attributes: [] }],
+                    attributes: [
+                        [Sequelize.col('lpar_id'), 'id'],
+                        [Sequelize.col('host_ci'), 'host_ci'],
+                        [Sequelize.literal('ci.description'), 'description'],
+                        [Sequelize.literal('ci.our_name'), 'our_name'],
+
+                    ]
+                },
+
+            ],
+            attributes: [
+                ['hardware_id', 'id'],
+                [Sequelize.col('ci.our_name'), 'name'],
+                [Sequelize.col('ci.ciType.name'), 'type'],
+                [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
+                [Sequelize.col('ci.envType.name'), 'environnement'],
+                [Sequelize.col('ci.status.name'), 'status'],
+                [Sequelize.col('ci.description'), 'description'],
+                [Sequelize.col('ci.classService.name'), 'classService'],
+                [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
+                [Sequelize.col('ci.platforms.name'), 'platform']
+
+
+            ]
+
+        }).map(data => data.toJSON())
+        .then(data => {
+            let result = data[0];
+            console.log(result.platform)
+            if (result != null && result != undefined && result.hardwares1.length > 0) {
+                result.hardwares1.forEach(element => result.hardwares.push(element));
+            }
+            delete result.hardwares1;
+            res.send(result);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving hardwares."
+            });
+        });
+
+
+};
