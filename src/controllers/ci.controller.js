@@ -24,6 +24,7 @@ const keyCloums = {
 }
 
 
+
 exports.findAll = (req, res) => {
     const platform = req.body.platform;
     const name = req.body.name;
