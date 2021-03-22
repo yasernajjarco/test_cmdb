@@ -4,6 +4,15 @@ const db = require("../index.db");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
+/**
+ * This function comment is parsed by doctrine
+ * @route GET /api
+ * @group foo - Operations about user
+ * @param {string} email.query.required - username or email - eg: user@domain
+ * @param {string} password.query.required - user's password.
+ * @returns {object} 200 - An array of user info
+ * @returns {Error}  default - Unexpected error
+ */
 exports.findAll = (req, res) => {
     //    const platform = req.query.id;
     const platform = req.body.platform;
