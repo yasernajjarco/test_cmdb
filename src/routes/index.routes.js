@@ -5,7 +5,7 @@ import Provider from './provider.routes';
 import hardware from './hardware.routes';
 import partitions from './partitions.routes';
 import systems from './systems.routes';
-
+import zlinux from './zlinux.routes';
 
 
 import Ci from './ci.routes';
@@ -22,6 +22,7 @@ router.use('/cis', Ci);
 router.use('/providers', Provider);
 router.use('/partitions', partitions);
 router.use('/systems', systems);
+router.use('/zlinuxs', zlinux);
 
 router.use('/apps', App);
 

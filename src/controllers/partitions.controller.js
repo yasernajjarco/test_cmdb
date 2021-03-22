@@ -59,7 +59,7 @@ exports.findById = (req, res) => {
     const id = req.params.id;
 
     db.lpars.findAll({
-            where: { lpar_id: id },
+            where: { ci_id: id },
             include: [{
                     model: db.ci,
                     required: false,
@@ -92,7 +92,7 @@ exports.findById = (req, res) => {
 
                     }],
                     attributes: [
-                        ['hardware_id', 'id'],
+                        ['ci_id', 'id'],
                         [Sequelize.col('serial_no'), 'serial_no'],
                         [Sequelize.literal('ci.description'), 'description'],
                         [Sequelize.literal('ci.our_name'), 'our_name'],
@@ -110,16 +110,14 @@ exports.findById = (req, res) => {
                         attributes: []
                     }],
                     attributes: [
-                        ['systeme_id', 'id'],
+                        ['ci_id', 'id'],
                         [Sequelize.literal('ci.our_name'), 'our_name'],
 
                     ]
                 }
             ],
             attributes: [
-                ['lpar_id', 'id'],
-                ['host_type', 'host_type'],
-                ['host_ci', 'host_ci'],
+                ['ci_id', 'id'],
                 [Sequelize.col('ci.our_name'), 'name'],
                 [Sequelize.col('ci.ciType.name'), 'type'],
                 [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
@@ -129,6 +127,10 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
+                ['host_type', 'host_type'],
+                ['host_ci', 'host_ci'],
+
+
 
             ]
 
@@ -178,7 +180,7 @@ function buildAttributes(columns) {
                 attributes.push([Sequelize.col('ci.platforms.name'), 'platform']);
                 break;
             case 'id':
-                attributes.push(['lpar_id', 'id']);
+                attributes.push(['ci_id', 'id']);
                 break;
             case 'host_type':
                 attributes.push(['host_type', 'host_type']);
@@ -187,7 +189,7 @@ function buildAttributes(columns) {
                 attributes.push(['host_ci', 'host_ci']);
                 break;
             case 'hardware':
-                attributes.push([Sequelize.col('hardwares.ci.our_name'), 'hardware']);
+                attributes.push([Sequelize.col('hardwares.ci_id'), 'hardware id']);
                 break;
 
         }

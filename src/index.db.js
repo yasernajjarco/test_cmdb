@@ -122,6 +122,10 @@ db.systems.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 db.lpars.hasMany(db.systems, { foreignKey: 'lpar_id', as: "systems" });
 db.systems.belongsTo(db.lpars, { foreignKey: 'lpar_id', as: "lpars" });
 
+
+db.systems.belongsTo(db.client, { foreignKey: 'systeme_id', as: "clients" });
+db.client.hasMany(db.systems, { foreignKey: 'systeme_id', as: "systems" });
+
 //===============================//
 
 
@@ -131,7 +135,7 @@ db.systems.belongsTo(db.lpars, { foreignKey: 'lpar_id', as: "lpars" });
 db.ci.hasMany(db.zLinux, { foreignKey: 'ci_id', as: "zLinux" });
 db.zLinux.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
-db.systems.hasMany(db.zLinux, { foreignKey: 'systeme_id', as: "zLinux" });
+db.systems.hasMany(db.zLinux, { foreignKey: 'systeme_id', as: "zLinuxs" });
 db.zLinux.belongsTo(db.systems, { foreignKey: 'systeme_id', as: "systems" });
 
 

@@ -11,7 +11,7 @@ exports.findAll = (req, res) => {
 
     let condition = buildCondition(platform, type, subtype);
     let attributes = (req.body.columns == undefined) ? [] : buildAttributes(req.body.columns);
-    db.systems.findAll({
+    db.zLinux.findAll({
             where: condition,
             include: [{
                     model: db.ci,
@@ -28,13 +28,23 @@ exports.findAll = (req, res) => {
                     ]
                 },
                 {
-                    model: db.lpars,
+                    model: db.systems,
                     required: false,
-                    as: 'lpars',
+                    as: 'systems',
                     attributes: [],
                     include: [
                         { model: db.ci, required: false, as: 'ci', attributes: [] }
                     ],
+                },
+                {
+                    model: db.client,
+                    required: false,
+                    as: 'clients',
+                    through: { attributes: [] },
+                    attributes: [
+                        // [Sequelize.col('companyname'), 'client_name']
+
+                    ]
                 },
             ],
             attributes: attributes
@@ -57,7 +67,7 @@ exports.findById = (req, res) => {
 
     const id = req.params.id;
 
-    db.systems.findAll({
+    db.zLinux.findAll({
             where: { ci_id: id },
             include: [{
                     model: db.ci,
@@ -74,9 +84,9 @@ exports.findById = (req, res) => {
                     ]
                 },
                 {
-                    model: db.lpars,
+                    model: db.systems,
                     required: false,
-                    as: 'lpars',
+                    as: 'systems',
                     attributes: [],
                     include: [
                         { model: db.ci, required: false, as: 'ci', attributes: [] }
@@ -86,21 +96,10 @@ exports.findById = (req, res) => {
                     model: db.client,
                     required: false,
                     as: 'clients',
-                    attributes: []
-                },
-
-                {
-                    model: db.zLinux,
-                    required: false,
-                    as: 'zLinuxs',
-                    include: [{ model: db.ci, required: false, as: 'ci', attributes: [] }],
+                    through: { attributes: [] },
                     attributes: [
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
-                        [Sequelize.literal('domaine'), 'domaine'],
-                        [Sequelize.literal('os_version'), 'os_version'],
-                        ['ci_id', 'id'],
-
-
+                        [Sequelize.col('companyname'), 'client_name'],
+                        [Sequelize.col('client_id'), 'client_id']
 
                     ]
                 },
@@ -117,8 +116,7 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('lpars.ci.our_name'), 'LPAR Our Name'],
-                [Sequelize.col('clients.companyname'), 'Client Name'],
+                [Sequelize.col('systems.ci_id'), 'system id'],
 
 
             ]
@@ -136,7 +134,12 @@ exports.findById = (req, res) => {
 
 };
 
+/* ['zlinux_id', 'Id'], [Sequelize.col('domaine'), 'Domaine'], [Sequelize.col('os_version'), 'OS Version'], [Sequelize.col('cpu_type'), 'CPU Type'], [Sequelize.col('cpu_number'), 'CPU Number'],
 
+
+[Sequelize.col('ci.logical_name'), 'Logical name'], [Sequelize.col('ci.ciType.name'), 'Type'], [Sequelize.col('ci.ciSubtype.name'), 'Subtype'], [Sequelize.col('ci.envType.name'), 'Environnement'], [Sequelize.col('ci.status.name'), 'Status'], [Sequelize.col('ci.description'), 'Description'], [Sequelize.col('systems.ci.logical_name'), 'System Logical Name'],
+
+ */
 function buildAttributes(columns) {
     let attributes = [];
     columns.forEach(element => {
@@ -172,15 +175,7 @@ function buildAttributes(columns) {
             case 'id':
                 attributes.push(['ci_id', 'id']);
                 break;
-            case 'LPAR Host ci':
-                attributes.push([Sequelize.col('lpars.host_ci'), 'LPAR Host ci']);
-                break;
-            case 'LPAR Host Type':
-                attributes.push([Sequelize.col('lpars.host_type'), 'LPAR Host Type']);
-                break;
-            case 'LPAR Our Name':
-                attributes.push([Sequelize.col('lpars.ci.our_name'), 'LPAR Our Name']);
-                break;
+
 
 
         }

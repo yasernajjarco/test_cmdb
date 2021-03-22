@@ -3,16 +3,6 @@ const db = require("../index.db");
 
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
-
-/**
- * This function comment is parsed by doctrine
- * @route GET /api
- * @group foo - Operations about user
- * @param {string} email.query.required - username or email - eg: user@domain
- * @param {string} password.query.required - user's password.
- * @returns {object} 200 - An array of user info
- * @returns {Error}  default - Unexpected error
- */
 exports.findAll = (req, res) => {
     //    const platform = req.query.id;
     const platform = req.body.platform;
@@ -117,7 +107,7 @@ function buildAttributes(columns) {
                 attributes.push([Sequelize.col('ci.platforms.name'), 'platform']);
                 break;
             case 'id':
-                attributes.push(['hardware_id', 'id']);
+                attributes.push(['ci_id', 'id']);
                 break;
 
         }
@@ -147,7 +137,7 @@ exports.findById = (req, res) => {
     const id = req.params.id;
 
     db.hardwares.findAll({
-            where: { hardware_id: id },
+            where: { ci_id: id },
             include: [{
                     model: db.ci,
                     required: false,
@@ -177,8 +167,7 @@ exports.findById = (req, res) => {
 
                     }],
                     attributes: [
-                        ['hardware_id', 'id'],
-                        [Sequelize.col('serial_no'), 'serial_no'],
+                        ['ci_id', 'id'],
                         [Sequelize.col('serial_no'), 'serial_no'],
                         [Sequelize.literal('ci.description'), 'description'],
                         [Sequelize.literal('ci.our_name'), 'our_name'],
@@ -198,7 +187,7 @@ exports.findById = (req, res) => {
 
                     }],
                     attributes: [
-                        ['hardware_id', 'id'],
+                        ['ci_id', 'id'],
                         [Sequelize.col('serial_no'), 'serial_no'],
                         [Sequelize.col('serial_no'), 'serial_no'],
                         [Sequelize.literal('ci.description'), 'description'],
@@ -224,7 +213,7 @@ exports.findById = (req, res) => {
                     as: 'lpars',
                     include: [{ model: db.ci, required: false, as: 'ci', attributes: [] }],
                     attributes: [
-                        [Sequelize.col('lpar_id'), 'id'],
+                        ['ci_id', 'id'],
                         [Sequelize.col('host_ci'), 'host_ci'],
                         [Sequelize.literal('ci.description'), 'description'],
                         [Sequelize.literal('ci.our_name'), 'our_name'],
@@ -234,7 +223,8 @@ exports.findById = (req, res) => {
 
             ],
             attributes: [
-                ['hardware_id', 'id'],
+                //['hardware_id', 'id'],
+                [Sequelize.col('ci.ci_id'), 'id'],
                 [Sequelize.col('ci.our_name'), 'name'],
                 [Sequelize.col('ci.ciType.name'), 'type'],
                 [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
