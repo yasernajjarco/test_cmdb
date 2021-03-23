@@ -147,7 +147,6 @@ create table ci_application(
 
 create table lpar(
    lpar_id int auto_increment,
-   host_ci varchar(300),
    host_type varchar(300),
 	hardware_id int not null,
    ci_id int not null,

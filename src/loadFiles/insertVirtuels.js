@@ -153,7 +153,7 @@ async function insertlserver(lserver, namePlatform, nameType) {
                         //  hardware_id: lserver.hardware_id,
                         where: { ci_id: res[0].dataValues.ci_id },
                         defaults: {
-                            host_ci: lserver.host_ci,
+                            // host_ci: lserver.host_ci,
                             host_type: lserver.host_type,
                             ci_id: res[0].dataValues.ci_id,
                             hardware_id: lserver.hardware_id

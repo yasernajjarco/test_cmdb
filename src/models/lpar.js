@@ -13,15 +13,6 @@ module.exports = sequelize => {
       comment: null,
       field: "lpar_id"
     },
-    host_ci: {
-      type: DataTypes.STRING(300),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "host_ci"
-    },
     host_type: {
       type: DataTypes.STRING(300),
       allowNull: true,

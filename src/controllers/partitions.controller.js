@@ -84,14 +84,11 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: ['our_name'],
+                        attributes: [],
                         include: []
 
                     }],
-                    attributes: [
-                        ['ci_id', 'id'],
-
-                    ]
+                    attributes: []
                 },
                 {
                     model: db.systems,
@@ -119,7 +116,8 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-
+                [Sequelize.col('hardwares.ci.name'), 'hardware our_name'],
+                [Sequelize.col('hardwares.ci.ci_id'), 'hardware id'],
 
 
             ]
@@ -174,9 +172,6 @@ function buildAttributes(columns) {
                 break;
             case 'host_type':
                 attributes.push(['host_type', 'host_type']);
-                break;
-            case 'host_ci':
-                attributes.push(['host_ci', 'host_ci']);
                 break;
             case 'hardware':
                 attributes.push([Sequelize.col('hardwares.ci_id'), 'hardware id']);

@@ -172,9 +172,6 @@ function buildAttributes(columns) {
             case 'id':
                 attributes.push(['ci_id', 'id']);
                 break;
-            case 'LPAR Host ci':
-                attributes.push([Sequelize.col('lpars.host_ci'), 'LPAR Host ci']);
-                break;
             case 'LPAR Host Type':
                 attributes.push([Sequelize.col('lpars.host_type'), 'LPAR Host Type']);
                 break;
