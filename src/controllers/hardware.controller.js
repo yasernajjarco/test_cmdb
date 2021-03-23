@@ -138,9 +138,10 @@ exports.findById = (req, res) => {
 
     db.hardwares.findAll({
             where: { ci_id: id },
+            required: true,
             include: [{
                     model: db.ci,
-                    required: false,
+                    required: true,
                     as: 'ci',
                     attributes: [],
                     include: [
@@ -163,14 +164,12 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: []
+                        attributes: ['our_name']
 
                     }],
                     attributes: [
                         ['ci_id', 'id'],
-                        [Sequelize.col('serial_no'), 'serial_no'],
-                        [Sequelize.literal('ci.description'), 'description'],
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
+                        ['serial_no', 'serial_no'],
 
                     ]
                 },
@@ -183,15 +182,12 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: []
+                        attributes: ['our_name']
 
                     }],
                     attributes: [
                         ['ci_id', 'id'],
-                        [Sequelize.col('serial_no'), 'serial_no'],
-                        [Sequelize.col('serial_no'), 'serial_no'],
-                        [Sequelize.literal('ci.description'), 'description'],
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
+                        ['serial_no', 'serial_no'],
 
                     ]
                 },
@@ -211,12 +207,10 @@ exports.findById = (req, res) => {
                     model: db.lpars,
                     required: false,
                     as: 'lpars',
-                    include: [{ model: db.ci, required: false, as: 'ci', attributes: [] }],
+                    include: [{ model: db.ci, required: false, as: 'ci', attributes: ['our_name'] }],
                     attributes: [
                         ['ci_id', 'id'],
-                        [Sequelize.col('host_ci'), 'host_ci'],
-                        [Sequelize.literal('ci.description'), 'description'],
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
+                        ['host_ci', 'host_ci'],
 
                     ]
                 },
@@ -233,8 +227,7 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.description'), 'description'],
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
-                [Sequelize.col('ci.platforms.name'), 'platform']
-
+                [Sequelize.col('ci.platforms.name'), 'platform'],
 
             ]
 
@@ -242,7 +235,7 @@ exports.findById = (req, res) => {
         .then(data => {
             let result = data[0];
             console.log(result.platform)
-            if (result != null && result != undefined && result.hardwares1.length > 0) {
+            if (result != null && result != undefined && result.hardwares1 != undefined && result.hardwares1.length > 0) {
                 result.hardwares1.forEach(element => result.hardwares.push(element));
             }
             delete result.hardwares1;
@@ -250,7 +243,7 @@ exports.findById = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving hardwares."
+                message: "Some error occurred while retrieving hardwares."
             });
         });
 

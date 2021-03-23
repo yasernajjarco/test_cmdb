@@ -84,18 +84,12 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: [],
-                        include: [
-                            { model: db.platforms, required: false, as: 'platforms', attributes: [] },
-                            { model: db.status, required: false, as: 'status', attributes: [], },
-                        ]
+                        attributes: ['our_name'],
+                        include: []
 
                     }],
                     attributes: [
                         ['ci_id', 'id'],
-                        [Sequelize.col('serial_no'), 'serial_no'],
-                        [Sequelize.literal('ci.description'), 'description'],
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
 
                     ]
                 },
@@ -107,12 +101,10 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: []
+                        attributes: ['our_name']
                     }],
                     attributes: [
                         ['ci_id', 'id'],
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
-
                     ]
                 }
             ],
@@ -127,8 +119,6 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                ['host_type', 'host_type'],
-                ['host_ci', 'host_ci'],
 
 
 
