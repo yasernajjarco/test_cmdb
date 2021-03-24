@@ -165,13 +165,11 @@ exports.findById = (req, res) => {
                         required: false,
                         as: 'ci',
                         include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
-                        attributes: ['our_name']
+                        attributes: ['our_name', ['ci_id', 'id']]
 
                     }],
                     attributes: [
-                        ['ci_id', 'id'],
-                        ['serial_no', 'serial_no'],
-
+                        ['ci_id', 'id']
                     ]
                 },
                 {
@@ -184,13 +182,11 @@ exports.findById = (req, res) => {
                         required: false,
                         as: 'ci',
                         include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
-                        attributes: ['our_name']
+                        attributes: ['our_name', ['ci_id', 'id']]
 
                     }],
                     attributes: [
-                        ['ci_id', 'id'],
-                        ['serial_no', 'serial_no'],
-
+                        ['ci_id', 'id']
                     ]
                 },
 
@@ -209,7 +205,13 @@ exports.findById = (req, res) => {
                     model: db.lpars,
                     required: false,
                     as: 'lpars',
-                    include: [{ model: db.ci, required: false, as: 'ci', attributes: ['our_name'] }],
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
                     attributes: [
                         ['ci_id', 'id'],
 

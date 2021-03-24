@@ -85,8 +85,6 @@ exports.findById = (req, res) => {
                         required: false,
                         as: 'ci',
                         attributes: [],
-                        include: []
-
                     }],
                     attributes: []
                 },
@@ -98,10 +96,11 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: ['our_name']
+                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        attributes: ['our_name', ['ci_id', 'id']]
                     }],
                     attributes: [
-                        ['ci_id', 'id'],
+                        ['ci_id', 'id']
                     ]
                 }
             ],
