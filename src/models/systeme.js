@@ -15,7 +15,7 @@ module.exports = sequelize => {
     },
     lpar_id: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,

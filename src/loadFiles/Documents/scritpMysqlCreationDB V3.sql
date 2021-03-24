@@ -148,7 +148,7 @@ create table ci_application(
 create table lpar(
    lpar_id int auto_increment,
    host_type varchar(300),
-	hardware_id int not null,
+	hardware_id int,
    ci_id int not null,
    primary key(lpar_id),
    foreign key(ci_id) references ci(ci_id),
@@ -158,7 +158,7 @@ create table lpar(
 
 create table systeme(
    systeme_id int auto_increment,
-   lpar_id int not null,
+   lpar_id int,
    ci_id int not null,
 	client_id int,
    foreign key(client_id) references client(client_id),
@@ -202,7 +202,7 @@ create table zlinux(
    cpu_number varchar(300),
    physical_mem_total varchar(300),
    ci_id int not null,
-   systeme_id int not null,
+   systeme_id int,
    primary key(zlinux_id),
    foreign key(ci_id) references ci(ci_id),
    foreign key(systeme_id) references systeme(systeme_id)
@@ -212,8 +212,8 @@ create table occurencesoft(
    occurencesoft_id int auto_increment,
    name varchar(300),
 	ci_id int not null,
-   	our_name varchar(300),
-   instance_id int not null,
+   our_name varchar(300),
+   instance_id int,
    primary key(occurencesoft_id),
 	foreign key(ci_id) references ci(ci_id),
    foreign key(instance_id) references instance(instance_id)

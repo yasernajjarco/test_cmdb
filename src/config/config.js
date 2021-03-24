@@ -4,8 +4,8 @@ module.exports = {
     PORT: process.env.PORT,
 
     /** DATABASE */
-    /* 
-        HOST: "localhost",
+
+    /*     HOST: "localhost",
         USER: "root",
         PASSWORD: "rootroot",
         DB: "cmdb",

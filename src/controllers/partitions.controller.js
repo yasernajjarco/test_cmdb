@@ -115,8 +115,8 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('hardwares.ci.name'), 'hardware our_name'],
-                [Sequelize.col('hardwares.ci.ci_id'), 'hardware id'],
+                [Sequelize.col('hardwares.ci.our_name'), '_hardware name'],
+                [Sequelize.col('hardwares.ci.ci_id'), '_hardware id'],
 
 
             ]

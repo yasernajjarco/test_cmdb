@@ -77,10 +77,12 @@ exports.findById = (req, res) => {
                     model: db.lpars,
                     required: false,
                     as: 'lpars',
-                    attributes: [],
-                    include: [
-                        { model: db.ci, required: false, as: 'ci', attributes: [] }
-                    ],
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                    }],
+                    attributes: []
                 },
                 {
                     model: db.client,
@@ -93,15 +95,15 @@ exports.findById = (req, res) => {
                     model: db.zLinux,
                     required: false,
                     as: 'zLinuxs',
-                    include: [{ model: db.ci, required: false, as: 'ci', attributes: [] }],
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
                     attributes: [
-                        [Sequelize.literal('ci.our_name'), 'our_name'],
-                        [Sequelize.literal('domaine'), 'domaine'],
-                        [Sequelize.literal('os_version'), 'os_version'],
-                        ['ci_id', 'id'],
-
-
-
+                        ['ci_id', 'id']
                     ]
                 },
 
@@ -117,17 +119,18 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('lpars.ci.our_name'), 'LPAR Our Name'],
-                [Sequelize.col('clients.companyname'), 'Client Name'],
+                [Sequelize.col('lpars.ci.our_name'), '_LPAR name'],
+                [Sequelize.col('lpars.ci.ci_id'), '_LPAR id'],
+                [Sequelize.col('clients.companyname'), '_Client name'],
+                [Sequelize.col('clients.client_id'), '_Client id'],
 
 
             ]
 
-        })
+        }).map(data => data.toJSON())
         .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
+            res.send(first(data));
+        }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."
             });
@@ -202,3 +205,11 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
+
+function first(array) {
+    if (array == null)
+        return {};
+    if (array.length == 0)
+        return {}
+    return array[0];
+};

@@ -123,8 +123,8 @@ db.lpars.hasMany(db.systems, { foreignKey: 'lpar_id', as: "systems" });
 db.systems.belongsTo(db.lpars, { foreignKey: 'lpar_id', as: "lpars" });
 
 
-db.systems.belongsTo(db.client, { foreignKey: 'systeme_id', as: "clients" });
-db.client.hasMany(db.systems, { foreignKey: 'systeme_id', as: "systems" });
+db.systems.belongsTo(db.client, { foreignKey: 'client_id', as: "clients" });
+db.client.hasMany(db.systems, { foreignKey: 'client_id', as: "systems" });
 
 //===============================//
 

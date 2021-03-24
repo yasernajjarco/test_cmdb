@@ -278,18 +278,18 @@ async function insertSystem(lserver, namePlatform, nameType) {
                         }
                     }).then(async function(res) {
 
-                        let idClient = null;
-                        if (lserver.nrb_class_service === 'IAAS') {
-                            idClient = lserver.client_id;
+                        /*  let idClient = null;
+                         if (lserver.nrb_class_service === 'IAAS') {
+                             idClient = lserver.client_id;
 
-                        }
+                         } */
                         await db.systems.findOrCreate({
                             //  hardware_id: lserver.hardware_id,
                             where: { ci_id: res[0].dataValues.ci_id },
                             defaults: {
                                 ci_id: res[0].dataValues.ci_id,
                                 lpar_id: lserver.lpar_id,
-                                client_id: idClient
+                                client_id: lserver.client_id
                             }
                         });
 
