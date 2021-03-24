@@ -164,6 +164,7 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
+                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
                         attributes: ['our_name']
 
                     }],
@@ -182,6 +183,7 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
+                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
                         attributes: ['our_name']
 
                     }],
@@ -210,7 +212,6 @@ exports.findById = (req, res) => {
                     include: [{ model: db.ci, required: false, as: 'ci', attributes: ['our_name'] }],
                     attributes: [
                         ['ci_id', 'id'],
-                        ['host_ci', 'host_ci'],
 
                     ]
                 },
@@ -243,7 +244,7 @@ exports.findById = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Some error occurred while retrieving hardwares."
+                message: err.message || "Some error occurred while retrieving hardwares."
             });
         });
 

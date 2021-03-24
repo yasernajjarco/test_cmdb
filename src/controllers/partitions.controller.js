@@ -122,13 +122,14 @@ exports.findById = (req, res) => {
 
             ]
 
-        })
+        }).map(data => data.toJSON())
         .then(data => {
-            res.send(data);
+
+            res.send(first(data));
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving hardwares."
+                message: err.message || "Some error occurred while retrieving partitions."
             });
         });
 
@@ -198,3 +199,11 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
+
+function first(array) {
+    if (array == null)
+        return {};
+    if (array.length == 0)
+        return {}
+    return array[0];
+};
