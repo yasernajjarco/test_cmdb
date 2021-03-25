@@ -48,7 +48,7 @@ create table status(
 
 create table client(
    client_id int auto_increment,
-   companyname varchar(300),
+   companyname varchar(300) unique,
    address varchar(300),
    primary key(client_id)
 );

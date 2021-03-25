@@ -164,7 +164,11 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] }
+
+                        ],
                         attributes: ['our_name', ['ci_id', 'id']]
 
                     }],
@@ -181,7 +185,12 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] }
+
+
+                        ],
                         attributes: ['our_name', ['ci_id', 'id']]
 
                     }],
@@ -209,7 +218,11 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+
+                        ],
                         attributes: ['our_name', ['ci_id', 'id']]
                     }],
                     attributes: [

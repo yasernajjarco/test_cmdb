@@ -41,10 +41,6 @@ exports.findAll = (req, res) => {
                     required: false,
                     as: 'clients',
                     through: { attributes: [] },
-                    attributes: [
-                        // [Sequelize.col('companyname'), 'client_name']
-
-                    ]
                 },
             ],
             attributes: attributes
@@ -94,6 +90,8 @@ exports.findById = (req, res) => {
                         as: 'ci',
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+
                         ],
                         attributes: []
                     }],
@@ -122,7 +120,13 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
+                ['domaine', 'Domaine'],
+                ['os_version', 'OS Version'],
+                ['cpu_type', 'CPU Type'],
+                ['cpu_number', 'CPU Number'],
+                ['physical_mem_total', 'physical_mem_total'],
                 [Sequelize.col('systems.ci.our_name'), '_system name'],
+                [Sequelize.col('systems.ci.ciType.name'), '_system type'],
                 [Sequelize.col('systems.ci.ciSubtype.name'), '_system subtype'],
                 [Sequelize.col('systems.ci.ci_id'), '_system id'],
 
@@ -130,11 +134,10 @@ exports.findById = (req, res) => {
 
             ]
 
-        })
+        }).map(data => data.toJSON())
         .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
+            res.send(first(data));
+        }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."
             });
@@ -208,3 +211,11 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
+
+function first(array) {
+    if (array == null)
+        return {};
+    if (array.length == 0)
+        return {}
+    return array[0];
+};

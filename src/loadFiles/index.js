@@ -8,6 +8,8 @@ const db = require("../index.db");
 const insertHardwares = require('./insertHardwares');
 const insertVirtuels = require('./insertVirtuels');
 const instances = require('./instances');
+const updateCopany = require('./updateCopany');
+
 const XLSX = require('xlsx');
 let clients_instance_z;
 
@@ -115,10 +117,19 @@ async function test() {
         });
 
 
+        // update company
+        file = path.resolve(__dirname, "update company/" + 'occurences_clients Z.xlsx')
+        await updateCopany.updateOccurences(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+
+
+
+
+        //////////////////////////////////
+
         let time = await new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
         await logger.info('End at: ', time)
 
-        await generateFiles();
+        // await generateFiles();
 
 
     });

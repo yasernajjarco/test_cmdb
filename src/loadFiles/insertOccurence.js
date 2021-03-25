@@ -140,16 +140,19 @@ async function insertOccurences(apps, namePlatform) {
 
                         }
                     }).then(async function(res) {
-                        await db.occurence_client.findOrCreate({
-                            where: {
-                                [db.Op.and]: [{ client_id: app.client_id, occurencesoft_id: res[0].dataValues.occurencesoft_id }]
-                            },
-                            defaults: {
-                                client_id: app.client_id,
-                                occurencesoft_id: res[0].dataValues.occurencesoft_id
+                        if (app.company != 'PROD-NRB') {
+                            await db.occurence_client.findOrCreate({
+                                where: {
+                                    [db.Op.and]: [{ client_id: app.client_id, occurencesoft_id: res[0].dataValues.occurencesoft_id }]
+                                },
+                                defaults: {
+                                    client_id: app.client_id,
+                                    occurencesoft_id: res[0].dataValues.occurencesoft_id
 
-                            }
-                        })
+                                }
+                            })
+                        }
+
 
 
                     });

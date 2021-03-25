@@ -82,6 +82,8 @@ exports.findById = (req, res) => {
                         required: false,
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+
                         ],
                         as: 'ci',
                     }],
@@ -102,7 +104,10 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        include: [{ model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] }],
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] }
+                        ],
                         attributes: ['our_name', ['ci_id', 'id']]
                     }],
                     attributes: [
@@ -124,6 +129,7 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.platforms.name'), 'platform'],
                 [Sequelize.col('lpars.ci.our_name'), '_LPAR name'],
                 [Sequelize.col('lpars.ci.ciSubtype.name'), '_LPAR subtype'],
+                [Sequelize.col('lpars.ci.ciType.name'), '_LPAR type'],
                 [Sequelize.col('lpars.ci.ci_id'), '_LPAR id'],
                 [Sequelize.col('clients.companyname'), '_Client name'],
                 [Sequelize.col('clients.client_id'), '_Client id'],
