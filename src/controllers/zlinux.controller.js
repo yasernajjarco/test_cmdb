@@ -88,9 +88,15 @@ exports.findById = (req, res) => {
                     required: false,
                     as: 'systems',
                     attributes: [],
-                    include: [
-                        { model: db.ci, required: false, as: 'ci', attributes: [] }
-                    ],
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                        ],
+                        attributes: []
+                    }],
                 },
                 {
                     model: db.client,
@@ -116,7 +122,10 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('systems.ci_id'), 'system id'],
+                [Sequelize.col('systems.ci.our_name'), '_system name'],
+                [Sequelize.col('systems.ci.ciSubtype.name'), '_system subtype'],
+                [Sequelize.col('systems.ci.ci_id'), '_system id'],
+
 
 
             ]

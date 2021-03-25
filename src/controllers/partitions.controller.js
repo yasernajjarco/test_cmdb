@@ -84,7 +84,9 @@ exports.findById = (req, res) => {
                         model: db.ci,
                         required: false,
                         as: 'ci',
-                        attributes: [],
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                        ]
                     }],
                     attributes: []
                 },
@@ -116,6 +118,7 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
                 [Sequelize.col('hardwares.ci.our_name'), '_hardware name'],
+                [Sequelize.col('hardwares.ci.ciSubtype.name'), '_hardware subtype'],
                 [Sequelize.col('hardwares.ci.ci_id'), '_hardware id'],
 
 

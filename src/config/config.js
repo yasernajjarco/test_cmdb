@@ -16,8 +16,8 @@ module.exports = {
             acquire: 30000,
             idle: 10000
         },
-     */
 
+     */
     HOST: "localhost",
     USER: "lsyalh",
     PASSWORD: "lsyalh",
@@ -29,7 +29,6 @@ module.exports = {
         acquire: 30000,
         idle: 10000
     },
-
 
 
     /** AUTH KEY */
