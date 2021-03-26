@@ -147,9 +147,37 @@ db.client.belongsToMany(db.zLinux, { through: "client_zlinux", as: "zLinux", for
 
 
 
+//=============== instance ================//
+
+db.ci.hasMany(db.instance, { foreignKey: 'ci_id', as: "instance" });
+db.instance.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.systems.hasMany(db.instance, { foreignKey: 'systeme_id', as: "instances" });
+db.instance.belongsTo(db.systems, { foreignKey: 'systeme_id', as: "systems" });
+
+
+db.instance.belongsToMany(db.client, { through: "instance_client", as: "clients", foreignKey: "instance_id" });
+db.client.belongsToMany(db.instance, { through: "instance_client", as: "instances", foreignKey: "client_id" });
+
+
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as: "instance" });
 db.instance.belongsTo(db.application, { foreignKey: 'ci_application_id', as: "application" });
 
+db.instance.hasMany(db.occurence, { foreignKey: 'instance_id', as: "occurences" });
+db.occurence.belongsTo(db.instance, { foreignKey: 'instance_id', as: "instance" });
+
+//===============================//
+
+
+//=============== occurence ================//
+
+db.ci.hasMany(db.occurence, { foreignKey: 'ci_id', as: "occurence" });
+db.occurence.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
+
+db.occurence.belongsToMany(db.client, { through: "occurence_client", as: "clients", foreignKey: "occurencesoft_id" });
+db.client.belongsToMany(db.occurence, { through: "occurence_client", as: "occurences", foreignKey: "client_id" });
+
+//===============================//
 
 db.provider.belongsToMany(db.platforms, { through: "provider_platform", as: "platforms", foreignKey: "provider_id" });
 db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "providers", foreignKey: "platform_id" });

@@ -1,4 +1,5 @@
 const db = require("../index.db");
+const utils = require("./utils");
 
 
 const { Sequelize, DataTypes, Op } = require("sequelize");
@@ -127,10 +128,10 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('lpars.ci.our_name'), '_LPAR name'],
-                [Sequelize.col('lpars.ci.ciSubtype.name'), '_LPAR subtype'],
-                [Sequelize.col('lpars.ci.ciType.name'), '_LPAR type'],
-                [Sequelize.col('lpars.ci.ci_id'), '_LPAR id'],
+                [Sequelize.col('lpars.ci.our_name'), '_partition name'],
+                [Sequelize.col('lpars.ci.ciSubtype.name'), '_partition subtype'],
+                [Sequelize.col('lpars.ci.ciType.name'), '_partition type'],
+                [Sequelize.col('lpars.ci.ci_id'), '_partition id'],
                 [Sequelize.col('clients.companyname'), '_Client name'],
                 [Sequelize.col('clients.client_id'), '_Client id'],
 
@@ -139,7 +140,8 @@ exports.findById = (req, res) => {
 
         }).map(data => data.toJSON())
         .then(data => {
-            res.send(first(data));
+            let result = utils.buildObject(utils.first(data));
+            res.send(result);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."
@@ -215,11 +217,3 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
-
-function first(array) {
-    if (array == null)
-        return {};
-    if (array.length == 0)
-        return {}
-    return array[0];
-};

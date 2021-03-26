@@ -12,32 +12,22 @@ exports.findAll = (req, res) => {
 
     let condition = buildCondition(platform, type, subtype);
     let attributes = (req.body.columns == undefined) ? [] : buildAttributes(req.body.columns);
-    db.zLinux.findAll({
+    db.instance.findAll({
             where: condition,
             include: [{
-                    model: db.ci,
-                    required: false,
-                    as: 'ci',
-                    attributes: [],
-                    include: [
-                        { model: db.platforms, required: false, as: 'platforms', attributes: [] },
-                        { model: db.status, required: false, as: 'status', attributes: [], },
-                        { model: db.classService, required: false, as: 'classService', attributes: [], },
-                        { model: db.ciType, required: false, as: 'ciType', attributes: [], },
-                        { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
-                        { model: db.envType, required: false, as: 'envType', attributes: [] },
-                    ]
-                },
-                {
-                    model: db.systems,
-                    required: false,
-                    as: 'systems',
-                    attributes: [],
-                    include: [
-                        { model: db.ci, required: false, as: 'ci', attributes: [] }
-                    ],
-                }
-            ],
+                model: db.ci,
+                required: false,
+                as: 'ci',
+                attributes: [],
+                include: [
+                    { model: db.platforms, required: false, as: 'platforms', attributes: [] },
+                    { model: db.status, required: false, as: 'status', attributes: [], },
+                    { model: db.classService, required: false, as: 'classService', attributes: [], },
+                    { model: db.ciType, required: false, as: 'ciType', attributes: [], },
+                    { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                    { model: db.envType, required: false, as: 'envType', attributes: [] },
+                ]
+            }, ],
             attributes: attributes
         })
         .then(data => {
@@ -58,7 +48,7 @@ exports.findById = (req, res) => {
 
     const id = req.params.id;
 
-    db.zLinux.findAll({
+    db.instance.findAll({
             where: { ci_id: id },
             include: [{
                     model: db.ci,
@@ -91,16 +81,53 @@ exports.findById = (req, res) => {
                         attributes: []
                     }],
                 },
+
+                {
+                    model: db.occurence,
+                    required: false,
+                    as: 'occurences',
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+
+
+                        ],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
+                    attributes: [
+                        ['ci_id', 'id']
+                    ]
+                },
                 {
                     model: db.client,
                     required: false,
                     as: 'clients',
                     through: { attributes: [] },
                     attributes: [
-                        [Sequelize.col('companyname'), 'name'],
-                        [Sequelize.col('client_id'), 'id']
+                        [Sequelize.col('companyname'), 'client_name'],
+                        [Sequelize.col('client_id'), 'client_id']
 
                     ]
+                },
+                {
+                    model: db.application,
+                    required: false,
+                    as: 'application',
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+
+                        ],
+                        as: 'ci',
+                    }],
+                    attributes: []
                 },
 
             ],
@@ -115,14 +142,15 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
-                ['domaine', 'Domaine'],
-                ['os_version', 'OS Version'],
-                ['cpu_type', 'CPU Type'],
-                ['cpu_number', 'CPU Number'],
-                ['physical_mem_total', 'physical_mem_total'],
+
+                [Sequelize.col('application.ci.our_name'), '_app name'],
+                [Sequelize.col('application.ci.ciSubtype.name'), '_app subtype'],
+                [Sequelize.col('application.ci.ciType.name'), '_app type'],
+                [Sequelize.col('application.ci.ci_id'), '_app id'],
+
                 [Sequelize.col('systems.ci.our_name'), '_system name'],
-                [Sequelize.col('systems.ci.ciType.name'), '_system type'],
                 [Sequelize.col('systems.ci.ciSubtype.name'), '_system subtype'],
+                [Sequelize.col('systems.ci.ciType.name'), '_system type'],
                 [Sequelize.col('systems.ci.ci_id'), '_system id'],
 
 
@@ -142,12 +170,7 @@ exports.findById = (req, res) => {
 
 };
 
-/* ['zlinux_id', 'Id'], [Sequelize.col('domaine'), 'Domaine'], [Sequelize.col('os_version'), 'OS Version'], [Sequelize.col('cpu_type'), 'CPU Type'], [Sequelize.col('cpu_number'), 'CPU Number'],
 
-
-[Sequelize.col('ci.logical_name'), 'Logical name'], [Sequelize.col('ci.ciType.name'), 'Type'], [Sequelize.col('ci.ciSubtype.name'), 'Subtype'], [Sequelize.col('ci.envType.name'), 'Environnement'], [Sequelize.col('ci.status.name'), 'Status'], [Sequelize.col('ci.description'), 'Description'], [Sequelize.col('systems.ci.logical_name'), 'System Logical Name'],
-
- */
 function buildAttributes(columns) {
     let attributes = [];
     columns.forEach(element => {
@@ -184,8 +207,6 @@ function buildAttributes(columns) {
                 attributes.push(['ci_id', 'id']);
                 break;
 
-
-
         }
 
 
@@ -207,3 +228,11 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
+
+function first(array) {
+    if (array == null)
+        return {};
+    if (array.length == 0)
+        return {}
+    return array[0];
+};

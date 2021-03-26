@@ -2,6 +2,8 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 const initial = require("./initial");
+const exportFiles = require("./exportFiles");
+
 const load = require("./loadFiles/index");
 import routes from './routes/index.routes';
 const logger = require('./logger');
@@ -66,10 +68,14 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 logger.info('start at: ', time)
 
-/* initial.seed().then(() => {
+initial.seed().then(() => {
     load.test()
 });
- */
+
+
+
+//exportFiles.start();
+
 
 
 app.use('/api', routes);

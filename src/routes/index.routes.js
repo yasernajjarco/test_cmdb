@@ -6,12 +6,14 @@ import hardware from './hardware.routes';
 import partitions from './partitions.routes';
 import systems from './systems.routes';
 import zlinux from './zlinux.routes';
-
+import instances from './instances.routes';
+import occurences from './occurences.routes';
 
 import Ci from './ci.routes';
 import App from './app.routes';
-
 import express from 'express';
+
+
 const router = express.Router();
 
 
@@ -23,6 +25,8 @@ router.use('/providers', Provider);
 router.use('/partitions', partitions);
 router.use('/systems', systems);
 router.use('/zlinuxs', zlinux);
+//router.use('/instances', instances);
+//router.use('/occurences', occurences);
 
 router.use('/apps', App);
 

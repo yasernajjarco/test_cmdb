@@ -191,7 +191,7 @@ exports.findById = (req, res) => {
 
 
                         ],
-                        attributes: ['our_name', ['ci_id', 'id']]
+                        attributes: ['our_name', ['ci_id', 'id'], 'des']
 
                     }],
                     attributes: [
@@ -250,7 +250,6 @@ exports.findById = (req, res) => {
         }).map(data => data.toJSON())
         .then(data => {
             let result = data[0];
-            console.log(result.platform)
             if (result != null && result != undefined && result.hardwares1 != undefined && result.hardwares1.length > 0) {
                 result.hardwares1.forEach(element => result.hardwares.push(element));
             }

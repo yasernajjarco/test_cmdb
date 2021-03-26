@@ -1,4 +1,5 @@
 const db = require("../index.db");
+const utils = require("./utils");
 
 
 const { Sequelize, DataTypes, Op } = require("sequelize");
@@ -134,8 +135,8 @@ exports.findById = (req, res) => {
 
         }).map(data => data.toJSON())
         .then(data => {
-
-            res.send(first(data));
+            let result = utils.buildObject(utils.first(data));
+            res.send(result);
         })
         .catch(err => {
             res.status(500).send({
@@ -209,11 +210,3 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
-
-function first(array) {
-    if (array == null)
-        return {};
-    if (array.length == 0)
-        return {}
-    return array[0];
-};
