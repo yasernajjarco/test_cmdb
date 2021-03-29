@@ -7,8 +7,8 @@ const { authJwt } = require("../middleware");
 
 
 // Retrieve all cis
-router.post("/", controller.findAll);
-router.get("/:id", controller.findById);
+router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll);
+router.get("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
 
 
 

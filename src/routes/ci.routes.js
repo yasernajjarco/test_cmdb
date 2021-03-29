@@ -40,9 +40,8 @@ const { authJwt } = require("../middleware");
  *   "message": "you cannot access to search data"
  * }
  */
-
-router.post("/", ci.findAll);
-router.post("/search", ci.findAllSearch);
+router.post("/", [authJwt.verifyToken, authJwt.isModerator], ci.findAll);
+//router.post("/search", [authJwt.verifyToken, authJwt.isModerator], ci.findAllSearch);
 
 
 

@@ -84,6 +84,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
                             { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                            { model: db.status, required: false, as: 'status', attributes: [] },
 
                         ],
                         as: 'ci',
@@ -107,7 +108,9 @@ exports.findById = (req, res) => {
                         as: 'ci',
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
-                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] }
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
+
                         ],
                         attributes: ['our_name', ['ci_id', 'id']]
                     }],
@@ -128,10 +131,14 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
+
                 [Sequelize.col('lpars.ci.our_name'), '_partition name'],
                 [Sequelize.col('lpars.ci.ciSubtype.name'), '_partition subtype'],
                 [Sequelize.col('lpars.ci.ciType.name'), '_partition type'],
                 [Sequelize.col('lpars.ci.ci_id'), '_partition id'],
+                [Sequelize.col('lpars.ci.status.name'), '_partition status'],
+
+
                 [Sequelize.col('clients.companyname'), '_Client name'],
                 [Sequelize.col('clients.client_id'), '_Client id'],
 

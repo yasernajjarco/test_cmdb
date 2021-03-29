@@ -76,6 +76,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
                             { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                            { model: db.status, required: false, as: 'status', attributes: [] },
 
                         ],
                         attributes: []
@@ -93,6 +94,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
                             { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
 
 
                         ],
@@ -123,6 +125,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
                             { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                            { model: db.status, required: false, as: 'status', attributes: [] },
 
                         ],
                         as: 'ci',
@@ -147,11 +150,14 @@ exports.findById = (req, res) => {
                 [Sequelize.col('application.ci.ciSubtype.name'), '_app subtype'],
                 [Sequelize.col('application.ci.ciType.name'), '_app type'],
                 [Sequelize.col('application.ci.ci_id'), '_app id'],
+                [Sequelize.col('application.ci.status.name'), '_app status'],
+
 
                 [Sequelize.col('systems.ci.our_name'), '_system name'],
                 [Sequelize.col('systems.ci.ciSubtype.name'), '_system subtype'],
                 [Sequelize.col('systems.ci.ciType.name'), '_system type'],
                 [Sequelize.col('systems.ci.ci_id'), '_system id'],
+                [Sequelize.col('systems.ci.status.name'), '_system status'],
 
 
 

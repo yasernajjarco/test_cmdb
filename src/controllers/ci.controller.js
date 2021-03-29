@@ -61,7 +61,7 @@ exports.findAll = (req, res) => {
 };
 
 
-exports.findAllSearch = (req, res) => {
+/* exports.findAllSearch = (req, res) => {
 
     const isCI = req.body.isCI;
 
@@ -70,7 +70,7 @@ exports.findAllSearch = (req, res) => {
     } else {
         res.send({ no: 'error' })
     }
-};
+}; */
 
 function getCIs(req) {
     const platform = req.body.platform;

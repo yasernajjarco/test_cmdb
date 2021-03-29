@@ -12,10 +12,8 @@ const { authJwt } = require("../middleware");
 
 
 // Retrieve all provider
-router.post("/", controller.findAll);
-
-// Retrieve a single provider with id
-router.get("/:id", controller.findById);
+router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll);
+router.get("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
 
 
 

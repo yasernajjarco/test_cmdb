@@ -88,6 +88,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [] },
                             { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                            { model: db.status, required: false, as: 'status', attributes: [] },
 
                         ]
                     }],
@@ -104,6 +105,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
                             { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
 
 
                         ],
@@ -125,10 +127,12 @@ exports.findById = (req, res) => {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
+
                 [Sequelize.col('hardwares.ci.our_name'), '_hardware name'],
                 [Sequelize.col('hardwares.ci.ciSubtype.name'), '_hardware subtype'],
                 [Sequelize.col('hardwares.ci.ciType.name'), '_hardware type'],
                 [Sequelize.col('hardwares.ci.ci_id'), '_hardware id'],
+                [Sequelize.col('hardwares.ci.status.name'), '_hardware status'],
 
 
             ]

@@ -86,6 +86,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
                             { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                            { model: db.status, required: false, as: 'status', attributes: [] },
 
                         ],
                         attributes: []
@@ -124,6 +125,7 @@ exports.findById = (req, res) => {
                 [Sequelize.col('systems.ci.ciType.name'), '_system type'],
                 [Sequelize.col('systems.ci.ciSubtype.name'), '_system subtype'],
                 [Sequelize.col('systems.ci.ci_id'), '_system id'],
+                [Sequelize.col('systems.ci.status.name'), '_system status'],
 
 
 

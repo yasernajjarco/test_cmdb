@@ -42,7 +42,7 @@ const { authJwt } = require("../middleware");
  * }
  */
 
-router.post("/", controller.findAll);
+router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll);
 
 
 
@@ -90,7 +90,7 @@ router.post("/", controller.findAll);
  *   "message": "you cannot access to get details of element hardware"
  * }
  */
-router.get("/:id", controller.findById);
+router.get("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
 
 
 
