@@ -79,6 +79,7 @@ exports.findById = (req, res) => {
                         include: [
                             { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
                             { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
 
 
                         ],
