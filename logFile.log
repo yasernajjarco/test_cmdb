@@ -1,0 +1,88 @@
+2021-03-29 09:37:46.888 INFO  start at: 2021-03-29 07:37:46 
+2021-03-29 09:37:47.693 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-03-29 09:37:47.862 INFO  6 sellers of  world  B has been updated or added 
+2021-03-29 09:37:47.862 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-03-29 09:37:48.021 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-03-29 09:37:48.699 INFO  44 sellers of  world  Z has been updated or added 
+2021-03-29 09:37:48.699 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-03-29 09:37:48.742 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-03-29 09:37:48.964 INFO  8 softs of  world  B has been updated or added 
+2021-03-29 09:37:48.964 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-03-29 09:37:49.341 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-03-29 09:38:00.785 INFO  347 softs of  world  Z has been updated or added 
+2021-03-29 09:38:00.785 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-03-29 09:38:00.852 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\Backend\Dev\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-03-29 09:38:01.023 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
+2021-03-29 09:38:06.441 INFO  start at: 2021-03-29 07:38:06 
+2021-03-29 09:41:39.172 INFO  start at: 2021-03-29 07:41:39 
+2021-03-29 09:42:15.600 INFO  start at: 2021-03-29 07:42:15 
+2021-03-29 09:42:40.859 INFO  start at: 2021-03-29 07:42:40 
+2021-03-29 09:42:51.954 INFO  start at: 2021-03-29 07:42:51 
+2021-03-29 09:49:14.393 INFO  start at: 2021-03-29 07:49:14 
+2021-03-29 09:52:05.349 INFO  start at: 2021-03-29 07:52:05 
+2021-03-29 09:54:58.318 INFO  start at: 2021-03-29 07:54:58 
+2021-03-29 09:55:03.186 INFO  start at: 2021-03-29 07:55:03 
+2021-03-29 09:55:21.016 INFO  start at: 2021-03-29 07:55:21 
+2021-03-29 09:55:59.228 INFO  start at: 2021-03-29 07:55:59 
+2021-03-29 09:56:09.090 INFO  start at: 2021-03-29 07:56:09 
+2021-03-29 09:57:17.219 INFO  start at: 2021-03-29 07:57:17 
+2021-03-29 10:11:43.125 INFO  start at: 2021-03-29 08:11:43 
+2021-03-29 10:14:58.307 INFO  start at: 2021-03-29 08:14:58 
+2021-03-29 10:15:58.357 INFO  start at: 2021-03-29 08:15:58 
+2021-03-29 10:18:51.046 INFO  start at: 2021-03-29 08:18:51 
+2021-03-29 10:19:38.976 INFO  start at: 2021-03-29 08:19:38 
+2021-03-29 10:20:49.614 INFO  start at: 2021-03-29 08:20:49 
+2021-03-29 10:22:25.534 INFO  start at: 2021-03-29 08:22:25 
+2021-03-29 10:23:29.444 INFO  start at: 2021-03-29 08:23:29 
+2021-03-29 10:24:12.377 INFO  start at: 2021-03-29 08:24:12 
+2021-03-29 10:24:49.874 INFO  start at: 2021-03-29 08:24:49 
+2021-03-29 10:26:29.563 INFO  start at: 2021-03-29 08:26:29 
+2021-03-29 10:27:12.392 INFO  start at: 2021-03-29 08:27:12 
+2021-03-29 10:27:18.447 INFO  start at: 2021-03-29 08:27:18 
+2021-03-29 10:27:39.185 INFO  start at: 2021-03-29 08:27:39 
+2021-03-29 10:27:59.002 INFO  start at: 2021-03-29 08:27:59 
+2021-03-29 10:28:37.857 INFO  start at: 2021-03-29 08:28:37 
+2021-03-29 10:30:30.746 INFO  start at: 2021-03-29 08:30:30 
+2021-03-29 10:31:30.727 INFO  start at: 2021-03-29 08:31:30 
+2021-03-29 10:31:49.106 INFO  start at: 2021-03-29 08:31:49 
+2021-03-29 10:32:50.792 INFO  start at: 2021-03-29 08:32:50 
+2021-03-29 10:33:11.305 INFO  start at: 2021-03-29 08:33:11 
+2021-03-29 10:33:23.800 INFO  start at: 2021-03-29 08:33:23 
+2021-03-29 10:33:43.421 INFO  start at: 2021-03-29 08:33:43 
+2021-03-29 10:34:40.798 INFO  start at: 2021-03-29 08:34:40 
+2021-03-29 10:35:04.522 INFO  start at: 2021-03-29 08:35:04 
+2021-03-29 10:35:34.989 INFO  start at: 2021-03-29 08:35:34 
+2021-03-29 10:35:47.194 INFO  start at: 2021-03-29 08:35:47 
+2021-03-29 10:36:22.460 INFO  start at: 2021-03-29 08:36:22 
+2021-03-29 10:36:43.063 INFO  start at: 2021-03-29 08:36:43 
+2021-03-29 10:37:01.520 INFO  start at: 2021-03-29 08:37:01 
+2021-03-29 10:37:22.642 INFO  start at: 2021-03-29 08:37:22 
+2021-03-29 10:37:29.800 INFO  start at: 2021-03-29 08:37:29 
+2021-03-29 10:37:39.272 INFO  start at: 2021-03-29 08:37:39 
+2021-03-29 10:37:52.415 INFO  start at: 2021-03-29 08:37:52 
+2021-03-29 10:38:07.543 INFO  start at: 2021-03-29 08:38:07 
+2021-03-29 10:38:20.018 INFO  start at: 2021-03-29 08:38:20 
+2021-03-29 10:39:53.432 INFO  start at: 2021-03-29 08:39:53 
+2021-03-29 10:41:15.458 INFO  start at: 2021-03-29 08:41:15 
+2021-03-29 10:41:52.801 INFO  start at: 2021-03-29 08:41:52 
+2021-03-29 10:42:48.123 INFO  start at: 2021-03-29 08:42:48 
+2021-03-29 10:43:26.420 INFO  start at: 2021-03-29 08:43:26 
+2021-03-29 10:43:38.175 INFO  start at: 2021-03-29 08:43:38 
+2021-03-29 10:43:46.824 INFO  start at: 2021-03-29 08:43:46 
+2021-03-29 10:43:55.205 INFO  start at: 2021-03-29 08:43:55 
+2021-03-29 10:44:06.558 INFO  start at: 2021-03-29 08:44:06 
+2021-03-29 10:44:15.566 INFO  start at: 2021-03-29 08:44:15 
+2021-03-29 10:44:47.997 INFO  start at: 2021-03-29 08:44:47 
+2021-03-29 10:51:24.393 INFO  start at: 2021-03-29 08:51:24 
+2021-03-29 10:57:34.425 INFO  start at: 2021-03-29 08:57:34 
+2021-03-29 11:00:10.061 INFO  start at: 2021-03-29 09:00:10 
+2021-03-29 11:00:52.655 INFO  start at: 2021-03-29 09:00:52 
+2021-03-29 11:01:30.488 INFO  start at: 2021-03-29 09:01:30 
+2021-03-29 11:02:14.225 INFO  start at: 2021-03-29 09:02:14 
+2021-03-29 11:03:15.563 INFO  start at: 2021-03-29 09:03:15 
+2021-03-29 11:04:06.082 INFO  start at: 2021-03-29 09:04:06 
+2021-03-29 11:05:30.226 INFO  start at: 2021-03-29 09:05:30 
+2021-03-29 11:05:51.419 INFO  start at: 2021-03-29 09:05:51 
+2021-03-29 11:06:52.904 INFO  start at: 2021-03-29 09:06:52 
+2021-03-29 11:07:02.989 INFO  start at: 2021-03-29 09:07:02 
+2021-03-29 11:07:32.061 INFO  start at: 2021-03-29 09:07:32 

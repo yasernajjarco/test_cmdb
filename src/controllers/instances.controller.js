@@ -108,8 +108,8 @@ exports.findById = (req, res) => {
                     as: 'clients',
                     through: { attributes: [] },
                     attributes: [
-                        [Sequelize.col('companyname'), 'client_name'],
-                        [Sequelize.col('client_id'), 'client_id']
+                        [Sequelize.col('companyname'), 'name'],
+                        [Sequelize.col('client_id'), 'id']
 
                     ]
                 },
@@ -228,11 +228,3 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
-
-function first(array) {
-    if (array == null)
-        return {};
-    if (array.length == 0)
-        return {}
-    return array[0];
-};

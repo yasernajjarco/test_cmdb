@@ -2,200 +2,198 @@ const db = require("../index.db");
 const ci = db.ci;
 const app = db.application;
 const classService = db.classService;
+const utils = require("./utils");
 
 
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
 exports.findAll = (req, res) => {
-    // const title = req.query.title;
-    // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-    // { include: ["ci"] }
-    // { include: [ { all: true, nested: true }] }
-    //        attributes: ['ManagerName']
+    const platform = req.body.platform;
+    const type = req.body.type;
+    const subtype = req.body.subtype;
 
-
-    /*   include: [{
-      model: db.ci,
-      required: false,
-      as: 'ci',
-      attributes: ['company','description'],
-      include: [{
-        model: db.classService,
-        required: false,
-        as: 'classService',
-        attributes: [['name','nameClass']],
-    }]
-
-  }],
-  attributes: ['version', 'is_valid','ci.company']
-
-} */
-
-
-    /* {
-       
-      attributes: ['is_valid',['version','versionName'], [Sequelize.col('ci.classService.name'), 'service'] , [Sequelize.col('ci.company'), 'company'] ],
-          include: [{
-              model: db.ci,
-              required: false,
-              as: 'ci',
-              attributes: [  ],
-              include: [{
-                model: db.classService,
-                required: false,
-                as: 'classService',
-                attributes: [],
-                
-            }]
-
-          }],
-          
-      } */
-
-
-
-    /*   {
-       
-        attributes: ['is_valid',['version','versionName'], [Sequelize.col('ci.classService.name'), 'service'] , [Sequelize.col('ci.company'), 'company'] ],
-            include: [{ model: db.ci, as: 'ci', attributes: [  ],
-                include: [{ model: db.classService,as: 'classService',attributes: [] }]
-                }],
-            
-      } */
-
-
-    //,     [Sequelize.literal('"ci"."company"'), 'companyName']
-    app.findAll({
-
+    let condition = buildCondition(platform, type, subtype);
+    let attributes = (req.body.columns == undefined) ? [] : buildAttributes(req.body.columns);
+    db.application.findAll({
+            where: condition,
             include: [{
-                    model: db.ci,
-                    required: false,
-                    as: 'ci',
-                    attributes: [],
-                    include: [{ model: db.platforms, required: false, as: 'platforms', attributes: [], }]
-                },
-                {
-                    model: db.instance,
-                    required: false,
-                    as: 'instance',
-                    attributes: ['name'],
-                },
-                {
-                    model: db.provider,
-                    required: false,
-                    as: 'provider',
-                    attributes: [],
-                }
-
-            ],
-            attributes: ['version', 'is_valid', [Sequelize.col('ci.platforms.name'), 'platform'],
-                [Sequelize.col('provider.name'), 'providerName'],
-                [Sequelize.col('ci.company'), 'company'],
-                [Sequelize.col('ci.description'), 'description']
-            ]
-
+                model: db.ci,
+                required: false,
+                as: 'ci',
+                attributes: [],
+                include: [
+                    { model: db.platforms, required: false, as: 'platforms', attributes: [] },
+                    { model: db.status, required: false, as: 'status', attributes: [], },
+                    { model: db.classService, required: false, as: 'classService', attributes: [], },
+                    { model: db.ciType, required: false, as: 'ciType', attributes: [], },
+                    { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                    { model: db.envType, required: false, as: 'envType', attributes: [] },
+                ]
+            }, ],
+            attributes: attributes
         })
         .then(data => {
-
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving Platforms."
+                message: err.message || "Some error occurred while retrieving hardwares."
             });
         });
+
+
+
 };
 
 
+exports.findById = (req, res) => {
 
-
-exports.findByIdProvider = (req, res) => {
-    // const title = req.query.title;
-    // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-    //{ include: ["application"] }
     const id = req.params.id;
 
-    app.findAll({
+    db.application.findAll({
+            where: { ci_id: id },
             include: [{
                     model: db.ci,
                     required: false,
                     as: 'ci',
                     attributes: [],
-                    include: [{ model: db.platforms, required: false, as: 'platforms', attributes: [], }]
+                    include: [
+                        { model: db.platforms, required: false, as: 'platforms', attributes: [] },
+                        { model: db.status, required: false, as: 'status', attributes: [], },
+                        { model: db.classService, required: false, as: 'classService', attributes: [], },
+                        { model: db.ciType, required: false, as: 'ciType', attributes: [], },
+                        { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                        { model: db.envType, required: false, as: 'envType', attributes: [] },
+                    ]
                 },
+
                 {
                     model: db.instance,
                     required: false,
                     as: 'instance',
-                    attributes: ['name'],
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+
+
+                        ],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
+                    attributes: [
+                        ['ci_id', 'id']
+                    ]
                 },
                 {
                     model: db.provider,
-                    required: true,
-                    as: 'provider',
-                    where: { provider_id: id },
-                }
-
-            ],
-            attributes: ['version', 'product_code', 'is_valid', [Sequelize.col('provider.name'), 'providerName'],
-                [Sequelize.col('ci.company'), 'company'],
-                [Sequelize.col('ci.description'), 'description']
-            ]
-
-        })
-        .then(data => {
-
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving Platforms."
-            });
-        });
-};
-
-exports.findByIdPlatform = (req, res) => {
-    // const title = req.query.title;
-    // var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-    //{ include: ["application"] }
-    const id = req.body.platform_id;
-    console.log(id)
-    app.findAll({
-            include: [{
-                    model: db.ci,
-                    required: true,
-                    as: 'ci',
-                    attributes: [],
-                    include: [{ model: db.platforms, required: true, as: 'platforms', where: { platform_id: id } }]
-                },
-                {
-                    model: db.instance,
                     required: false,
-                    as: 'instance',
-                    attributes: ['name'],
-                },
-                {
-                    model: db.provider,
-                    required: true,
                     as: 'provider',
-                    attributes: [],
-                }
+                    attributes: ['vendor_code']
+                },
 
             ],
-            attributes: ['version', 'product_code', 'is_valid', [Sequelize.col('provider.name'), 'providerName'],
-                [Sequelize.col('ci.company'), 'company'],
-                [Sequelize.col('ci.description'), 'description']
+            attributes: [
+                ['ci_id', 'id'],
+                [Sequelize.col('ci.our_name'), 'name'],
+                [Sequelize.col('ci.ciType.name'), 'type'],
+                [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
+                [Sequelize.col('ci.envType.name'), 'environnement'],
+                [Sequelize.col('ci.status.name'), 'status'],
+                [Sequelize.col('ci.description'), 'description'],
+                [Sequelize.col('ci.classService.name'), 'classService'],
+                [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
+                [Sequelize.col('ci.platforms.name'), 'platform'],
+
+                [Sequelize.col('provider.provider_id'), '_provider id'],
+                [Sequelize.col('provider.vendor_code'), '_provider vendor_code'],
+                [Sequelize.col('provider.name'), '_provider name'],
+
+
             ]
 
-        })
+        }).map(data => data.toJSON())
         .then(data => {
-
-            res.send(data);
-        })
-        .catch(err => {
+            let result = utils.buildObject(utils.first(data));
+            res.send(result);
+        }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving Platforms."
+                message: err.message || "Some error occurred while retrieving hardwares."
             });
         });
+
+
 };
+
+
+function buildAttributes(columns) {
+    let attributes = [];
+    columns.forEach(element => {
+        switch (element) {
+
+            case 'name':
+                attributes.push([Sequelize.col('ci.our_name'), 'name']);
+                break;
+            case 'type':
+                attributes.push([Sequelize.col('ci.ciType.name'), 'type']);
+                break;
+            case 'subtype':
+                attributes.push([Sequelize.col('ci.ciSubtype.name'), 'subtype']);
+                break;
+            case 'environnement':
+                attributes.push([Sequelize.col('ci.envType.name'), 'environnement']);
+                break;
+            case 'status':
+                attributes.push([Sequelize.col('ci.status.name'), 'status']);
+                break;
+            case 'description':
+                attributes.push([Sequelize.col('ci.description'), 'description']);
+                break;
+            case 'classService':
+                attributes.push([Sequelize.col('ci.classService.name'), 'classService']);
+                break;
+            case 'nrb_managed_by':
+                attributes.push([Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by']);
+                break;
+            case 'platform':
+                attributes.push([Sequelize.col('ci.platforms.name'), 'platform']);
+                break;
+            case 'id':
+                attributes.push(['ci_id', 'id']);
+                break;
+            case 'version':
+                attributes.push(['version', 'version']);
+                break;
+            case 'product_code':
+                attributes.push(['product_code', 'product_code']);
+                break;
+            case 'end_of_support_date':
+                attributes.push(['end_of_support_date', 'end_of_support_date']);
+                break;
+            case 'end_extended_support':
+                attributes.push(['end_extended_support', 'end_extended_support']);
+                break;
+        }
+
+
+    });
+
+    return attributes;
+
+}
+
+function buildCondition(platform, type, subtype) {
+    console.log(platform)
+    let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
+
+    (type !== undefined) ? condition['$ci.ciType.name$'] = {
+        [Op.like]: `%${type}%`
+    }: {};
+    (subtype !== undefined) ? condition['$ci.ciSubtype.name$'] = {
+        [Op.like]: `%${subtype}%`
+    }: {};
+    return condition;
+}

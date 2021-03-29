@@ -191,7 +191,7 @@ exports.findById = (req, res) => {
 
 
                         ],
-                        attributes: ['our_name', ['ci_id', 'id'], 'des']
+                        attributes: ['our_name', ['ci_id', 'id']]
 
                     }],
                     attributes: [
@@ -205,8 +205,8 @@ exports.findById = (req, res) => {
                     as: 'clients',
                     through: { attributes: [] },
                     attributes: [
-                        [Sequelize.col('companyname'), 'client_name'],
-                        [Sequelize.col('client_id'), 'client_id']
+                        [Sequelize.col('companyname'), 'name'],
+                        [Sequelize.col('client_id'), 'id']
 
                     ]
                 },

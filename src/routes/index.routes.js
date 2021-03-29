@@ -8,6 +8,8 @@ import systems from './systems.routes';
 import zlinux from './zlinux.routes';
 import instances from './instances.routes';
 import occurences from './occurences.routes';
+import clients from './client.routes';
+
 
 import Ci from './ci.routes';
 import App from './app.routes';
@@ -21,15 +23,17 @@ router.use('/platforms', platform);
 router.use('/hardwares', hardware);
 router.use('/users', Auth);
 router.use('/cis', Ci);
-router.use('/providers', Provider);
+
+
 router.use('/partitions', partitions);
 router.use('/systems', systems);
 router.use('/zlinuxs', zlinux);
-//router.use('/instances', instances);
-//router.use('/occurences', occurences);
-
+router.use('/instances', instances);
+router.use('/occurences', occurences);
 router.use('/apps', App);
 
+//router.use('/providers', Provider);
+//router.use('/clients', clients);
 
 
 router.use('/', User); //pour test

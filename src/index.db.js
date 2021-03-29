@@ -55,6 +55,7 @@ db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes
 
 db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize, DataTypes);
 
+db.contact = require("./models/contact")(sequelize, Sequelize, DataTypes);
 
 
 //=============== CI ================//
@@ -185,10 +186,11 @@ db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "pro
 
 
 
-db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "application" });
+db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "applications" });
 db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
 
-
+db.client.hasMany(db.contact, { foreignKey: 'client_id', as: "contacts" });
+db.contact.belongsTo(db.client, { foreignKey: 'client_id', as: "client" });
 
 
 /*
