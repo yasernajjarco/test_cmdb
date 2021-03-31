@@ -49,9 +49,46 @@ exports.findAll = (req, res) => {
                 ]
             }
 
-        )
+        ).map(data => data.toJSON())
         .then(data => {
-            res.send(data);
+            let result = data;
+            db.provider.findAll({
+                where: {
+                    '$name$': {
+                        [Op.like]: `%${name}%`
+                    }
+                }
+            }).map(data => data.toJSON()).then(data => {
+                data.forEach(element => {
+                    result.push({
+                        id: element.provider_id,
+                        name: element.name,
+                        type: "provider",
+                        subtype: "provider"
+                    })
+                })
+
+                db.client.findAll({
+                    where: {
+                        '$companyname$': {
+                            [Op.like]: `%${name}%`
+                        }
+                    }
+                }).map(data => data.toJSON()).then(data => {
+                    data.forEach(element => {
+                        result.push({
+                            id: element.client_id,
+                            name: element.companyname,
+                            type: "client",
+                            subtype: "client"
+                        })
+                    })
+                    res.send(result);
+
+                })
+
+            })
+
         })
         .catch(err => {
             res.status(500).send({
