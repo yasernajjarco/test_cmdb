@@ -17,30 +17,30 @@ module.exports = sequelize => {
         model: "client_model"
       }
     },
-    instance_id: {
+    systeme_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
       comment: null,
-      field: "instance_id",
+      field: "systeme_id",
       references: {
-        key: "instance_id",
-        model: "instance_model"
+        key: "systeme_id",
+        model: "systeme_model"
       }
     }
   };
   const options = {
-    tableName: "instance_client",
+    tableName: "client_systeme",
     comment: "",
     indexes: [{
-      name: "instance_id",
+      name: "systeme_id",
       unique: false,
       type: "BTREE",
-      fields: ["instance_id"]
+      fields: ["systeme_id"]
     }]
   };
-  const InstanceClientModel = sequelize.define("instance_client_model", attributes, options);
-  return InstanceClientModel;
+  const ClientSystemeModel = sequelize.define("client_systeme_model", attributes, options);
+  return ClientSystemeModel;
 };

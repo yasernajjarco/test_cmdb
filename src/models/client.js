@@ -20,7 +20,8 @@ module.exports = sequelize => {
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "companyname"
+      field: "companyname",
+      unique: "companyname"
     },
     address: {
       type: DataTypes.STRING(300),

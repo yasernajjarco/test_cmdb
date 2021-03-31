@@ -32,8 +32,8 @@ router.use('/instances', instances);
 router.use('/occurences', occurences);
 router.use('/apps', App);
 
-//router.use('/providers', Provider);
-//router.use('/clients', clients);
+router.use('/providers', Provider);
+router.use('/clients', clients);
 
 
 router.use('/', User); //pour test

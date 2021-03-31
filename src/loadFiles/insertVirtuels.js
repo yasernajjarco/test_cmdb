@@ -278,19 +278,27 @@ async function insertSystem(lserver, namePlatform, nameType) {
                         }
                     }).then(async function(res) {
 
-                        /*  let idClient = null;
-                         if (lserver.nrb_class_service === 'IAAS') {
-                             idClient = lserver.client_id;
-
-                         } */
                         await db.systems.findOrCreate({
                             //  hardware_id: lserver.hardware_id,
                             where: { ci_id: res[0].dataValues.ci_id },
                             defaults: {
                                 ci_id: res[0].dataValues.ci_id,
-                                lpar_id: lserver.lpar_id,
-                                client_id: lserver.client_id
+                                lpar_id: lserver.lpar_id
                             }
+                        }).then(async function(res) {
+                            if (lserver.company != 'PROD-NRB') {
+                                await db.client_systeme.findOrCreate({
+                                    where: {
+                                        [db.Op.and]: [{ client_id: lserver.client_id, systeme_id: res[0].dataValues.systeme_id }]
+                                    },
+                                    defaults: {
+                                        client_id: lserver.client_id,
+                                        systeme_id: res[0].dataValues.systeme_id
+
+                                    }
+                                })
+                            }
+
                         });
 
                     })
@@ -468,3 +476,20 @@ async function insertClient(apps) {
     }
     return i;
 }
+
+
+/* .then(async function(res) {
+    if (lserver.company != 'PROD-NRB') {
+        await db.client_systeme.findOrCreate({
+            where: {
+                [db.Op.and]: [{ client_id: lserver.client_id, systeme_id: res[0].dataValues.systeme_id }]
+            },
+            defaults: {
+                client_id: lserver.client_id,
+                systeme_id: res[0].dataValues.systeme_id
+
+            }
+        })
+    }
+
+}); */

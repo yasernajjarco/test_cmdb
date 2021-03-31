@@ -12,6 +12,8 @@ const { authJwt } = require("../middleware");
 
 router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll);
 router.get("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
+router.get("/table/:id", [authJwt.verifyToken, authJwt.isModerator], controller.buildTableById);
+router.get("/clientForTable/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findClientsForTable);
 
 
 

@@ -131,30 +131,31 @@ async function insertInstance(instances, namePlatform) {
 
                     compt++;
                     await db.instance.findOrCreate({
-                        where: { name: app.logicalname },
-                        defaults: {
-                            name: app.logicalname,
-                            ci_application_id: app.ci_application_id,
-                            systeme_id: app.systeme_id,
-                            ci_id: res[0].dataValues.ci_id,
-                            // isoccurenciable: 1,
-
-                        }
-
-                    }).then(async function(res) {
-                        await db.instance_client.findOrCreate({
-                            where: {
-                                [db.Op.and]: [{ client_id: app.client_id, instance_id: res[0].dataValues.instance_id }]
-                            },
+                            where: { name: app.logicalname },
                             defaults: {
-                                client_id: app.client_id,
-                                instance_id: res[0].dataValues.instance_id
+                                name: app.logicalname,
+                                ci_application_id: app.ci_application_id,
+                                systeme_id: app.systeme_id,
+                                ci_id: res[0].dataValues.ci_id,
+                                // isoccurenciable: 1,
 
                             }
+
                         })
+                        /*                     .then(async function(res) {
+                                                await db.instance_client.findOrCreate({
+                                                    where: {
+                                                        [db.Op.and]: [{ client_id: app.client_id, instance_id: res[0].dataValues.instance_id }]
+                                                    },
+                                                    defaults: {
+                                                        client_id: app.client_id,
+                                                        instance_id: res[0].dataValues.instance_id
+
+                                                    }
+                                                })
 
 
-                    });
+                                            }); */
 
                 });
 

@@ -95,7 +95,12 @@ exports.findById = (req, res) => {
                     model: db.client,
                     required: false,
                     as: 'clients',
-                    attributes: []
+                    through: { attributes: [] },
+                    attributes: [
+                        [Sequelize.col('companyname'), 'name'],
+                        [Sequelize.col('client_id'), 'id']
+
+                    ]
                 },
 
                 {
@@ -139,8 +144,8 @@ exports.findById = (req, res) => {
                 [Sequelize.col('lpars.ci.status.name'), '_partition status'],
 
 
-                [Sequelize.col('clients.companyname'), '_Client name'],
-                [Sequelize.col('clients.client_id'), '_Client id'],
+                // [Sequelize.col('clients.companyname'), '_Client name'],
+                // [Sequelize.col('clients.client_id'), '_Client id'],
 
 
             ]
@@ -187,6 +192,9 @@ function buildAttributes(columns) {
                 break;
             case 'nrb_managed_by':
                 attributes.push([Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by']);
+                break;
+            case 'logical_name':
+                attributes.push([Sequelize.col('ci.logical_name'), 'logical_name']);
                 break;
             case 'platform':
                 attributes.push([Sequelize.col('ci.platforms.name'), 'platform']);

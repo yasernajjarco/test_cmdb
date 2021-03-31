@@ -159,6 +159,9 @@ function buildAttributes(columns) {
             case 'nrb_managed_by':
                 attributes.push([Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by']);
                 break;
+            case 'logical_name':
+                attributes.push([Sequelize.col('ci.logical_name'), 'logical_name']);
+                break;
             case 'platform':
                 attributes.push([Sequelize.col('ci.platforms.name'), 'platform']);
                 break;

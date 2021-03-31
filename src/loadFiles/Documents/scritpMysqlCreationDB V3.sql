@@ -2,8 +2,8 @@
 
 `cmdb`.`client_hardware`, 
 `cmdb`.`client_zlinux`,
+`cmdb`.`client_systeme`,
 `cmdb`.`hardware_relation`,
-`cmdb`.`instance_client`,
 `cmdb`.`occurence_client`,
 `cmdb`.`provider_platform`,
 `cmdb`.`occurencesoft`,
@@ -160,8 +160,6 @@ create table systeme(
    systeme_id int auto_increment,
    lpar_id int,
    ci_id int not null,
-	client_id int,
-   foreign key(client_id) references client(client_id),
    primary key(systeme_id),
    foreign key(lpar_id) references lpar(lpar_id),
    foreign key(ci_id) references ci(ci_id)
@@ -236,6 +234,14 @@ create table client_zlinux(
    foreign key(zlinux_id) references zlinux(zlinux_id)
 );
 
+create table client_systeme(
+   client_id int,
+   systeme_id int,
+   primary key(client_id, systeme_id),
+   foreign key(client_id) references client(client_id),
+   foreign key(systeme_id) references systeme(systeme_id)
+);
+
 create table client_hardware(
    hardware_id int,
    client_id int,
@@ -253,13 +259,6 @@ create table hardware_relation(
    foreign key(hardware_id_1) references hardware(hardware_id)
 );
 
-create table instance_client(
-   client_id int,
-   instance_id int,
-   primary key(client_id, instance_id),
-   foreign key(client_id) references client(client_id),
-   foreign key(instance_id) references instance(instance_id)
-);
 
 create table occurence_client(
    client_id int,

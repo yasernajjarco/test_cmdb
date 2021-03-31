@@ -47,9 +47,9 @@ db.hardwares_relations = require("./models/hardware_relation")(sequelize, Sequel
 db.ciType = require("./models/ci_type")(sequelize, Sequelize, DataTypes);
 db.ciSubtype = require("./models/ci_subtype")(sequelize, Sequelize, DataTypes);
 db.client = require("./models/client")(sequelize, Sequelize, DataTypes);
-db.instance_client = require("./models/instance_client")(sequelize, Sequelize, DataTypes);
 db.client_zlinux = require("./models/client_zlinux")(sequelize, Sequelize, DataTypes);
 db.client_hardware = require("./models/client_hardware")(sequelize, Sequelize, DataTypes);
+db.client_systeme = require("./models/client_systeme")(sequelize, Sequelize, DataTypes);
 
 db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes);
 
@@ -124,8 +124,11 @@ db.lpars.hasMany(db.systems, { foreignKey: 'lpar_id', as: "systems" });
 db.systems.belongsTo(db.lpars, { foreignKey: 'lpar_id', as: "lpars" });
 
 
-db.systems.belongsTo(db.client, { foreignKey: 'client_id', as: "clients" });
-db.client.hasMany(db.systems, { foreignKey: 'client_id', as: "systems" });
+/* db.systems.belongsTo(db.client, { foreignKey: 'client_id', as: "clients" });
+db.client.hasMany(db.systems, { foreignKey: 'client_id', as: "systems" }); */
+
+db.systems.belongsToMany(db.client, { through: "client_systeme", as: "clients", foreignKey: "systeme_id" });
+db.client.belongsToMany(db.systems, { through: "client_systeme", as: "systems", foreignKey: "client_id" });
 
 //===============================//
 
@@ -157,8 +160,8 @@ db.systems.hasMany(db.instance, { foreignKey: 'systeme_id', as: "instances" });
 db.instance.belongsTo(db.systems, { foreignKey: 'systeme_id', as: "systems" });
 
 
-db.instance.belongsToMany(db.client, { through: "instance_client", as: "clients", foreignKey: "instance_id" });
-db.client.belongsToMany(db.instance, { through: "instance_client", as: "instances", foreignKey: "client_id" });
+/* db.instance.belongsToMany(db.client, { through: "instance_client", as: "clients", foreignKey: "instance_id" });
+db.client.belongsToMany(db.instance, { through: "instance_client", as: "instances", foreignKey: "client_id" }); */
 
 
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as: "instance" });

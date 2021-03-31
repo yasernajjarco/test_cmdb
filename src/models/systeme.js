@@ -38,30 +38,12 @@ module.exports = sequelize => {
         key: "ci_id",
         model: "ci_model"
       }
-    },
-    client_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "client_id",
-      references: {
-        key: "client_id",
-        model: "client_model"
-      }
     }
   };
   const options = {
     tableName: "systeme",
     comment: "",
     indexes: [{
-      name: "client_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["client_id"]
-    }, {
       name: "lpar_id",
       unique: false,
       type: "BTREE",
