@@ -9,6 +9,7 @@ import zlinux from './zlinux.routes';
 import instances from './instances.routes';
 import occurences from './occurences.routes';
 import clients from './client.routes';
+import info from './info.routes';
 
 
 import Ci from './ci.routes';
@@ -34,6 +35,7 @@ router.use('/apps', App);
 
 router.use('/providers', Provider);
 router.use('/clients', clients);
+router.use('/info', info);
 
 
 router.use('/', User); //pour test

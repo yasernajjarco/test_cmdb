@@ -124,7 +124,8 @@ async function test() {
         file = path.resolve(__dirname, "update company/" + 'CI virtual Z.xlsx')
         await updateCopany.updateSystemes(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
-
+        file = path.resolve(__dirname, "update company/" + 'linux_clients Z.xlsx')
+        await updateCopany.updateLinux(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
 
         //////////////////////////////////
