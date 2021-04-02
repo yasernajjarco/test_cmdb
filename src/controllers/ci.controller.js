@@ -79,8 +79,8 @@ exports.findAll = (req, res) => {
                         result.push({
                             id: element.client_id,
                             name: element.companyname,
-                            type: "client",
-                            subtype: "client"
+                            type: "customer",
+                            subtype: "customer"
                         })
                     })
                     res.send(result);
