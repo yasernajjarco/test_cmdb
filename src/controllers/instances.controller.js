@@ -70,17 +70,29 @@ exports.findById = (req, res) => {
                     as: 'systems',
                     attributes: [],
                     include: [{
-                        model: db.ci,
-                        required: false,
-                        as: 'ci',
-                        include: [
-                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
-                            { model: db.ciType, required: false, as: 'ciType', attributes: [] },
-                            { model: db.status, required: false, as: 'status', attributes: [] },
+                            model: db.ci,
+                            required: false,
+                            as: 'ci',
+                            include: [
+                                { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                                { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                                { model: db.status, required: false, as: 'status', attributes: [] },
 
-                        ],
-                        attributes: []
-                    }],
+                            ],
+                            attributes: []
+                        },
+                        {
+                            model: db.client,
+                            required: false,
+                            as: 'clients',
+                            through: { attributes: [] },
+                            attributes: [
+                                [Sequelize.col('companyname'), 'name'],
+                                [Sequelize.col('client_id'), 'id']
+
+                            ]
+                        },
+                    ],
                 },
 
                 {

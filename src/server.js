@@ -1,4 +1,5 @@
 import 'dotenv/config';
+const config = require("./config/config");
 import cors from 'cors';
 import express from 'express';
 const initial = require("./initial");
@@ -7,8 +8,6 @@ const exportFiles = require("./exportFiles");
 const load = require("./loadFiles/index");
 import routes from './routes/index.routes';
 const logger = require('./logger');
-
-
 
 
 const app = express();
@@ -76,11 +75,12 @@ logger.info('start at: ', time)
 //exportFiles.start();
 
 
-
 app.use('/api', routes);
 
 
-app.listen(process.env.PORT, () =>
+
+
+app.listen(config.PORT, () =>
     app.use('/api/v1', app),
-    console.log(`le server  listening on port ${process.env.PORT}!`),
+    console.log(`le server  listening on port ${config.PORT}!`),
 );
