@@ -9,7 +9,6 @@ import routes from './routes/index.routes';
 const logger = require('./logger');
 
 
-console.log(config)
 
 const app = express();
 const expressJSDocSwagger = require('express-jsdoc-swagger');
@@ -69,8 +68,6 @@ logger.info('start at: ', time)
 
 
 app.use('/api', routes);
-
-
 
 
 app.listen(config.PORT, () =>

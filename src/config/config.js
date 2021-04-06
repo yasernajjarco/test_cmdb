@@ -2,8 +2,10 @@
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjE3MDA5OTQ4LCJleHAiOjE2MjU2NDk5NDh9.TLFdMlTFW3P8CGsvBH5LmWvcxxW-YvxC6KindnSccGw
 
 let path = require('path');
-let filename = require('path').resolve(__dirname, '../..');
+let filename = require('path').resolve(__dirname, '../../..');
 let env = path.dirname(filename).split(path.sep).pop();
+
+console.log(env);
 
 const local = {
     PORT: 3000,
