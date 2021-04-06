@@ -7,6 +7,7 @@ let env = path.dirname(filename).split(path.sep).pop();
 
 const local = {
     PORT: 3000,
+    ENV: 'local',
     HOST: "localhost",
     USER: "root",
     PASSWORD: "rootroot",
@@ -28,7 +29,7 @@ const local = {
 const dev = {
 
     PORT: 3000,
-
+    ENV: 'dev',
     HOST: "localhost",
     USER: "lsyalh",
     PASSWORD: "lsyalh",
@@ -51,6 +52,7 @@ const dev = {
 const test = {
 
     PORT: 3001,
+    ENV: 'test',
 
     HOST: "localhost",
     USER: "lsyalh",
@@ -74,6 +76,7 @@ const test = {
 const prod = {
 
     PORT: 3002,
+    ENV: 'prod',
 
     HOST: "localhost",
     USER: "lsyalh",

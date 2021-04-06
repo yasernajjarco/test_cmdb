@@ -4,11 +4,12 @@ import cors from 'cors';
 import express from 'express';
 const initial = require("./initial");
 const exportFiles = require("./exportFiles");
-
 const load = require("./loadFiles/index");
 import routes from './routes/index.routes';
 const logger = require('./logger');
 
+
+console.log(config)
 
 const app = express();
 const expressJSDocSwagger = require('express-jsdoc-swagger');
@@ -55,19 +56,11 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to CMDB API service." });
 });
 
-/* var options = {
-    swaggerOptions: {
-        authAction: { JWT: { name: "JWT", schema: { type: "apiKey", in: "header", name: "Authorization", description: "" }, value: "Bearer <JWT>" } }
-    }
-};
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
- */
-
+/*
 let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 logger.info('start at: ', time)
-
-/* initial.seed().then(() => {
+ initial.seed().then(() => {
     load.test()
 });
  */
