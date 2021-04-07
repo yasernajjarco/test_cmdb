@@ -5,8 +5,6 @@ let path = require('path');
 let filename = require('path').resolve(__dirname, '../../..');
 let env = path.dirname(filename).split(path.sep).pop();
 
-console.log(env);
-
 const local = {
     PORT: 3000,
     ENV: 'local',

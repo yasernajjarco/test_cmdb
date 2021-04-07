@@ -12,10 +12,12 @@ exports.buildTableById = (req, res) => {
 
     const id = req.params.id;
 
-    let condition = (id > 0) ? { '$clients.client_id$': id } : {
+    /*  let condition = (id > 0) ? { '$clients.client_id$': id } : {
 
-        [db.Op.or]: [{ '$clients.companyname$': ['SIBELGA', 'NRB'] }]
-    }
+      [db.Op.or]: [{ '$clients.companyname$': ['SIBELGA', 'NRB'] }]
+     } */
+
+    let condition = { '$clients.client_id$': id }
 
     db.systems.findAll({
             where: condition,
