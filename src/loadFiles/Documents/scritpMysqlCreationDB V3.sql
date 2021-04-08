@@ -50,6 +50,7 @@ create table client(
    client_id int auto_increment,
    companyname varchar(300) unique,
    address varchar(300),
+   isshared int,
    primary key(client_id)
 );
 
