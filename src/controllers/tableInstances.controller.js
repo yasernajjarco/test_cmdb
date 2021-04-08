@@ -99,7 +99,6 @@ exports.buildTableById = (req, res) => {
 
         }).map(data => data.toJSON())
         .then(data => {
-            data.forEach(element => console.log(element.instances.length))
             let result = buildResult(data)
             res.send(result);
         }).catch(err => {
@@ -205,6 +204,7 @@ function buildResult(data) {
         /* let isFound = apps.some(function(el) { return el.ci_application_id == element.application.ci_application_id && el.sysName == element.systems.ci.logical_name });
         if (!isFound)  */
         element.instances.forEach(instance => {
+            console.log(instance)
             apps.push(getApp(instance, element.id))
         })
 

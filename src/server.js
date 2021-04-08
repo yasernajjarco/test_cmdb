@@ -56,14 +56,14 @@ app.get("/", (req, res) => {
 });
 
 
-/*
+
 let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 logger.info('start at: ', time)
- initial.seed().then(() => {
+initial.seed().then(() => {
     load.test()
 });
- */
 
+//3249
 //exportFiles.start();
 
 

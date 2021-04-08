@@ -97,7 +97,8 @@ async function insertApplications(apps, namePlatform) {
 
 
                 await db.ci.findOrCreate({
-                    where: { name: app.product_code },
+
+                    where: { logical_name: app.logicalname },
                     defaults: {
                         name: app.product_code,
                         logical_name: app.logicalname,

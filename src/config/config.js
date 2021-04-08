@@ -99,14 +99,15 @@ const prod = {
 
 function config() {
     switch (env) {
-        case 'local':
-            return local;
+
         case 'dev':
             return dev;
         case 'test':
             return test;
         case 'prod':
             return prod;
+        default:
+            return local;
     }
 }
 
