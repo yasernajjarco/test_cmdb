@@ -82,9 +82,13 @@ async function insertOccurences(apps, namePlatform) {
 
             const asyncFunction = async() => {
 
-                let step1 = await db.client.findOne({ where: { companyname: occu.company }, attributes: ['client_id'] })
-                occu.client_id = step1.dataValues.client_id;
+                let step1 = null;
+                if (occu.company !== 'PROD-NRB') {
 
+                    step1 = await db.client.findOne({ where: { companyname: occu.company }, attributes: ['client_id'] })
+                    occu.client_id = step1.dataValues.client_id;
+
+                }
                 step1 = await db.instance.findOne({ where: { name: occu.softinstance }, attributes: ['instance_id'] })
                 occu.instance_id = step1.dataValues.instance_id;
 
@@ -140,7 +144,7 @@ async function insertOccurences(apps, namePlatform) {
 
                         }
                     }).then(async function(res) {
-                        if (app.company != 'PROD-NRB') {
+                        if (app.company !== 'PROD-NRB') {
                             await db.occurence_client.findOrCreate({
                                 where: {
                                     [db.Op.and]: [{ client_id: app.client_id, occurencesoft_id: res[0].dataValues.occurencesoft_id }]
@@ -177,12 +181,15 @@ async function insertOccurences(apps, namePlatform) {
         for (var i = 1; i < apps.length; i++) {
             const occu = { company: apps[i]["COMPANY"] };
 
-            await db.client.findOrCreate({
-                where: { companyname: occu.company },
-                defaults: {
-                    companyname: occu.company,
-                }
-            });
+            if (occu.company !== undefined && occu.company != 'PROD-NRB') {
+                await db.client.findOrCreate({
+                    where: { companyname: occu.company },
+                    defaults: {
+                        companyname: occu.company,
+                    }
+                });
+            }
+
 
         }
         return i;

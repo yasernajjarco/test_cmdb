@@ -81,17 +81,8 @@ exports.findById = (req, res) => {
                             ],
                             attributes: []
                         },
-                        {
-                            model: db.client,
-                            required: false,
-                            as: 'clients',
-                            through: { attributes: [] },
-                            attributes: [
-                                [Sequelize.col('companyname'), 'name'],
-                                [Sequelize.col('client_id'), 'id']
 
-                            ]
-                        },
+
                     ],
                 },
 
@@ -165,8 +156,9 @@ exports.findById = (req, res) => {
             ]
 
         }).map(data => data.toJSON())
-        .then(data => {
+        .then(async data => {
             let result = utils.buildObject(utils.first(data));
+            result['clients'] = await getClients(result.system.id);
             res.send(result);
         }).catch(err => {
             res.status(500).send({
@@ -237,4 +229,46 @@ function buildCondition(platform, type, subtype) {
         [Op.like]: `%${subtype}%`
     }: {};
     return condition;
+}
+
+async function getClients(systeme_id) {
+
+    return new Promise(
+        (resolve, reject) => {
+            db.systems.findAll({
+                    where: { ci_id: systeme_id },
+                    include: [{
+                            model: db.ci,
+                            required: false,
+                            as: 'ci',
+                            attributes: [],
+                        },
+
+                        {
+                            model: db.client,
+                            required: false,
+                            as: 'clients',
+                            through: { attributes: [] },
+                            attributes: [
+                                [Sequelize.col('companyname'), 'name'],
+                                [Sequelize.col('client_id'), 'id']
+                            ]
+                        },
+
+                    ],
+                    attributes: [
+                        ['ci_id', 'id']
+                    ]
+
+                }).map(data => data.toJSON())
+                .then(data => {
+                    resolve(utils.first(data).clients)
+                }).catch(err => {
+                    reject([])
+                });
+        }
+    );
+
+
+
 }

@@ -48,7 +48,7 @@ export async function insertInstances(fileName, namePlatform) {
 
 async function insertInstance(instances, namePlatform) {
 
-    var i = await insertClient(instances);
+    // var i = await insertClient(instances);
 
     for (var i = 1; i < instances.length; i++) {
 
@@ -102,8 +102,6 @@ async function insertInstance(instances, namePlatform) {
                 step1 = await db.application.findOne({ where: { product_code: instance.product_code, version: instance.version }, attributes: ['ci_application_id'] })
                 instance.ci_application_id = step1.dataValues.ci_application_id;
 
-                step1 = await db.client.findOne({ where: { companyname: instance.company }, attributes: ['client_id'] })
-                instance.client_id = step1.dataValues.client_id;
 
                 return instance;
 
@@ -171,16 +169,19 @@ async function insertInstance(instances, namePlatform) {
     }
 
 
-    async function insertClient(clients) {
-        for (var i = 1; i < clients.length; i++) {
-            const element = { company: clients[i]["COMPANY"] };
+    async function insertClient(apps) {
+        for (var i = 1; i < apps.length; i++) {
+            const occu = { company: apps[i]["COMPANY"] };
 
-            await db.client.findOrCreate({
-                where: { companyname: element.company },
-                defaults: {
-                    companyname: element.company,
-                }
-            });
+            if (occu.company !== undefined && occu.company != 'PROD-NRB') {
+                await db.client.findOrCreate({
+                    where: { companyname: occu.company },
+                    defaults: {
+                        companyname: occu.company,
+                    }
+                });
+            }
+
 
         }
         return i;

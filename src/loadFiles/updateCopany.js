@@ -46,7 +46,7 @@ export async function updateOccurences(fileName, namePlatform) {
 
 async function updateOccurenceElements(occurences, namePlatform) {
 
-    await insertClient(occurences);
+    await insertClient(occurences, false);
 
     for (var i = 0; i < occurences.length; i++) {
 
@@ -107,38 +107,62 @@ async function updateOccurenceElements(occurences, namePlatform) {
 
 }
 
-async function insertClient(clients) {
+async function insertClient(clients, isShared) {
     let array = [];
     for (var i = 0; i < clients.length; i++) {
 
         const element = clients[i]["COMPANY_BREAKDOWN"];
-        let companies = element.split(',');
+        if (element != undefined) {
+            let companies = element.split(',');
 
-        await companies.forEach(async companyCode => {
-            let test = companyCode.trim();
-            if (array.indexOf(test) === -1) array.push(test)
+            await companies.forEach(async companyCode => {
+                let test = companyCode.trim();
+                if (array.indexOf(test) === -1) array.push(test)
 
-        })
+            })
+        }
+
 
     }
 
     await array.forEach(async companyCode => {
-        await setClient(companyCode);
+        await setClient(companyCode, isShared);
 
     });
 }
 
-async function setClient(companyCode) {
-    await db.client.findOrCreate({
-        where: { companyname: companyCode },
-        defaults: {
+async function setClient(companyCode, isShared) {
+
+    if (isShared) {
+        await upsert(db.client, { companyname: companyCode }, {
             companyname: companyCode,
-        }
-    });
+            isshared: 1
+        });
+    } else {
+        await db.client.findOrCreate({
+            where: { companyname: companyCode },
+            defaults: {
+                companyname: companyCode,
+                isshared: 1
+            }
+        });
+    }
+
 }
 
 
 
+async function upsert(Model, condition, values) {
+    return Model
+        .findOne({ where: condition })
+        .then(function(obj) {
+            // update
+            if (obj)
+                return obj.update(values);
+            // insert
+            return Model.create(values);
+        })
+}
 
 /////////////////////////////////////////////
 
@@ -179,7 +203,7 @@ export async function updateSystemes(fileName, namePlatform) {
 
 async function updateSystemeElements(systemes, namePlatform) {
 
-    await insertClient(systemes);
+    await insertClient(systemes, true);
 
     for (var i = 0; i < systemes.length; i++) {
 
@@ -228,21 +252,11 @@ async function updateSystemeElements(systemes, namePlatform) {
             }
         })
 
-
-
-
-
-
-
     }
 
 
 
 }
-
-
-
-
 
 export async function updateLinux(fileName, namePlatform) {
 
@@ -277,7 +291,7 @@ export async function updateLinux(fileName, namePlatform) {
 
 async function updateLinuxElements(linuxs, namePlatform) {
 
-    await insertClient(linuxs);
+    await insertClient(linuxs, false);
 
     for (var i = 0; i < linuxs.length; i++) {
 
@@ -331,6 +345,94 @@ async function updateLinuxElements(linuxs, namePlatform) {
 
 
 
+
+    }
+
+
+
+}
+
+export async function updateHardware(fileName, namePlatform) {
+
+    const file = reader.readFile(fileName, { type: "string", cellDates: false })
+    let data = new Array();
+    const sheets = file.SheetNames
+    sheets.forEach((res) => {
+        data[res] = new Array();
+    })
+
+    logger.info('start processing this file : ', fileName);
+
+
+    for (let i = 0; i < sheets.length; i++) {
+        const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]], {
+            raw: false,
+        })
+        data[sheets[i]] = (temp);
+
+        switch (sheets[i]) {
+            case 'hardware Bull':
+                await updateHardwareElements(temp, namePlatform);
+                break;
+        }
+
+    }
+
+
+
+}
+
+
+async function updateHardwareElements(hardwares, namePlatform) {
+
+    await insertClient(hardwares, false);
+
+    for (var i = 0; i < hardwares.length; i++) {
+
+        const element = hardwares[i]["COMPANY_BREAKDOWN"];
+        let companies = element.split(',');
+
+        companies.forEach(async oneCompany => {
+            const occu = {
+
+                serial_no: hardwares[i]["SERIAL_NO"],
+                company: oneCompany,
+            };
+
+            try {
+
+                const asyncFunction = async() => {
+
+                    let step1 = await db.client.findOne({ where: { companyname: occu.company }, attributes: ['client_id'] })
+                    occu.client_id = step1.dataValues.client_id;
+
+                    step1 = await db.hardwares.findOne({ where: { serial_no: occu.serial_no }, attributes: ['hardware_id'] })
+                    occu.hardware_id = step1.dataValues.hardware_id;
+
+                    return occu;
+
+                }
+
+                await asyncFunction().then(async app => {
+
+                    await db.client_hardware.findOrCreate({
+                        where: {
+                            [db.Op.and]: [{ client_id: app.client_id, hardware_id: app.hardware_id }]
+                        },
+                        defaults: {
+                            client_id: app.client_id,
+                            hardware_id: app.hardware_id
+
+                        }
+                    })
+
+
+                });
+            } catch (error) {
+                logger.error('can\'t insert client_systeme ', occu)
+
+            }
+        })
 
     }
 

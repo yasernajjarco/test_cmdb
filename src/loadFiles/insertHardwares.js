@@ -77,8 +77,11 @@ async function insertpserver(pservers, namePlatform) {
                     step1 = await db.platforms.findOne({ where: { name: namePlatform }, attributes: ['platform_id'] })
                     ciPserver.platform_id = step1.dataValues.platform_id;
 
-                    step1 = await db.client.findOne({ where: { companyname: ciPserver.company }, attributes: ['client_id'] })
-                    ciPserver.client_id = step1.dataValues.client_id;
+                    if (ciPserver.company !== 'PROD-NRB') {
+                        step1 = await db.client.findOne({ where: { companyname: ciPserver.company }, attributes: ['client_id'] })
+                        ciPserver.client_id = step1.dataValues.client_id;
+                    }
+
 
 
                     step1 = await db.classService.findOne({ where: { name: ciPserver.nrb_class_service }, attributes: ['class_service_id'] })
@@ -131,9 +134,8 @@ async function insertpserver(pservers, namePlatform) {
                                 ci_id: res[0].dataValues.ci_id
                             }
                         }).then(async function(res) {
-
-
-                            if ((ciHardware.nrb_class_service === 'Housing' && ciHardware.client_id > 0) || (ciHardware.type === 'storage')) {
+                            // && (ciHardware.nrb_class_service === 'Housing' && ciHardware.client_id != null) || (ciHardware.type === 'storage'))
+                            if (ciHardware.company !== 'PROD-NRB') {
                                 await db.client_hardware.findOrCreate({
                                     where: {
                                         [db.Op.and]: [{ client_id: ciHardware.client_id, hardware_id: res[0].dataValues.hardware_id }]
@@ -167,7 +169,7 @@ async function insertpserver(pservers, namePlatform) {
 async function insertClient(apps) {
     for (var i = 1; i < apps.length; i++) {
         const occu = { company: apps[i]["COMPANY"] };
-        if (occu.company !== undefined) {
+        if (occu.company !== undefined && occu.company != 'PROD-NRB') {
             await db.client.findOrCreate({
                 where: { companyname: occu.company },
                 defaults: {

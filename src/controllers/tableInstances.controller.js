@@ -12,12 +12,9 @@ exports.buildTableById = (req, res) => {
 
     const id = req.params.id;
 
-    /*  let condition = (id > 0) ? { '$clients.client_id$': id } : {
+    let condition = (id > 0) ? { '$clients.client_id$': id } : { '$clients.isshared$': 1 }
 
-      [db.Op.or]: [{ '$clients.companyname$': ['SIBELGA', 'NRB'] }]
-     } */
 
-    let condition = { '$clients.client_id$': id }
 
     db.systems.findAll({
             where: condition,
@@ -100,6 +97,7 @@ exports.buildTableById = (req, res) => {
         }).map(data => data.toJSON())
         .then(data => {
             let result = buildResult(data)
+            console.log(result.length)
             res.send(result);
         }).catch(err => {
             res.status(500).send({
@@ -112,55 +110,26 @@ exports.buildTableById = (req, res) => {
 exports.findClientsForTable = (req, res) => {
 
     db.client.findAll({
-            include: [{
-                    model: db.systems,
-                    required: false,
-                    as: 'systems',
-                    include: [{
-                            model: db.ci,
-                            required: false,
-                            as: 'ci',
-                            include: [
-                                { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
-                                { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
-                                { model: db.status, required: false, as: 'status', attributes: ['name'], },
 
-
-                            ],
-                            attributes: ['our_name', ['ci_id', 'id']]
-                        },
-                        {
-                            model: db.client,
-                            required: false,
-                            as: 'clients',
-                            through: { attributes: [] },
-
-                        }
-                    ],
-                    attributes: [
-                        ['ci_id', 'id']
-                    ]
-                },
-
-            ],
             attributes: [
                 ['client_id', 'id'],
                 ['companyname', 'name'],
+                'isshared'
             ]
         }).map(data => data.toJSON())
         .then(data => {
-            let result = [];
+            console.log(data)
+            if (data.some(element => element.isshared == 1)) {
+                data = data.filter(function(item) { return item.isshared !== 1 });
+                data.push({ id: -1, name: 'PROD-NRB' })
+            }
+
             data.forEach(element => {
-                let clients = (element.systems[0] != undefined) ? element.systems[0].clients : [];
-                if (clients.some(client => client.companyname == 'ETHIAS' || client.companyname == 'NRB' || client.companyname == 'SIBELGA')) {
-                    console.log(clients)
-                    if (!result.some(item => item.name == 'PROD-NRB')) result.push({ name: 'PROD-NRB', id: -1 })
-                } else if (!result.some(item => item.name === element.name)) {
-                    result.push({ name: element.name, id: element.id })
-                }
+
+                delete element.isshared
 
             })
-            res.send(result);
+            res.send(data);
         })
         .catch(err => {
             res.status(500).send({
@@ -172,39 +141,10 @@ exports.findClientsForTable = (req, res) => {
 };
 
 
-
-/* function buildResult(systems, apps, data) {
-    let result = [];
-    systems.forEach(sys => {
-        result.push({ name: sys.logical_name, apps: [] })
-    })
-
-    apps.forEach(app => {
-        let index = result.findIndex(function(item) { return item.name === app.sysName })
-
-        result[index].apps.push(app)
-
-    })
-    return result;
-} */
-
-function buildSystems(data) {
-    let systems = [];
-    data.forEach(element => {
-        let isFound = systems.some(function(el) { return el.logical_name === element.logical_name });
-        if (!isFound) systems.push({ logical_name: element.logical_name })
-    })
-    return systems;
-}
-
-
 function buildResult(data) {
-    let apps = [];
     data.forEach(element => {
-        /* let isFound = apps.some(function(el) { return el.ci_application_id == element.application.ci_application_id && el.sysName == element.systems.ci.logical_name });
-        if (!isFound)  */
+        let apps = [];
         element.instances.forEach(instance => {
-            console.log(instance)
             apps.push(getApp(instance, element.id))
         })
 

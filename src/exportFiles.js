@@ -5,13 +5,14 @@ const fs = require('fs');
 const logger = require('./logger');
 const { Sequelize, DataTypes, Op } = require("sequelize");
 const prfixeTest = 'test ';
+const utils = require("./controllers/utils");
 
 export async function start() {
 
 
     await generateInstances();
 
-    await generateOccurences();
+    // await generateOccurences();
 
 };
 
@@ -61,7 +62,7 @@ async function generateInstances() {
                             model: db.systems,
                             required: false,
                             as: 'systems',
-                            attributes: [],
+                            attributes: ['systeme_id'],
                             include: [{
                                 model: db.ci,
                                 required: false,
@@ -99,7 +100,9 @@ async function generateInstances() {
                 .then(async data => {
 
                     let result = [];
-                    data.forEach(element => result.push(setCompanyInstance(element)))
+                    data.forEach(element => {
+                        result.push(setCompanyInstance(element))
+                    })
                     Promise.all(result)
                         .then(result => {
                             let pathFile = path.resolve(__dirname, 'Exported files/', prfixeTest + 'CI sinstance ' + platform + '.xlsx')
@@ -208,14 +211,21 @@ function generateFiles(nameSheet, pathFile, data) {
 
 async function setCompanyInstance(element) {
     return await new Promise(async function(resolve) {
-        await db.instance_client.findAll({ where: { instance_id: element.id }, attributes: ['client_id'] }).map(result => result.toJSON()).then(async allClients => {
-            if (allClients.length > 1) {
-                element['COMPANY'] = 'PROD-NRB'
+        await db.systems.findAll({
+            where: { systeme_id: element.systems.systeme_id },
+            attributes: [],
+            include: [
+                { model: db.client, required: false, as: 'clients', through: { attributes: [] }, attributes: ['companyname'] }
+            ],
+        }).map(result => result.toJSON()).then(async allClients => {
+
+            let clients = utils.first(allClients).clients;
+
+            if (clients.some(client => client.companyname == 'ETHIAS' || client.companyname == 'NRB' || client.companyname == 'SIBELGA')) {
+                element['COMPANY-NAME'] = 'PROD-NRB'
+
             } else {
-
-                let step1 = await db.client.findOne({ where: { client_id: allClients[0].client_id }, attributes: ['companyname'] })
-
-                element['COMPANY'] = step1.dataValues.companyname;
+                element['COMPANY-NAME'] = clients[0];
             }
         })
         resolve(element);

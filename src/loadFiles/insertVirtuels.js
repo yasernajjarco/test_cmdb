@@ -233,8 +233,10 @@ async function insertSystem(lserver, namePlatform, nameType) {
                 step1 = await db.envType.findOne({ where: { name: ciLserver.nrb_env_type }, attributes: ['env_type_id'] })
                 ciLserver.env_type_id = step1.dataValues.env_type_id;
 
-                step1 = await db.client.findOne({ where: { companyname: ciLserver.company }, attributes: ['client_id'] })
-                ciLserver.client_id = step1.dataValues.client_id;
+                if (ciLserver.company !== 'PROD-NRB') {
+                    step1 = await db.client.findOne({ where: { companyname: ciLserver.company }, attributes: ['client_id'] })
+                    ciLserver.client_id = step1.dataValues.client_id;
+                }
 
                 step1 = await db.ciType.findOne({ where: { name: ciLserver.type }, attributes: ['ci_type_id'] })
                 ciLserver.ci_type_id = step1.dataValues.ci_type_id;
@@ -286,7 +288,7 @@ async function insertSystem(lserver, namePlatform, nameType) {
                                 lpar_id: lserver.lpar_id
                             }
                         }).then(async function(res) {
-                            if (lserver.company != 'PROD-NRB') {
+                            if (lserver.company !== 'PROD-NRB') {
                                 await db.client_systeme.findOrCreate({
                                     where: {
                                         [db.Op.and]: [{ client_id: lserver.client_id, systeme_id: res[0].dataValues.systeme_id }]
@@ -386,8 +388,10 @@ async function insertzLinux(lserver, namePlatform) {
             step1 = await db.ciSubtype.findOne({ where: { name: ciLserver.subtype }, attributes: ['ci_subtype_id'] })
             ciLserver.ci_subtype_id = step1.dataValues.ci_subtype_id;
 
-            step1 = await db.client.findOne({ where: { companyname: ciLserver.company }, attributes: ['client_id'] })
-            ciLserver.client_id = step1.dataValues.client_id;
+            if (ciLserver.company !== 'PROD-NRB') {
+                step1 = await db.client.findOne({ where: { companyname: ciLserver.company }, attributes: ['client_id'] })
+                ciLserver.client_id = step1.dataValues.client_id;
+            }
 
             step1 = await db.systems.findOne({
                 include: [{ model: db.ci, as: 'ci', attributes: [], where: { logical_name: ciLserver.supervisuer } }],
@@ -436,16 +440,19 @@ async function insertzLinux(lserver, namePlatform) {
 
                     }
                 }).then(async function(res) {
-                    await db.client_zlinux.findOrCreate({
-                        where: {
-                            [db.Op.and]: [{ client_id: ciLserver.client_id, zlinux_id: res[0].dataValues.zlinux_id }]
-                        },
-                        defaults: {
-                            client_id: ciLserver.client_id,
-                            zlinux_id: res[0].dataValues.zlinux_id
+                    if (lserver.company !== 'PROD-NRB') {
 
-                        }
-                    })
+                        await db.client_zlinux.findOrCreate({
+                            where: {
+                                [db.Op.and]: [{ client_id: ciLserver.client_id, zlinux_id: res[0].dataValues.zlinux_id }]
+                            },
+                            defaults: {
+                                client_id: ciLserver.client_id,
+                                zlinux_id: res[0].dataValues.zlinux_id
+
+                            }
+                        })
+                    }
 
 
                 });
@@ -466,12 +473,15 @@ async function insertClient(apps) {
     for (var i = 1; i < apps.length; i++) {
         const occu = { company: apps[i]["COMPANY"] };
 
-        await db.client.findOrCreate({
-            where: { companyname: occu.company },
-            defaults: {
-                companyname: occu.company,
-            }
-        });
+        if (occu.company !== undefined && occu.company != 'PROD-NRB') {
+            await db.client.findOrCreate({
+                where: { companyname: occu.company },
+                defaults: {
+                    companyname: occu.company,
+                }
+            });
+        }
+
 
     }
     return i;
