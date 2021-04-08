@@ -37,7 +37,7 @@ router.use('/apps', App);
 router.use('/providers', Provider);
 router.use('/clients', clients);
 router.use('/info', info);
-router.use('/table', table);
+//router.use('/table', table);
 
 
 router.use('/', User); //pour test
