@@ -148,6 +148,15 @@ async function insertlserver(lserver, namePlatform, nameType) {
                         env_type_id: lserver.env_type_id
                     }
                 }).then(async function(res) {
+                    if (res[0]._options.isNewRecord) {
+                        db.audit.create({
+                            audittimestamp: Sequelize.fn('NOW'),
+                            audituser: 'auto',
+                            auditdescription: 'initial loading',
+                            ci_id: res[0].dataValues.ci_id
+                        })
+
+                    }
                     compt++;
                     await db.lpars.findOrCreate({
                         //  hardware_id: lserver.hardware_id,
@@ -279,6 +288,15 @@ async function insertSystem(lserver, namePlatform, nameType) {
 
                         }
                     }).then(async function(res) {
+                        if (res[0]._options.isNewRecord) {
+                            db.audit.create({
+                                audittimestamp: Sequelize.fn('NOW'),
+                                audituser: 'auto',
+                                auditdescription: 'initial loading',
+                                ci_id: res[0].dataValues.ci_id
+                            })
+
+                        }
 
                         await db.systems.findOrCreate({
                             //  hardware_id: lserver.hardware_id,
@@ -425,6 +443,15 @@ async function insertzLinux(lserver, namePlatform) {
                     env_type_id: lserver.env_type_id
                 }
             }).then(async function(res) {
+                if (res[0]._options.isNewRecord) {
+                    db.audit.create({
+                        audittimestamp: Sequelize.fn('NOW'),
+                        audituser: 'auto',
+                        auditdescription: 'initial loading',
+                        ci_id: res[0].dataValues.ci_id
+                    })
+
+                }
 
                 await db.zLinux.findOrCreate({
                     where: { ci_id: res[0].dataValues.ci_id },

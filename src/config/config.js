@@ -19,6 +19,14 @@ const local = {
         acquire: 30000,
         idle: 10000
     },
+    dialectOptions: {
+        typeCast: function(field, next) {
+            if (field.type == 'DATETIME' || field.type == 'TIMESTAMP') {
+                return new Date(field.string() + 'Z');
+            }
+            return next();
+        }
+    },
 
     auth: {
         secret: "jllgshllWEUJHGHYJkjsfjds90",

@@ -51,6 +51,7 @@ exports.findAll = (req, res) => {
 
         ).map(data => data.toJSON())
         .then(data => {
+
             let result = data;
             db.provider.findAll({
                 where: {
@@ -67,7 +68,6 @@ exports.findAll = (req, res) => {
                         subtype: "provider"
                     })
                 })
-
                 db.client.findAll({
                     where: {
                         '$companyname$': {

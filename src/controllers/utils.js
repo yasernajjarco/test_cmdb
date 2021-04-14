@@ -1,3 +1,6 @@
+const db = require("../index.db");
+const { Sequelize, DataTypes, Op } = require("sequelize");
+
 export function first(array) {
     if (array == null)
         return {};
@@ -23,4 +26,24 @@ export function buildObject(data) {
 
     })
     return data;
+}
+export async function getLastAudit(result) {
+    try {
+        let audit = null;
+        await db.audit.findAll({
+            where: { ci_id: result.id },
+            attributes: [
+                ['audituser', 'user'],
+                ['auditdescription', 'description'],
+                ['audittimestamp', 'last_update']
+            ]
+        }).map(data => { return data.toJSON() }).then(data => {
+            new Date(Math.max(...data.map(e => new Date(e.last_update))));
+            audit = (first(data.sort().reverse()))
+        });
+        return audit;
+    } catch (error) {
+        return null;
+    }
+
 }

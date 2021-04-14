@@ -61,19 +61,6 @@ module.exports = sequelize => {
         key: "ci_id",
         model: "ci_model"
       }
-    },
-    auditaction_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "auditaction_id",
-      references: {
-        key: "auditaction_id",
-        model: "auditaction_model"
-      }
     }
   };
   const options = {
@@ -84,11 +71,6 @@ module.exports = sequelize => {
       unique: false,
       type: "BTREE",
       fields: ["ci_id"]
-    }, {
-      name: "auditaction_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["auditaction_id"]
     }]
   };
   const AuditModel = sequelize.define("audit_model", attributes, options);

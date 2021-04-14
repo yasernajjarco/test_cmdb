@@ -134,7 +134,7 @@ async function test() {
         let time = await new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
         await logger.info('End at: ', time)
 
-        // await generateFiles();
+        // await generateFiles(); 
 
 
     });

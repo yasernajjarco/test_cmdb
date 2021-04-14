@@ -1,7 +1,9 @@
 const db = require("../index.db");
+const utils = require("./utils");
 
 
 const { Sequelize, DataTypes, Op } = require("sequelize");
+const hardware_relation = require("../models/hardware_relation");
 
 exports.findAll = (req, res) => {
     //    const platform = req.query.id;
@@ -256,13 +258,19 @@ exports.findById = (req, res) => {
             ]
 
         }).map(data => data.toJSON())
-        .then(data => {
-            let result = data[0];
-            if (result != null && result != undefined && result.hardwares1 != undefined && result.hardwares1.length > 0) {
-                result.hardwares1.forEach(element => result.hardwares.push(element));
+        .then(async data => {
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                let result = data[0];
+                let audit = await utils.getLastAudit(result);
+                if (audit != null) result['audit'] = audit;
+
+                if (result != null && result != undefined && result.hardwares1 != undefined && result.hardwares1.length > 0) {
+                    result.hardwares1.forEach(element => result.hardwares.push(element));
+                }
+                delete result.hardwares1;
+                res.send(result);
             }
-            delete result.hardwares1;
-            res.send(result);
         })
         .catch(err => {
             res.status(500).send({
@@ -272,3 +280,68 @@ exports.findById = (req, res) => {
 
 
 };
+
+
+exports.addRelation = async(req, res) => {
+    const id = req.params.id;
+
+    let hardware_id = await getId(id)
+    let hardware_id_1 = await getId(req.body.hardware_id)
+
+    db.hardwares_relations.findOrCreate({
+            where: {
+                [Op.or]: [{
+                    hardware_id: hardware_id,
+                    hardware_id_1: hardware_id_1
+
+                }, {
+                    hardware_id: hardware_id_1,
+                    hardware_id_1: hardware_id
+
+                }]
+
+            },
+            defaults: {
+                hardware_id: hardware_id,
+                hardware_id_1: hardware_id_1
+
+            }
+        }).then(num => {
+            if (num[0]._options.isNewRecord) {
+                db.audit.create({
+                    audittimestamp: Sequelize.fn('NOW'),
+                    audituser: req.user,
+                    auditdescription: 'update relation hardware',
+                    ci_id: id
+                })
+
+                res.send({
+                    message: "hardware relation was added successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update hardware relation with id=${id}. Maybe hardware relation was not found reference or relation already exists`
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).send({
+                message: "Error updating hardware relation with id=" + id
+            });
+        });
+
+
+};
+
+
+
+async function getId(hardware_id) {
+    try {
+        let step1 = await db.hardwares.findOne({ where: { ci_id: hardware_id }, attributes: ['hardware_id'] })
+        return step1.dataValues.hardware_id;
+    } catch (error) {
+        return -1;
+    }
+
+}

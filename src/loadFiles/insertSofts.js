@@ -2,6 +2,7 @@ const db = require("../index.db");
 import moment from 'moment';
 const logger = require('../logger');
 let compt = 0;
+const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
 
@@ -112,6 +113,16 @@ async function insertApplications(apps, namePlatform) {
                         our_name: app.our_name
                     }
                 }).then(async function(res) {
+
+                    if (res[0]._options.isNewRecord) {
+                        db.audit.create({
+                            audittimestamp: Sequelize.fn('NOW'),
+                            audituser: 'auto',
+                            auditdescription: 'initial loading',
+                            ci_id: res[0].dataValues.ci_id
+                        })
+                    }
+
                     compt++;
                     await db.application.findOrCreate({
                         where: { product_code: app.product_code, version: app.version },

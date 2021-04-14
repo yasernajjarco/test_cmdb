@@ -11,6 +11,10 @@ const sequelize = new Sequelize(
         define: {
             timestamps: false
         },
+        dialectOptions: {
+            useUTC: false
+        },
+        timezone: '+02:00',
 
         poll: {
             max: config.pool.max,
@@ -56,6 +60,7 @@ db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes
 db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize, DataTypes);
 
 db.contact = require("./models/contact")(sequelize, Sequelize, DataTypes);
+db.audit = require("./models/audit")(sequelize, Sequelize, DataTypes);
 
 
 //=============== CI ================//
@@ -194,6 +199,11 @@ db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider
 
 db.client.hasMany(db.contact, { foreignKey: 'client_id', as: "contacts" });
 db.contact.belongsTo(db.client, { foreignKey: 'client_id', as: "client" });
+
+//=============== audit ================//
+
+db.ci.hasMany(db.audit, { foreignKey: 'ci_id', as: "audit" });
+db.audit.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
 
 /*

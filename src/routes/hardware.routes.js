@@ -90,7 +90,8 @@ router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll)
  *   "message": "you cannot access to get details of element hardware"
  * }
  */
-router.get("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
+router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
+router.put("/relation/:id", [authJwt.verifyToken, authJwt.isModerator], controller.addRelation);
 
 
 

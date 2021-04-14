@@ -72,8 +72,11 @@ exports.findById = (req, res) => {
 
         }).map(data => data.toJSON())
         .then(data => {
-            let result = utils.buildObject(utils.first(data));
-            res.send(result);
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                let result = utils.buildObject(utils.first(data));
+                res.send(result);
+            }
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."
@@ -118,6 +121,44 @@ function buildCondition(platform) {
     return condition;
 }
 
+
+
+exports.findForDetails = (req, res) => {
+
+    db.provider.findAll({
+            include: [{
+                model: db.application,
+                required: false,
+                as: 'applications',
+                where: { is_valid: 1 },
+                include: [{ model: db.ci, required: false, as: 'ci', attributes: ['description'], }],
+                attributes: [
+                    ['ci_id', 'id'], 'product_code', 'version',
+
+                ]
+            }, ],
+
+            attributes: [
+                ['provider_id', 'id'],
+                ['vendor_code', 'vendor_code'],
+                ['name', 'name'],
+            ]
+
+        }).map(data => data.toJSON())
+        .then(data => {
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                //let result = utils.buildObject(utils.first(data));
+                res.send(data);
+            }
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving hardwares."
+            });
+        });
+
+
+};
 
 
 /*

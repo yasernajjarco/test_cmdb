@@ -138,8 +138,11 @@ exports.findById = (req, res) => {
 
         }) //.map(data => data.toJSON())
         .then(function(data) {
-            let result = utils.buildObject(data.toJSON());
-            res.send(result);
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                let result = utils.buildObject(data.toJSON());
+                res.send(result);
+            }
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."

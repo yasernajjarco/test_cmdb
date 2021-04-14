@@ -16,7 +16,6 @@
 `cmdb`.`lpar`,
 `cmdb`.`hardware`,
 `cmdb`.`audit`, 
-`cmdb`.`auditaction`,
 `cmdb`.`ci`,
 `cmdb`.`provider`,
 `cmdb`.`class_service`,
@@ -69,11 +68,6 @@ create table env_type(
    primary key(env_type_id)
 );
 
-create table auditaction(
-   auditaction_id int auto_increment,
-   name varchar(300),
-   primary key(auditaction_id)
-);
 
 create table class_service(
    class_service_id int auto_increment,
@@ -187,10 +181,8 @@ create table audit(
    audituser varchar(300),
    auditdescription varchar(3000),
    ci_id int not null,
-   auditaction_id int not null,
    primary key(audit_id),
-   foreign key(ci_id) references ci(ci_id),
-   foreign key(auditaction_id) references auditaction(auditaction_id)
+   foreign key(ci_id) references ci(ci_id)
 );
 
 create table zlinux(

@@ -4,6 +4,7 @@ import ConsoleAppender from 'simple-node-logger/lib/ConsoleAppender';
 const logger = require('../logger');
 let compt = 0;
 let results = [];
+import { Sequelize } from "sequelize";
 
 //zVM linux, occurence linux all sauf PROD-NRB
 
@@ -126,7 +127,15 @@ async function insertInstance(instances, namePlatform) {
 
                     }
                 }).then(async function(res) {
+                    if (res[0]._options.isNewRecord) {
+                        db.audit.create({
+                            audittimestamp: Sequelize.fn('NOW'),
+                            audituser: 'auto',
+                            auditdescription: 'initial loading',
+                            ci_id: res[0].dataValues.ci_id
+                        })
 
+                    }
                     compt++;
                     await db.instance.findOrCreate({
                             where: { name: app.logicalname },

@@ -96,9 +96,11 @@ exports.buildTableById = (req, res) => {
 
         }).map(data => data.toJSON())
         .then(data => {
-            let result = buildResult(data)
-            console.log(result.length)
-            res.send(result);
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                let result = buildResult(data)
+                res.send(result);
+            }
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."
@@ -110,6 +112,27 @@ exports.buildTableById = (req, res) => {
 exports.findClientsForTable = (req, res) => {
 
     db.client.findAll({
+            where: {
+                '$systems.ci.classService.name$': 'PAAS'
+                    //  [db.Op.and]: [{ '$systems.ci.classService.name$': 'IAAS', hardware_id: res[0].dataValues.hardware_id }]
+
+            },
+            include: [{
+                model: db.systems,
+                required: false,
+                through: { attributes: [] },
+                as: 'systems',
+                include: [{
+                    model: db.ci,
+                    required: false,
+                    as: 'ci',
+                    include: [
+                        { model: db.classService, required: false, as: 'classService', attributes: [], }
+                    ],
+                    attributes: []
+                }],
+                attributes: ['ci_id']
+            }],
 
             attributes: [
                 ['client_id', 'id'],
@@ -118,18 +141,23 @@ exports.findClientsForTable = (req, res) => {
             ]
         }).map(data => data.toJSON())
         .then(data => {
-            console.log(data)
-            if (data.some(element => element.isshared == 1)) {
-                data = data.filter(function(item) { return item.isshared !== 1 });
-                data.push({ id: -1, name: 'PROD-NRB' })
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                if (data.some(element => element.isshared == 1)) {
+                    data = data.filter(function(item) { return item.isshared !== 1 });
+                    data.push({ id: -1, name: 'PROD-NRB' })
+                }
+                // console.log(data)
+
+                // data = data.filter(function(item) { return item.systems != undefined && item.systems.length > 0 });
+
+                data.forEach(element => {
+                    delete element.isshared;
+                    delete element.systems;
+
+                })
+                res.send(data);
             }
-
-            data.forEach(element => {
-
-                delete element.isshared
-
-            })
-            res.send(data);
         })
         .catch(err => {
             res.status(500).send({

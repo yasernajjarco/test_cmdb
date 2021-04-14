@@ -157,9 +157,16 @@ exports.findById = (req, res) => {
 
         }).map(data => data.toJSON())
         .then(async data => {
-            let result = utils.buildObject(utils.first(data));
-            result['clients'] = await getClients(result.system.id);
-            res.send(result);
+            if (data == undefined || data.length == 0) res.send({});
+            else {
+                let result = utils.buildObject(utils.first(data));
+                let audit = await utils.getLastAudit(result);
+                if (audit != null) result['audit'] = audit;
+
+                result['clients'] = await getClients(result.system.id);
+                res.send(result);
+            }
+
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving hardwares."
