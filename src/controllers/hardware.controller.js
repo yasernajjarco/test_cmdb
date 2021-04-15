@@ -353,11 +353,31 @@ exports.update = async(req, res) => {
 
         db.hardwares.update({ serial_no: req.body.serial_no }, {
             where: { ci_id: id }
-        }).then(res => {
+        }).then(result => {
+            let num = result[0];
+            if (num > 0) {
+                db.audit.create({
+                    audittimestamp: Sequelize.fn('NOW'),
+                    audituser: req.user,
+                    auditdescription: 'update element hardware',
+                    ci_id: id
+                })
+            }
             db.ci.update({ description: req.body.description, our_name: req.body.name, class_service_id: class_service_id, status_id: status_id, env_type_id: environnement_id }, {
                 where: { ci_id: id }
+            }).then(result => {
+                let num = result[0];
+                if (num > 0) {
+                    db.audit.create({
+                        audittimestamp: Sequelize.fn('NOW'),
+                        audituser: req.user,
+                        auditdescription: 'update element hardware',
+                        ci_id: id
+                    })
+                }
+
             })
-        }).then(result => {
+        }).then(all => {
             res.redirect('/api/hardwares/details/' + id);
         }).catch(err => {
             res.status(500).send({

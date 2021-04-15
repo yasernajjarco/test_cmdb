@@ -1,0 +1,26 @@
+2021-04-15 12:06:00.982 INFO  start at: 2021-04-15 10:06:00 
+2021-04-15 12:06:01.839 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-04-15 12:06:02.022 INFO  6 sellers of  world  B has been updated or added 
+2021-04-15 12:06:02.022 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-04-15 12:06:02.181 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-04-15 12:06:03.222 INFO  44 sellers of  world  Z has been updated or added 
+2021-04-15 12:06:03.222 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-04-15 12:06:03.260 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-15 12:06:03.564 INFO  8 softs of  world  B has been updated or added 
+2021-04-15 12:06:03.564 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-15 12:06:04.232 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-15 12:06:19.200 INFO  347 softs of  world  Z has been updated or added 
+2021-04-15 12:06:19.200 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-15 12:06:19.260 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-04-15 12:06:19.443 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
+2021-04-15 12:06:20.068 INFO  17 hardwares of  world  B of type pserver|Appliance has been updated or added 
+2021-04-15 12:06:20.113 INFO  2 hardwares of  world  B of type storage|M. Drive Enclosure has been updated or added 
+2021-04-15 12:06:20.460 INFO  9 hardwares of  world  B of type storage|Mainframe VTS & TL has been updated or added 
+2021-04-15 12:06:20.460 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-04-15 12:06:20.511 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
+2021-04-15 12:06:20.694 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
+2021-04-15 12:06:20.797 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
+2021-04-15 12:06:21.008 INFO  8 hardwares of  world  Z of type storage|M. Drive Enclosure has been updated or added 
+2021-04-15 12:06:21.506 INFO  12 hardwares of  world  Z of type storage|Mainframe VTS has been updated or added 
+2021-04-15 12:06:21.506 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
+2021-04-15 12:06:21.520 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
