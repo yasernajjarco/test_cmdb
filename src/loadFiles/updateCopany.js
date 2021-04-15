@@ -374,6 +374,10 @@ export async function updateHardware(fileName, namePlatform) {
             case 'hardware Bull':
                 await updateHardwareElements(temp, namePlatform);
                 break;
+            case 'hardware IBM':
+                await updateHardwareElements(temp, namePlatform);
+                break;
+
         }
 
     }

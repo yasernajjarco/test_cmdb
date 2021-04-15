@@ -47,3 +47,33 @@ export async function getLastAudit(result) {
     }
 
 }
+
+
+export async function get_classService_id(name) {
+    try {
+        let step1 = await db.classService.findOne({ where: { name: name }, attributes: ['class_service_id'] })
+        return step1.dataValues.class_service_id;
+    } catch (error) {
+        throw new Error('class_service not found or class_service does not exist');
+
+    }
+}
+
+export async function get_status_id(name) {
+    try {
+        let step1 = await db.status.findOne({ where: { name: name }, attributes: ['status_id'] });
+        return step1.dataValues.status_id;
+    } catch (error) {
+        throw new Error('status not found or status does not exist');
+    }
+
+}
+export async function get_environnement_id(name) {
+    try {
+        let step1 = await db.envType.findOne({ where: { name: name }, attributes: ['env_type_id'] })
+        return step1.dataValues.env_type_id;
+    } catch (error) {
+        throw new Error('environnement not found or environnement does not exist');
+    }
+
+}

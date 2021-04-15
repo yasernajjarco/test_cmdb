@@ -133,8 +133,7 @@ exports.findForDetails = (req, res) => {
                 where: { is_valid: 1 },
                 include: [{ model: db.ci, required: false, as: 'ci', attributes: ['description'], }],
                 attributes: [
-                    ['ci_id', 'id'], 'product_code', 'version',
-
+                    ['ci_id', 'id'], 'product_code', 'version', ['end_of_support_date', 'EOS']
                 ]
             }, ],
 

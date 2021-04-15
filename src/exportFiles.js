@@ -10,9 +10,9 @@ const utils = require("./controllers/utils");
 export async function start() {
 
 
-    await generateInstances();
+    // await generateInstances();
 
-    // await generateOccurences();
+    await generateOccurences();
 
 };
 
@@ -21,6 +21,10 @@ async function generateInstances() {
     await db.platforms.findAll().map(data => data.toJSON()).then(platforms => {
         platforms.forEach(one => {
             let platform = one.name;
+            //  let platform = 'B';
+            let ASSIGNMENT = (platform == 'Z') ? 'ZSYS' : 'GCOS';
+
+
             let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
             db.instance.findAll({
                     where: condition,
@@ -64,34 +68,45 @@ async function generateInstances() {
                             as: 'systems',
                             attributes: ['systeme_id'],
                             include: [{
-                                model: db.ci,
-                                required: false,
-                                as: 'ci',
-                                include: [
-                                    { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
-                                    { model: db.ciType, required: false, as: 'ciType', attributes: [] },
+                                    model: db.ci,
+                                    required: false,
+                                    as: 'ci',
+                                    include: [
+                                        { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                                        { model: db.ciType, required: false, as: 'ciType', attributes: [] },
 
-                                ],
-                                attributes: []
-                            }],
+                                    ],
+                                    attributes: []
+                                },
+                                {
+                                    model: db.client,
+                                    required: false,
+                                    as: 'clients',
+                                    through: { attributes: [] },
+                                    attributes: [
+                                        [Sequelize.col('companyname'), 'name'],
+                                        [Sequelize.col('client_id'), 'id']
+
+                                    ]
+                                },
+                            ],
                         },
                     ],
                     attributes: [
                         ['instance_id', 'id'],
                         [Sequelize.col('ci.our_name'), '__EMPTY'],
-                        [Sequelize.col('application.ci.our_name'), 'APPLICATION'],
+                        [Sequelize.col('application.ci.logical_name'), 'APPLICATION'],
                         [Sequelize.col('systems.ci.our_name'), 'NETWORK_NAME'],
                         [Sequelize.col('ci.ciType.name'), 'TYPE'],
                         [Sequelize.col('ci.ciSubtype.name'), 'SUBTYPE'],
                         [Sequelize.col('ci.logical_name'), 'LOGICAL_NAME'],
                         [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.prefixe"), '_', Sequelize.col("ci.our_name")), 'DISPLAY_NAME'],
 
-                        // [Sequelize.col('ci.nrb_managed_by'), 'COMPANY'],
-
+                        [Sequelize.fn('CONCAT', '', ''), 'COMPANY'],
 
                         [Sequelize.col('ci.nrb_managed_by'), 'NRB_MANAGED_BY'],
 
-                        [Sequelize.fn('CONCAT', 'GCOS'), 'ASSIGNMENT'],
+                        [Sequelize.fn('CONCAT', ASSIGNMENT), 'ASSIGNMENT'],
                         [Sequelize.col('ci.status.name'), 'ISTATUS'],
                         [Sequelize.col('ci.description'), 'DESCRIPTION'],
 
@@ -103,11 +118,13 @@ async function generateInstances() {
                     data.forEach(element => {
                         result.push(setCompanyInstance(element))
                     })
-                    Promise.all(result)
-                        .then(result => {
-                            let pathFile = path.resolve(__dirname, 'Exported files/', prfixeTest + 'CI sinstance ' + platform + '.xlsx')
-                            generateFiles('sinstance|Mainframe Software', pathFile, result)
-                        })
+                    addLine(result, 'instance')
+                    console.log(result)
+                    console.log(result.length)
+
+                    let pathFile = path.resolve(__dirname, 'Exported files/', prfixeTest + 'CI sinstance ' + platform + '.xlsx')
+                    generateFiles('sinstance|Mainframe Software', pathFile, result)
+
 
 
                 }).catch(err => {
@@ -121,7 +138,11 @@ async function generateInstances() {
 async function generateOccurences() {
     await db.platforms.findAll().map(data => data.toJSON()).then(platforms => {
         platforms.forEach(one => {
-            let platform = one.name;
+            //let platform = one.name;
+            let platform = 'B';
+
+            let ASSIGNMENT = (platform == 'Z') ? 'ZSYS' : 'GCOS';
+
             let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
             db.occurence.findAll({
                     where: condition,
@@ -138,7 +159,16 @@ async function generateOccurences() {
                                 { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
                                 { model: db.envType, required: false, as: 'envType', attributes: [] },
 
-
+                            ]
+                        },
+                        {
+                            model: db.client,
+                            required: false,
+                            as: 'clients',
+                            through: { attributes: [] },
+                            attributes: [
+                                [Sequelize.col('companyname'), 'name'],
+                                [Sequelize.col('client_id'), 'id']
 
                             ]
                         },
@@ -174,8 +204,11 @@ async function generateOccurences() {
                         [Sequelize.col('ci.ciSubtype.name'), 'SUBTYPE'],
                         [Sequelize.col('ci.logical_name'), 'LOGICAL_NAME'],
                         [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.prefixe"), '_', Sequelize.col("ci.our_name")), 'DISPLAY_NAME'],
+                        [Sequelize.fn('CONCAT', '', ''), 'COMPANY'],
+
                         [Sequelize.col('ci.nrb_managed_by'), 'NRB_MANAGED_BY'],
-                        [Sequelize.fn('CONCAT', 'GCOS'), 'ASSIGNMENT'],
+
+                        [Sequelize.fn('CONCAT', ASSIGNMENT), 'ASSIGNMENT'],
                         [Sequelize.col('ci.status.name'), 'ISTATUS'],
                         [Sequelize.col('ci.description'), 'DESCRIPTION'],
 
@@ -185,13 +218,14 @@ async function generateOccurences() {
 
                     let result = [];
                     data.forEach(element => result.push(setCompanyOccurence(element)))
-                    Promise.all(result)
+                    console.log(result)
+                        /*   Promise.all(result)
                         .then(result => {
                             let pathFile = path.resolve(__dirname, 'Exported files/', prfixeTest + 'CI software ' + platform + '.xlsx')
                             generateFiles('occurence|Mainframe Subsystem', pathFile, result)
                         })
 
-
+ */
                 }).catch(err => {
                     console.log(err)
                 });
@@ -209,50 +243,55 @@ function generateFiles(nameSheet, pathFile, data) {
 
 }
 
-async function setCompanyInstance(element) {
-    return await new Promise(async function(resolve) {
-        await db.systems.findAll({
-            where: { systeme_id: element.systems.systeme_id },
-            attributes: [],
-            include: [
-                { model: db.client, required: false, as: 'clients', through: { attributes: [] }, attributes: ['companyname'] }
-            ],
-        }).map(result => result.toJSON()).then(async allClients => {
+function setCompanyInstance(element) {
+    let clients = element.systems.clients;
+    if (clients.some(element => element.isshared == 1)) {
+        element['COMPANY'] = 'PROD-NRB'
+    } else {
+        element['COMPANY'] = clients[0].name
 
-            let clients = utils.first(allClients).clients;
+    }
+    delete element.systems;
+    delete element.id;
+    return element;
+}
 
-            if (clients.some(client => client.companyname == 'ETHIAS' || client.companyname == 'NRB' || client.companyname == 'SIBELGA')) {
-                element['COMPANY-NAME'] = 'PROD-NRB'
+function addLine(arr, type) {
+    let firstLine = getLineDescription(type)
 
-            } else {
-                element['COMPANY-NAME'] = clients[0];
-            }
-        })
-        resolve(element);
-    });
+    let lineDesc = {...arr[0] };
+    let i = 0;
+    for (let value of Object.keys(lineDesc)) {
+        try {
+            if (firstLine[i] != undefined) lineDesc[value] = firstLine[i];
+            else lineDesc[value] = value;
+
+        } catch (error) {
+            lineDesc[value] = value;
+        }
+        i++;
+    }
+    arr.splice(0, 0, lineDesc);
+}
+
+function getLineDescription(type) {
+    switch (type) {
+        case 'instance':
+            return ['Our name', 'application', 'Mainframe System', 'sinstance', 'Mainframe Software', '="B C"', '=MBULL_(Our name)', 'Client ou PROD-NRB', 'NRB', 'GCOS', 'Operational', 'Description'];
+    }
 }
 
 
-async function setCompanyOccurence(element) {
-    try {
-        return await new Promise(async function(resolve) {
-            await db.occurence_client.findAll({ where: { occurencesoft_id: element.id }, attributes: ['client_id'] }).map(result => result.toJSON()).then(async allClients => {
-                if (allClients.length > 1) {
-                    element['COMPANY'] = 'PROD-NRB'
-                } else {
-                    if (allClients != undefined && allClients.length > 0) {
-                        let step1 = await db.client.findOne({ where: { client_id: allClients[0].client_id }, attributes: ['companyname'] })
+function setCompanyOccurence(element) {
 
-                        element['COMPANY'] = step1.dataValues.companyname;
-                    }
+    let clients = element.clients;
+    if (clients.some(element => element.isshared == 1)) {
+        element['COMPANY'] = 'PROD-NRB'
+    } else {
+        element['COMPANY'] = clients[0].name
 
-                }
-            })
-
-            resolve(element);
-        });
-    } catch (error) {
-        console.log(error)
     }
-
+    delete element.clients;
+    delete element.id;
+    return element;
 }

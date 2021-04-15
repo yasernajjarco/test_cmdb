@@ -93,12 +93,6 @@ async function test() {
         });
 
 
-
-
-
-
-
-
         file = path.resolve(__dirname, "Documents/" + 'CI software B.xlsx')
         await insertOccurence.insert(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0)).then(async(data) => {
             var ws = XLSX.utils.json_to_sheet(data);
@@ -128,6 +122,9 @@ async function test() {
         await updateCopany.updateLinux(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "update company/" + 'CI hardware B.xlsx')
+        await updateCopany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+
+        file = path.resolve(__dirname, "update company/" + 'CI hardware Z.xlsx')
         await updateCopany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
         //////////////////////////////////
 
