@@ -370,15 +370,8 @@ export async function updateHardware(fileName, namePlatform) {
         })
         data[sheets[i]] = (temp);
 
-        switch (sheets[i]) {
-            case 'hardware Bull':
-                await updateHardwareElements(temp, namePlatform);
-                break;
-            case 'hardware IBM':
-                await updateHardwareElements(temp, namePlatform);
-                break;
+        await updateHardwareElements(temp, namePlatform);
 
-        }
 
     }
 
@@ -393,50 +386,55 @@ async function updateHardwareElements(hardwares, namePlatform) {
 
     for (var i = 0; i < hardwares.length; i++) {
 
+
         const element = hardwares[i]["COMPANY_BREAKDOWN"];
-        let companies = element.split(',');
+        if (element != undefined) {
+            let companies = element.split(',');
 
-        companies.forEach(async oneCompany => {
-            const occu = {
+            companies.forEach(async oneCompany => {
+                const occu = {
 
-                serial_no: hardwares[i]["SERIAL_NO"],
-                company: oneCompany,
-            };
+                    serial_no: hardwares[i]["SERIAL_NO"],
+                    company: oneCompany,
+                };
 
-            try {
+                try {
 
-                const asyncFunction = async() => {
+                    const asyncFunction = async() => {
 
-                    let step1 = await db.client.findOne({ where: { companyname: occu.company }, attributes: ['client_id'] })
-                    occu.client_id = step1.dataValues.client_id;
+                        let step1 = await db.client.findOne({ where: { companyname: occu.company }, attributes: ['client_id'] })
+                        occu.client_id = step1.dataValues.client_id;
 
-                    step1 = await db.hardwares.findOne({ where: { serial_no: occu.serial_no }, attributes: ['hardware_id'] })
-                    occu.hardware_id = step1.dataValues.hardware_id;
+                        step1 = await db.hardwares.findOne({ where: { serial_no: occu.serial_no }, attributes: ['hardware_id'] })
+                        occu.hardware_id = step1.dataValues.hardware_id;
 
-                    return occu;
+                        return occu;
+
+                    }
+
+                    await asyncFunction().then(async app => {
+
+                        await db.client_hardware.findOrCreate({
+                            where: {
+                                [db.Op.and]: [{ client_id: app.client_id, hardware_id: app.hardware_id }]
+                            },
+                            defaults: {
+                                client_id: app.client_id,
+                                hardware_id: app.hardware_id
+
+                            }
+                        })
+
+
+                    });
+                } catch (error) {
+                    logger.error('can\'t insert client_systeme ', occu)
 
                 }
-
-                await asyncFunction().then(async app => {
-
-                    await db.client_hardware.findOrCreate({
-                        where: {
-                            [db.Op.and]: [{ client_id: app.client_id, hardware_id: app.hardware_id }]
-                        },
-                        defaults: {
-                            client_id: app.client_id,
-                            hardware_id: app.hardware_id
-
-                        }
-                    })
+            })
+        }
 
 
-                });
-            } catch (error) {
-                logger.error('can\'t insert client_systeme ', occu)
-
-            }
-        })
 
     }
 
