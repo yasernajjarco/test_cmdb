@@ -102,3 +102,32 @@
 2021-04-16 10:52:17.413 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
 2021-04-16 10:52:17.768 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
 2021-04-16 10:52:18.187 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
+2021-04-16 11:36:18.552 INFO  start at: 2021-04-16 09:36:18 
+2021-04-16 11:36:19.055 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-04-16 11:36:19.181 INFO  6 sellers of  world  B has been updated or added 
+2021-04-16 11:36:19.181 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-04-16 11:36:19.293 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-04-16 11:36:19.756 INFO  44 sellers of  world  Z has been updated or added 
+2021-04-16 11:36:19.756 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-04-16 11:36:19.775 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-16 11:36:19.958 INFO  8 softs of  world  B has been updated or added 
+2021-04-16 11:36:19.958 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-16 11:36:20.274 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-16 11:36:59.848 INFO  347 softs of  world  Z has been updated or added 
+2021-04-16 11:36:59.848 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-16 11:36:59.935 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-04-16 11:37:00.108 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
+2021-04-16 11:37:00.978 INFO  17 hardwares of  world  B of type pserver|Appliance has been updated or added 
+2021-04-16 11:37:01.048 INFO  2 hardwares of  world  B of type storage|M. Drive Enclosure has been updated or added 
+2021-04-16 11:37:01.315 INFO  9 hardwares of  world  B of type storage|Mainframe VTS & TL has been updated or added 
+2021-04-16 11:37:01.315 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-04-16 11:37:01.364 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
+2021-04-16 11:37:01.488 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
+2021-04-16 11:37:01.793 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
+2021-04-16 11:37:02.397 INFO  8 hardwares of  world  Z of type storage|M. Drive Enclosure has been updated or added 
+2021-04-16 11:37:03.116 INFO  12 hardwares of  world  Z of type storage|Mainframe VTS has been updated or added 
+2021-04-16 11:37:03.116 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
+2021-04-16 11:37:03.131 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
+2021-04-16 11:37:04.804 INFO  9 virtual of  world  B of type lserver|Mainframe LGP has been updated or added 
+2021-04-16 11:37:04.804 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
+2021-04-16 11:37:04.885 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual Z.xlsx 
