@@ -150,6 +150,8 @@ exports.addRelation = async(req, res) => {
     const id = req.params.id;
 
     try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
         let hardware_id = await getId(id)
         let hardware_id_1 = await getId(req.body.id)
 
@@ -211,10 +213,10 @@ exports.addClient = async(req, res) => {
     const id = req.params.id;
 
     try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
         let hardware_id = await getId(id)
-
         let client_id = req.body.id
-
 
         db.client_hardware.findOrCreate({
                 where: {
@@ -258,8 +260,9 @@ exports.addClient = async(req, res) => {
 
 exports.update = async(req, res) => {
     const id = req.params.id;
-
     try {
+
+        await utils.isLastUpdate(id, req.body.last_update);
         const class_service_id = await utils.get_classService_id(req.body.classService)
         const status_id = await utils.get_status_id(req.body.status)
         const environnement_id = await utils.get_environnement_id(req.body.environnement)
@@ -423,7 +426,7 @@ function getById(id, res) {
                 res.send({});
             else {
                 let result = data[0];
-                let audit = await utils.getLastAudit(result);
+                let audit = await utils.getLastAudit(result.id);
                 if (audit != null)
                     result['audit'] = audit;
 

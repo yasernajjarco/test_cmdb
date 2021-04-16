@@ -27,11 +27,11 @@ export function buildObject(data) {
     })
     return data;
 }
-export async function getLastAudit(result) {
+export async function getLastAudit(id) {
     try {
         let audit = null;
         await db.audit.findAll({
-            where: { ci_id: result.id },
+            where: { ci_id: id },
             attributes: [
                 ['audituser', 'user'],
                 ['auditdescription', 'description'],
@@ -48,6 +48,13 @@ export async function getLastAudit(result) {
 
 }
 
+
+export async function isLastUpdate(id, last_update) {
+
+    let audit = await getLastAudit(id);
+    if (audit.last_update == last_update) return true;
+    else throw new Error('someone has already updated, please refresh your element to get last modification');
+}
 
 export async function get_classService_id(name) {
     try {

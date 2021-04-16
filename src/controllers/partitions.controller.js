@@ -142,7 +142,7 @@ exports.findById = (req, res) => {
             if (data == undefined || data.length == 0) res.send({});
             else {
                 let result = utils.buildObject(utils.first(data));
-                let audit = await utils.getLastAudit(result);
+                let audit = await utils.getLastAudit(result.id);
                 if (audit != null) result['audit'] = audit;
 
                 res.send(result);
