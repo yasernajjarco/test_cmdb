@@ -138,146 +138,9 @@ function buildCondition(platform, type, subtype) {
 
 
 exports.findById = (req, res) => {
-
     const id = req.params.id;
 
-    db.hardwares.findAll({
-            where: { ci_id: id },
-            required: true,
-            include: [{
-                    model: db.ci,
-                    required: true,
-                    as: 'ci',
-                    attributes: [],
-                    include: [
-                        { model: db.platforms, required: false, as: 'platforms', attributes: [] },
-                        { model: db.status, required: false, as: 'status', attributes: [], },
-                        { model: db.classService, required: false, as: 'classService', attributes: [], },
-                        { model: db.ciType, required: false, as: 'ciType', attributes: [], },
-                        { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
-                        { model: db.envType, required: false, as: 'envType', attributes: [] },
-
-                    ]
-
-                },
-                {
-                    model: db.hardwares,
-                    required: false,
-                    as: 'hardwares',
-                    through: { attributes: [] },
-                    include: [{
-                        model: db.ci,
-                        required: false,
-                        as: 'ci',
-                        include: [
-                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
-                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
-                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
-
-
-                        ],
-                        attributes: ['our_name', ['ci_id', 'id']]
-
-                    }],
-                    attributes: [
-                        ['ci_id', 'id']
-                    ]
-                },
-                {
-                    model: db.hardwares,
-                    required: false,
-                    as: 'hardwares1',
-                    through: { attributes: [] },
-                    include: [{
-                        model: db.ci,
-                        required: false,
-                        as: 'ci',
-                        include: [
-                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
-                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
-                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
-
-
-
-                        ],
-                        attributes: ['our_name', ['ci_id', 'id']]
-
-                    }],
-                    attributes: [
-                        ['ci_id', 'id']
-                    ]
-                },
-
-                {
-                    model: db.client,
-                    required: false,
-                    as: 'clients',
-                    through: { attributes: [] },
-                    attributes: [
-                        [Sequelize.col('companyname'), 'name'],
-                        [Sequelize.col('client_id'), 'id']
-
-                    ]
-                },
-                {
-                    model: db.lpars,
-                    required: false,
-                    as: 'lpars',
-                    include: [{
-                        model: db.ci,
-                        required: false,
-                        as: 'ci',
-                        include: [
-                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
-                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
-                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
-
-                        ],
-                        attributes: ['our_name', ['ci_id', 'id']]
-                    }],
-                    attributes: [
-                        ['ci_id', 'id'],
-
-                    ]
-                },
-
-            ],
-            attributes: [
-                //['hardware_id', 'id'],
-                ['serial_no', 'serial_no'],
-                [Sequelize.col('ci.ci_id'), 'id'],
-                [Sequelize.col('ci.our_name'), 'name'],
-                [Sequelize.col('ci.ciType.name'), 'type'],
-                [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
-                [Sequelize.col('ci.envType.name'), 'environnement'],
-                [Sequelize.col('ci.status.name'), 'status'],
-                [Sequelize.col('ci.description'), 'description'],
-                [Sequelize.col('ci.classService.name'), 'classService'],
-                [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
-                [Sequelize.col('ci.platforms.name'), 'platform'],
-
-            ]
-
-        }).map(data => data.toJSON())
-        .then(async data => {
-            if (data == undefined || data.length == 0) res.send({});
-            else {
-                let result = data[0];
-                let audit = await utils.getLastAudit(result);
-                if (audit != null) result['audit'] = audit;
-
-                if (result != null && result != undefined && result.hardwares1 != undefined && result.hardwares1.length > 0) {
-                    result.hardwares1.forEach(element => result.hardwares.push(element));
-                }
-                delete result.hardwares1;
-                res.send(result);
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving hardwares."
-            });
-        });
+    getById(id, res);
 
 
 };
@@ -317,9 +180,11 @@ exports.addRelation = async(req, res) => {
                         ci_id: id
                     })
 
-                    res.send({
-                        message: "hardware relation was added successfully."
-                    });
+                    /*  res.send({
+                         message: "hardware relation was added successfully."
+                     }); */
+                    getById(id, res)
+
                 } else {
                     res.send({
                         message: `Cannot update hardware relation with id=${id}. Maybe hardware relation already exists`
@@ -342,6 +207,54 @@ exports.addRelation = async(req, res) => {
 
 };
 
+exports.addClient = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        let hardware_id = await getId(id)
+
+        let client_id = req.body.client_id
+
+
+        db.client_hardware.findOrCreate({
+                where: {
+                    [db.Op.and]: [{ client_id: client_id, hardware_id: hardware_id }]
+                },
+                defaults: {
+                    client_id: client_id,
+                    hardware_id: hardware_id
+
+                }
+            }).then(num => {
+                if (num[0]._options.isNewRecord) {
+                    db.audit.create({
+                        audittimestamp: Sequelize.fn('NOW'),
+                        audituser: req.user,
+                        auditdescription: 'update relation hardware',
+                        ci_id: id
+                    })
+                    getById(id, res)
+                } else {
+                    res.send({
+                        message: `Cannot update hardware client relation with id=${id}. Maybe client relation already exists`
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).send({
+                    message: "Error updating hardware client relation with id=" + id
+                });
+            });
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        });
+    }
+
+
+
+};
 
 exports.update = async(req, res) => {
     const id = req.params.id;
@@ -378,7 +291,8 @@ exports.update = async(req, res) => {
 
             })
         }).then(all => {
-            res.redirect('/api/hardwares/details/' + id);
+            getById(id, res)
+                // res.redirect('/api/hardwares/details/' + id);
         }).catch(err => {
             res.status(500).send({
                 message: "Error updating hardware with id=" + id
@@ -397,6 +311,135 @@ exports.update = async(req, res) => {
 
 };
 
+
+function getById(id, res) {
+
+    db.hardwares.findAll({
+            where: { ci_id: id },
+            required: true,
+            include: [{
+                    model: db.ci,
+                    required: true,
+                    as: 'ci',
+                    attributes: [],
+                    include: [
+                        { model: db.platforms, required: false, as: 'platforms', attributes: [] },
+                        { model: db.status, required: false, as: 'status', attributes: [], },
+                        { model: db.classService, required: false, as: 'classService', attributes: [], },
+                        { model: db.ciType, required: false, as: 'ciType', attributes: [], },
+                        { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                        { model: db.envType, required: false, as: 'envType', attributes: [] },
+                    ]
+                },
+                {
+                    model: db.hardwares,
+                    required: false,
+                    as: 'hardwares',
+                    through: { attributes: [] },
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
+                        ],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
+                    attributes: [
+                        ['ci_id', 'id']
+                    ]
+                },
+                {
+                    model: db.hardwares,
+                    required: false,
+                    as: 'hardwares1',
+                    through: { attributes: [] },
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
+                        ],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
+                    attributes: [
+                        ['ci_id', 'id']
+                    ]
+                },
+
+                {
+                    model: db.client,
+                    required: false,
+                    as: 'clients',
+                    through: { attributes: [] },
+                    attributes: [
+                        [Sequelize.col('companyname'), 'name'],
+                        [Sequelize.col('client_id'), 'id']
+                    ]
+                },
+                {
+                    model: db.lpars,
+                    required: false,
+                    as: 'lpars',
+                    include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        include: [
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: ['name'] },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: ['name'] },
+                            { model: db.status, required: false, as: 'status', attributes: ['name'], },
+                        ],
+                        attributes: ['our_name', ['ci_id', 'id']]
+                    }],
+                    attributes: [
+                        ['ci_id', 'id'],
+                    ]
+                },
+
+            ],
+            attributes: [
+                //['hardware_id', 'id'],
+                ['serial_no', 'serial_no'],
+                [Sequelize.col('ci.ci_id'), 'id'],
+                [Sequelize.col('ci.our_name'), 'name'],
+                [Sequelize.col('ci.ciType.name'), 'type'],
+                [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
+                [Sequelize.col('ci.envType.name'), 'environnement'],
+                [Sequelize.col('ci.status.name'), 'status'],
+                [Sequelize.col('ci.description'), 'description'],
+                [Sequelize.col('ci.classService.name'), 'classService'],
+                [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
+                [Sequelize.col('ci.platforms.name'), 'platform'],
+            ]
+        }).map(data => data.toJSON())
+        .then(async(data) => {
+            if (data == undefined || data.length == 0)
+                res.send({});
+            else {
+                let result = data[0];
+                let audit = await utils.getLastAudit(result);
+                if (audit != null)
+                    result['audit'] = audit;
+
+                if (result != null && result != undefined && result.hardwares1 != undefined && result.hardwares1.length > 0) {
+                    result.hardwares1.forEach(element => result.hardwares.push(element));
+                }
+                delete result.hardwares1;
+                res.send(result);
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving hardwares."
+            });
+        });
+}
 
 async function getId(hardware_id) {
     try {
