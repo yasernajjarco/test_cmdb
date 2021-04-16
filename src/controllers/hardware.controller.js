@@ -151,7 +151,7 @@ exports.addRelation = async(req, res) => {
 
     try {
         let hardware_id = await getId(id)
-        let hardware_id_1 = await getId(req.body.hardware_id)
+        let hardware_id_1 = await getId(req.body.id)
 
         db.hardwares_relations.findOrCreate({
                 where: {
@@ -213,7 +213,7 @@ exports.addClient = async(req, res) => {
     try {
         let hardware_id = await getId(id)
 
-        let client_id = req.body.client_id
+        let client_id = req.body.id
 
 
         db.client_hardware.findOrCreate({

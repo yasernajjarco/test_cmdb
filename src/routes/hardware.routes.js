@@ -91,8 +91,10 @@ router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll)
  * }
  */
 router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
-router.put("/relation/:id", [authJwt.verifyToken, authJwt.isModerator], controller.addRelation);
-router.put("/client/:id", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
+//router.put("/relation/:id", [authJwt.verifyToken, authJwt.isModerator], controller.addRelation);
+//router.put("/client/:id", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
+router.put("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
+router.put("/:id/relation", [authJwt.verifyToken, authJwt.isModerator], controller.addRelation);
 
 router.put("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.update);
 
