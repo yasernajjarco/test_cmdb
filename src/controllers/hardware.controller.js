@@ -209,6 +209,69 @@ exports.addRelation = async(req, res) => {
 
 };
 
+exports.deleteRelation = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
+        let hardware_id = await getId(id)
+        let hardware_id_1 = await getId(req.body.id)
+
+        db.hardwares_relations.findOrCreate({
+                where: {
+                    [Op.or]: [{
+                        hardware_id: hardware_id,
+                        hardware_id_1: hardware_id_1
+
+                    }, {
+                        hardware_id: hardware_id_1,
+                        hardware_id_1: hardware_id
+
+                    }]
+
+                },
+                defaults: {
+                    hardware_id: hardware_id,
+                    hardware_id_1: hardware_id_1
+
+                }
+            }).then(num => {
+                if (num[0]._options.isNewRecord) {
+                    db.audit.create({
+                        audittimestamp: Sequelize.fn('NOW'),
+                        audituser: req.user,
+                        auditdescription: 'update relation hardware',
+                        ci_id: id
+                    })
+
+                    /*  res.send({
+                         message: "hardware relation was added successfully."
+                     }); */
+                    getById(id, res)
+
+                } else {
+                    res.send({
+                        message: `Cannot update hardware relation with id=${id}. Maybe hardware relation already exists`
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).send({
+                    message: "Error updating hardware relation with id=" + id
+                });
+            });
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        });
+    }
+
+
+
+};
+
 exports.addClient = async(req, res) => {
     const id = req.params.id;
 

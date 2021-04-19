@@ -7,8 +7,18 @@ const utils = require("./utils");
 exports.findAll = (req, res) => {
 
     let attributes = (req.body.columns == undefined) ? [] : buildAttributes(req.body.columns);
+    let condition = buildCondition(req.body.platform);
+
     db.client.findAll({
-            attributes: attributes
+            where: condition,
+            attributes: attributes,
+            include: [{
+                model: db.platforms,
+                required: false,
+                as: 'platforms',
+                through: { attributes: [] },
+                attributes: []
+            }, ],
         })
         .then(data => {
             res.send(data);
@@ -174,6 +184,11 @@ function buildAttributes(columns) {
 
     return attributes;
 
+}
+
+function buildCondition(platform) {
+    let condition = (platform !== undefined) ? { '$platforms.name$': platform } : {};
+    return condition;
 }
 
 

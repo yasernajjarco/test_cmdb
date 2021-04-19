@@ -95,6 +95,7 @@ router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controlle
 //router.put("/client/:id", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
 router.put("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
 router.put("/:id/relation", [authJwt.verifyToken, authJwt.isModerator], controller.addRelation);
+router.delete("/:id/relation", [authJwt.verifyToken, authJwt.isModerator], controller.deleteRelation);
 
 router.put("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.update);
 

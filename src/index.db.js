@@ -61,6 +61,7 @@ db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize,
 
 db.contact = require("./models/contact")(sequelize, Sequelize, DataTypes);
 db.audit = require("./models/audit")(sequelize, Sequelize, DataTypes);
+db.client_platform = require("./models/client_platform")(sequelize, Sequelize, DataTypes);
 
 
 //=============== CI ================//
@@ -191,6 +192,9 @@ db.client.belongsToMany(db.occurence, { through: "occurence_client", as: "occure
 db.provider.belongsToMany(db.platforms, { through: "provider_platform", as: "platforms", foreignKey: "provider_id" });
 db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "providers", foreignKey: "platform_id" });
 
+
+db.client.belongsToMany(db.platforms, { through: "client_platform", as: "platforms", foreignKey: "client_id" });
+db.platforms.belongsToMany(db.client, { through: "client_platform", as: "clients", foreignKey: "platform_id" });
 
 
 

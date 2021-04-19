@@ -168,7 +168,62 @@ async function upsert(Model, condition, values) {
 
 
 
+export async function updateClients(fileName, namePlatform) {
 
+    const file = reader.readFile(fileName, { type: "string", cellDates: false })
+    let data = new Array();
+    const sheets = file.SheetNames
+    sheets.forEach((res) => { data[res] = new Array() })
+
+    logger.info('start processing this file : ', fileName);
+
+
+    const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[0]], { raw: false });
+
+    data[sheets[0]] = (temp);
+    let platforms = [];
+    await db.platforms.findAll().map(data => data.toJSON()).then(res => { platforms = [...res] });
+
+
+
+    await temp.forEach(async element => {
+        let client_id = element.client_id;
+
+        if (element.inworld_B != null && element.inworld_B != undefined) {
+            let platform_id = platforms.find(x => x.name == 'B').platform_id;
+            await db.client_platform.findOrCreate({
+                where: {
+                    [db.Op.and]: [{ platform_id: platform_id }, { client_id: client_id }]
+                },
+                defaults: { platform_id: platform_id, client_id: client_id }
+            })
+
+        }
+        if (element.inworld_Z != null && element.inworld_Z != undefined) {
+            let platform_id = platforms.find(x => x.name == 'Z').platform_id;
+            await db.client_platform.findOrCreate({
+                where: {
+                    [db.Op.and]: [{ platform_id: platform_id }, { client_id: client_id }]
+                },
+                defaults: { platform_id: platform_id, client_id: client_id }
+            })
+        }
+        if (element.inworld_I != null && element.inworld_I != undefined) {
+            let platform_id = platforms.find(x => x.name == 'I').platform_id;
+            await db.client_platform.findOrCreate({
+                where: {
+                    [db.Op.and]: [{ platform_id: platform_id }, { client_id: client_id }]
+                },
+                defaults: { platform_id: platform_id, client_id: client_id }
+            })
+        }
+    })
+
+
+
+
+
+}
 export async function updateSystemes(fileName, namePlatform) {
 
     const file = reader.readFile(fileName, { type: "string", cellDates: false })

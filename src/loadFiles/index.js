@@ -128,6 +128,10 @@ async function test() {
         await updateCopany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
         //////////////////////////////////
 
+
+        file = path.resolve(__dirname, "update company/" + 'clients.csv')
+        await updateCopany.updateClients(file, '');
+
         let time = await new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
         await logger.info('End at: ', time)
 

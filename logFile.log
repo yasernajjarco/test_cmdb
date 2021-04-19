@@ -1,133 +1,83 @@
-2021-04-16 10:47:41.315 INFO  start at: 2021-04-16 08:47:41 
-2021-04-16 10:47:41.975 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
-2021-04-16 10:47:42.126 INFO  6 sellers of  world  B has been updated or added 
-2021-04-16 10:47:42.126 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
-2021-04-16 10:47:42.200 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
-2021-04-16 10:47:43.012 INFO  44 sellers of  world  Z has been updated or added 
-2021-04-16 10:47:43.012 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
-2021-04-16 10:47:43.040 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 10:47:43.353 INFO  8 softs of  world  B has been updated or added 
-2021-04-16 10:47:43.353 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 10:47:43.667 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 10:47:57.818 INFO  347 softs of  world  Z has been updated or added 
-2021-04-16 10:47:57.818 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 10:47:57.889 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
-2021-04-16 10:47:58.264 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
-2021-04-16 10:47:59.037 INFO  17 hardwares of  world  B of type pserver|Appliance has been updated or added 
-2021-04-16 10:47:59.109 INFO  2 hardwares of  world  B of type storage|M. Drive Enclosure has been updated or added 
-2021-04-16 10:47:59.426 INFO  9 hardwares of  world  B of type storage|Mainframe VTS & TL has been updated or added 
-2021-04-16 10:47:59.426 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
-2021-04-16 10:47:59.466 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
-2021-04-16 10:47:59.685 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
-2021-04-16 10:47:59.807 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
-2021-04-16 10:48:00.086 INFO  8 hardwares of  world  Z of type storage|M. Drive Enclosure has been updated or added 
-2021-04-16 10:48:00.572 INFO  12 hardwares of  world  Z of type storage|Mainframe VTS has been updated or added 
-2021-04-16 10:48:00.572 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
-2021-04-16 10:48:00.586 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
-2021-04-16 10:48:01.430 INFO  9 virtual of  world  B of type lserver|Mainframe LGP has been updated or added 
-2021-04-16 10:48:01.430 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
-2021-04-16 10:48:01.481 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual Z.xlsx 
-2021-04-16 10:48:14.633 INFO  163 virtual of  world  Z of type lserver|Mainframe LPAR has been updated or added 
-2021-04-16 10:48:15.746 INFO  163 virtual of  world  Z of type lserver|zVM Linux has been updated or added 
-2021-04-16 10:48:15.746 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual Z.xlsx 
-2021-04-16 10:48:15.775 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware Z pserver.csv 
-2021-04-16 10:48:15.777 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware Z pserver.csv 
-2021-04-16 10:48:15.777 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B pserver.csv 
-2021-04-16 10:48:15.778 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B pserver.csv 
-2021-04-16 10:48:15.778 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B storage.csv 
-2021-04-16 10:48:15.778 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B storage.csv 
-2021-04-16 10:48:15.801 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance B.xlsx 
-2021-04-16 10:48:16.086 ERROR can't find referenced for relation DS8886 75CBP20 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.097 ERROR can't find referenced for relation DS8886 75BZZ00 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.122 ERROR can't find referenced for relation DS8886 75HKT20 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.124 ERROR can't find referenced for relation DS8886 75HKF20 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.146 ERROR can't find referenced for relation VTS 7760 78H8884 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.147 ERROR can't find referenced for relation VTS 7720 78H7498 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.251 ERROR can't find referenced for relation HMC PUP X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.252 ERROR can't find referenced for relation HMC B10 X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.252 ERROR can't find referenced for relation HMC BDC X CEC03 to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.355 ERROR can't find referenced for relation DS8886 75CBP20 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.383 ERROR can't find referenced for relation DS8886 75BZZ00 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.395 ERROR can't find referenced for relation DS8886 75HKT20 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.409 ERROR can't find referenced for relation DS8886 75HKF20 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.437 ERROR can't find referenced for relation VTS 7760 78H8884 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.438 ERROR can't find referenced for relation VTS 7720 78H7498 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.487 ERROR can't find referenced for relation HMC PUP X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.497 ERROR can't find referenced for relation HMC B10 X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:16.505 ERROR can't find referenced for relation HMC BDC X CEC02B to insert in the table (hardwares_relations) 
-2021-04-16 10:48:18.904 INFO  16 instances of  world  B has been updated or added 
-2021-04-16 10:48:18.904 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance B.xlsx 
-2021-04-16 10:48:19.365 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance Z.xlsx 
-2021-04-16 10:49:51.120 INFO  2163 instances of  world  Z has been updated or added 
-2021-04-16 10:49:51.120 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance Z.xlsx 
-2021-04-16 10:49:51.171 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 10:49:51.555 INFO  8 occurrences of  world  B has been updated or added 
-2021-04-16 10:49:51.555 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 10:49:51.947 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 10:50:00.015 ERROR can't insert occurence {"ourName":"ADABASP","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 FERMAT","system":"FERMAT","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASP FERMAT","displayName":"Z_ADABASP","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Production Dieteren","client_id":10} 
-2021-04-16 10:50:00.023 ERROR can't insert occurence {"ourName":"ADABASD","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 FERMAT","system":"FERMAT","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASD FERMAT","displayName":"Z_ADABASD","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Développement Dieteren","client_id":10} 
-2021-04-16 10:50:00.029 ERROR can't insert occurence {"ourName":"ADABASE","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 FERMAT","system":"FERMAT","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASE FERMAT","displayName":"Z_ADABASE","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Educ Dieteren","client_id":10} 
-2021-04-16 10:50:00.036 ERROR can't insert occurence {"ourName":"ADABASP","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASP PAVLOV","displayName":"Z_ADABASP","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Production Dieteren PAVLOV","client_id":10} 
-2021-04-16 10:50:00.041 ERROR can't insert occurence {"ourName":"ADABASD","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASD PAVLOV","displayName":"Z_ADABASD","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Développement Dieteren PAVLOV","client_id":10} 
-2021-04-16 10:50:00.045 ERROR can't insert occurence {"ourName":"ADABASE","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASE PAVLOV","displayName":"Z_ADABASE","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Educ Dieteren PAVLOV","client_id":10} 
-2021-04-16 10:50:18.492 INFO  479 occurrences of  world  Z has been updated or added 
-2021-04-16 10:50:18.492 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 10:50:18.511 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\occurences_clients Z.xlsx 
-2021-04-16 10:50:18.519 INFO   instances of  world  Z has been updated or added 
-2021-04-16 10:50:18.519 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\occurences_clients Z.xlsx 
-2021-04-16 10:50:18.529 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\CI virtual Z.xlsx 
-2021-04-16 10:50:18.629 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\linux_clients Z.xlsx 
-2021-04-16 10:50:18.717 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\CI hardware B.xlsx 
-2021-04-16 10:50:18.758 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\CI hardware Z.xlsx 
-2021-04-16 10:50:18.773 INFO  End at: 2021-04-16 08:50:18 
-2021-04-16 10:51:59.510 INFO  start at: 2021-04-16 08:51:59 
-2021-04-16 10:52:00.142 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
-2021-04-16 10:52:00.258 INFO  6 sellers of  world  B has been updated or added 
-2021-04-16 10:52:00.258 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
-2021-04-16 10:52:00.368 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
-2021-04-16 10:52:01.369 INFO  44 sellers of  world  Z has been updated or added 
-2021-04-16 10:52:01.369 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
-2021-04-16 10:52:01.406 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 10:52:01.685 INFO  8 softs of  world  B has been updated or added 
-2021-04-16 10:52:01.685 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 10:52:02.023 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 10:52:12.935 INFO  347 softs of  world  Z has been updated or added 
-2021-04-16 10:52:12.935 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 10:52:13.021 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
-2021-04-16 10:52:13.348 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
-2021-04-16 10:52:15.579 INFO  17 hardwares of  world  B of type pserver|Appliance has been updated or added 
-2021-04-16 10:52:16.124 INFO  2 hardwares of  world  B of type storage|M. Drive Enclosure has been updated or added 
-2021-04-16 10:52:17.356 INFO  9 hardwares of  world  B of type storage|Mainframe VTS & TL has been updated or added 
-2021-04-16 10:52:17.356 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
-2021-04-16 10:52:17.413 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
-2021-04-16 10:52:17.768 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
-2021-04-16 10:52:18.187 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
-2021-04-16 11:36:18.552 INFO  start at: 2021-04-16 09:36:18 
-2021-04-16 11:36:19.055 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
-2021-04-16 11:36:19.181 INFO  6 sellers of  world  B has been updated or added 
-2021-04-16 11:36:19.181 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
-2021-04-16 11:36:19.293 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
-2021-04-16 11:36:19.756 INFO  44 sellers of  world  Z has been updated or added 
-2021-04-16 11:36:19.756 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
-2021-04-16 11:36:19.775 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 11:36:19.958 INFO  8 softs of  world  B has been updated or added 
-2021-04-16 11:36:19.958 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
-2021-04-16 11:36:20.274 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 11:36:59.848 INFO  347 softs of  world  Z has been updated or added 
-2021-04-16 11:36:59.848 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
-2021-04-16 11:36:59.935 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
-2021-04-16 11:37:00.108 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
-2021-04-16 11:37:00.978 INFO  17 hardwares of  world  B of type pserver|Appliance has been updated or added 
-2021-04-16 11:37:01.048 INFO  2 hardwares of  world  B of type storage|M. Drive Enclosure has been updated or added 
-2021-04-16 11:37:01.315 INFO  9 hardwares of  world  B of type storage|Mainframe VTS & TL has been updated or added 
-2021-04-16 11:37:01.315 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
-2021-04-16 11:37:01.364 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
-2021-04-16 11:37:01.488 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
-2021-04-16 11:37:01.793 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
-2021-04-16 11:37:02.397 INFO  8 hardwares of  world  Z of type storage|M. Drive Enclosure has been updated or added 
-2021-04-16 11:37:03.116 INFO  12 hardwares of  world  Z of type storage|Mainframe VTS has been updated or added 
-2021-04-16 11:37:03.116 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
-2021-04-16 11:37:03.131 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
-2021-04-16 11:37:04.804 INFO  9 virtual of  world  B of type lserver|Mainframe LGP has been updated or added 
-2021-04-16 11:37:04.804 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
-2021-04-16 11:37:04.885 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual Z.xlsx 
+2021-04-16 14:25:32.714 INFO  start at: 2021-04-16 12:25:32 
+2021-04-16 14:25:33.329 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-04-16 14:25:33.474 INFO  6 sellers of  world  B has been updated or added 
+2021-04-16 14:25:33.474 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs B.xlsx 
+2021-04-16 14:25:33.564 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-04-16 14:25:34.500 INFO  44 sellers of  world  Z has been updated or added 
+2021-04-16 14:25:34.500 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\Refs Z.xlsx 
+2021-04-16 14:25:34.529 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-16 14:25:34.759 INFO  8 softs of  world  B has been updated or added 
+2021-04-16 14:25:34.759 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-16 14:25:35.038 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-16 14:29:20.709 INFO  347 softs of  world  Z has been updated or added 
+2021-04-16 14:29:20.709 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-16 14:29:20.742 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-04-16 14:29:20.877 INFO  4 hardwares of  world  B of type pserver|Mainframe Bull has been updated or added 
+2021-04-16 14:29:21.411 INFO  17 hardwares of  world  B of type pserver|Appliance has been updated or added 
+2021-04-16 14:30:04.297 INFO  2 hardwares of  world  B of type storage|M. Drive Enclosure has been updated or added 
+2021-04-16 14:30:04.576 INFO  9 hardwares of  world  B of type storage|Mainframe VTS & TL has been updated or added 
+2021-04-16 14:30:04.576 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware B.xlsx 
+2021-04-16 14:30:04.623 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
+2021-04-16 14:30:04.800 INFO  5 hardwares of  world  Z of type pserver|Mainframe IBM has been updated or added 
+2021-04-16 14:30:04.920 INFO  4 hardwares of  world  Z of type pserver|Appliance has been updated or added 
+2021-04-16 14:30:05.176 INFO  8 hardwares of  world  Z of type storage|M. Drive Enclosure has been updated or added 
+2021-04-16 14:30:05.527 INFO  12 hardwares of  world  Z of type storage|Mainframe VTS has been updated or added 
+2021-04-16 14:30:05.527 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI hardware Z.xlsx 
+2021-04-16 14:30:05.538 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
+2021-04-16 14:30:45.064 INFO  9 virtual of  world  B of type lserver|Mainframe LGP has been updated or added 
+2021-04-16 14:30:45.064 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual B.xlsx 
+2021-04-16 14:30:45.120 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual Z.xlsx 
+2021-04-16 14:34:53.058 INFO  163 virtual of  world  Z of type lserver|Mainframe LPAR has been updated or added 
+2021-04-16 14:35:25.627 INFO  163 virtual of  world  Z of type lserver|zVM Linux has been updated or added 
+2021-04-16 14:35:25.627 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI virtual Z.xlsx 
+2021-04-16 14:35:25.651 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware Z pserver.csv 
+2021-04-16 14:35:25.653 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware Z pserver.csv 
+2021-04-16 14:35:25.653 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B pserver.csv 
+2021-04-16 14:35:25.653 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B pserver.csv 
+2021-04-16 14:35:25.653 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B storage.csv 
+2021-04-16 14:35:25.653 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\REL hardware B storage.csv 
+2021-04-16 14:35:25.673 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance B.xlsx 
+2021-04-16 14:35:25.886 ERROR can't find referenced for relation DS8886 75CBP20 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:25.887 ERROR can't find referenced for relation DS8886 75BZZ00 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:25.896 ERROR can't find referenced for relation DS8886 75HKT20 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:25.896 ERROR can't find referenced for relation DS8886 75HKF20 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.262 ERROR can't find referenced for relation VTS 7760 78H8884 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.263 ERROR can't find referenced for relation VTS 7720 78H7498 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.280 ERROR can't find referenced for relation HMC PUP X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.280 ERROR can't find referenced for relation HMC B10 X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.281 ERROR can't find referenced for relation HMC BDC X CEC03 to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.428 ERROR can't find referenced for relation DS8886 75CBP20 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.435 ERROR can't find referenced for relation DS8886 75BZZ00 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.458 ERROR can't find referenced for relation DS8886 75HKT20 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.459 ERROR can't find referenced for relation DS8886 75HKF20 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.474 ERROR can't find referenced for relation VTS 7760 78H8884 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.475 ERROR can't find referenced for relation VTS 7720 78H7498 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.521 ERROR can't find referenced for relation HMC PUP X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.522 ERROR can't find referenced for relation HMC B10 X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:35:59.529 ERROR can't find referenced for relation HMC BDC X CEC02B to insert in the table (hardwares_relations) 
+2021-04-16 14:36:30.733 INFO  16 instances of  world  B has been updated or added 
+2021-04-16 14:36:30.733 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance B.xlsx 
+2021-04-16 14:36:31.083 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance Z.xlsx 
+2021-04-16 14:57:02.286 INFO  2163 instances of  world  Z has been updated or added 
+2021-04-16 14:57:02.286 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI sinstance Z.xlsx 
+2021-04-16 14:57:02.589 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-16 14:57:03.354 INFO  8 occurrences of  world  B has been updated or added 
+2021-04-16 14:57:03.354 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software B.xlsx 
+2021-04-16 14:57:04.573 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-16 14:57:31.626 ERROR can't insert occurence {"ourName":"ADABASP","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 FERMAT","system":"FERMAT","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASP FERMAT","displayName":"Z_ADABASP","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Production Dieteren","client_id":10} 
+2021-04-16 14:57:31.633 ERROR can't insert occurence {"ourName":"ADABASD","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 FERMAT","system":"FERMAT","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASD FERMAT","displayName":"Z_ADABASD","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Développement Dieteren","client_id":10} 
+2021-04-16 14:57:31.640 ERROR can't insert occurence {"ourName":"ADABASE","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 FERMAT","system":"FERMAT","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASE FERMAT","displayName":"Z_ADABASE","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Educ Dieteren","client_id":10} 
+2021-04-16 14:57:31.647 ERROR can't insert occurence {"ourName":"ADABASP","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASP PAVLOV","displayName":"Z_ADABASP","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Production Dieteren PAVLOV","client_id":10} 
+2021-04-16 14:57:31.655 ERROR can't insert occurence {"ourName":"ADABASD","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASD PAVLOV","displayName":"Z_ADABASD","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Développement Dieteren PAVLOV","client_id":10} 
+2021-04-16 14:57:31.666 ERROR can't insert occurence {"ourName":"ADABASE","product_code":"ADA","version":"8.4.2","softinstance":"SAG ADA 8.4.2 PAVLOV","system":"PAVLOV","type":"occurence","subtype":"Mainframe Subsystem","logicalname":"ADABASE PAVLOV","displayName":"Z_ADABASE","company":"DIETEREN","nrb_managed_by":"NRB","asignment":"ZSYS","status":"Operational","description":"ADABAS Educ Dieteren PAVLOV","client_id":10} 
+2021-04-16 14:58:04.515 INFO  479 occurrences of  world  Z has been updated or added 
+2021-04-16 14:58:04.515 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\Documents\CI software Z.xlsx 
+2021-04-16 14:58:04.563 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\occurences_clients Z.xlsx 
+2021-04-16 14:58:04.571 INFO   instances of  world  Z has been updated or added 
+2021-04-16 14:58:04.571 INFO  end processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\occurences_clients Z.xlsx 
+2021-04-16 14:58:04.599 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\CI virtual Z.xlsx 
+2021-04-16 14:58:04.806 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\linux_clients Z.xlsx 
+2021-04-16 14:58:05.087 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\CI hardware B.xlsx 
+2021-04-16 14:58:05.326 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\CI hardware Z.xlsx 
+2021-04-16 14:58:05.397 INFO  start processing this file : C:\Users\p62956\OneDrive - NRB\Bureau\local\Backend\test_cmdb\src\loadFiles\update company\clients.csv 
+2021-04-16 14:58:07.468 INFO  End at: 2021-04-16 12:58:07 

@@ -10,7 +10,7 @@ const EnvType = db.envType;
 const LparType = db.partitionType;
 
 
-const platforms = [{ name: 'Z', prefixe: 'Z' }, { name: 'B', prefixe: 'MBULL' }];
+const platforms = [{ name: 'Z', prefixe: 'Z' }, { name: 'B', prefixe: 'MBULL' }, { name: 'I', prefixe: 'I' }];
 const status = [{ name: 'Available' }, { name: 'Operational' }, { name: 'Retired' }, { name: 'Under construction' }, { name: 'Pre-Operation' }, { name: 'Pre-retired' }];
 const classServices = [{ name: 'SAAS' }, { name: 'PAAS' }, { name: 'IAAS' }, { name: 'Housing' }, { name: 'Not applicable' }];
 const envTypes = [{ name: 'Laboratoire' }, { name: 'Développement' }, { name: 'Homologation' }, { name: 'Acceptance' }, { name: 'Not Production' }, { name: 'Unknown' }, { name: 'Production' }];

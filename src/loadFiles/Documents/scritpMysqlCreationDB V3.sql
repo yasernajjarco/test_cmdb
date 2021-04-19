@@ -3,6 +3,7 @@
 `cmdb`.`client_hardware`, 
 `cmdb`.`client_zlinux`,
 `cmdb`.`client_systeme`,
+`cmdb`.`client_platform`,
 `cmdb`.`hardware_relation`,
 `cmdb`.`occurence_client`,
 `cmdb`.`provider_platform`,
@@ -211,6 +212,13 @@ create table occurencesoft(
 );
 
 
+create table client_platform(
+   platform_id int,
+   client_id int,
+   primary key(platform_id, client_id),
+   foreign key(platform_id) references platform(platform_id),
+   foreign key(client_id) references client(client_id)
+);
 create table provider_platform(
    platform_id int,
    provider_id int,
