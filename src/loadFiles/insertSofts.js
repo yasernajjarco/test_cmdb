@@ -1,11 +1,7 @@
 const db = require("../index.db");
-import moment from 'moment';
 const logger = require('../logger');
 let compt = 0;
 const { Sequelize, DataTypes, Op } = require("sequelize");
-
-
-
 const reader = require('xlsx')
 
 
@@ -40,7 +36,6 @@ export async function insertApplication(fileName, namePlatform) {
 
 
 }
-
 
 async function insertApplications(apps, namePlatform) {
 

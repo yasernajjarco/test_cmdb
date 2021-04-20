@@ -1,7 +1,5 @@
 const db = require("../index.db");
 const utils = require("./utils");
-
-
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
@@ -188,7 +186,6 @@ exports.findById = (req, res) => {
 
 
 };
-
 
 function buildAttributes(columns) {
     let attributes = [];

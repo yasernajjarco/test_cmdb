@@ -1,7 +1,5 @@
 const db = require("../index.db");
 const utils = require("./utils");
-
-
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
@@ -196,11 +194,3 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
-
-function first(array) {
-    if (array == null)
-        return {};
-    if (array.length == 0)
-        return {}
-    return array[0];
-};

@@ -1,14 +1,8 @@
 const db = require("../index.db");
-import moment from 'moment';
 const logger = require('../logger');
 let compt = 0;
-var fs = require('fs')
-const path = require('path');
 import { Sequelize } from "sequelize";
-
 const reader = require('xlsx')
-
-
 let results = [];
 
 export async function insert(fileName, namePlatform) {

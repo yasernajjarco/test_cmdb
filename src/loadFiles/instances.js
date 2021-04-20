@@ -1,15 +1,9 @@
 const db = require("../index.db");
-import moment from 'moment';
-import ConsoleAppender from 'simple-node-logger/lib/ConsoleAppender';
 const logger = require('../logger');
 let compt = 0;
 let results = [];
 import { Sequelize } from "sequelize";
-
-//zVM linux, occurence linux all sauf PROD-NRB
-
 const reader = require('xlsx')
-
 
 export async function insertInstances(fileName, namePlatform) {
 
@@ -45,7 +39,6 @@ export async function insertInstances(fileName, namePlatform) {
 
 
 }
-
 
 async function insertInstance(instances, namePlatform) {
 

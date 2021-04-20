@@ -66,7 +66,7 @@ async function insertpserver(pservers, namePlatform) {
 
             if (ciPserver.serial_no !== undefined) {
 
-                ciPserver.nrb_env_type = (pservers[i]["NRB_ENV_TYPE"]).substring((pservers[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim();
+                ciPserver.nrb_env_type = pservers[i]["NRB_ENV_TYPE"];
 
 
                 const asyncFunction = async() => {

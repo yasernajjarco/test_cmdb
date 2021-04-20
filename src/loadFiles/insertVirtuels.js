@@ -1,14 +1,8 @@
 const db = require("../index.db");
-const Provider = db.provider;
-const Provider_Platform = db.provider_platform;
 import { Sequelize } from "sequelize";
-import moment from 'moment';
 const logger = require('../logger');
 let compt = 0;
-
 let results = [];
-
-
 const reader = require('xlsx')
 
 
@@ -87,7 +81,7 @@ async function insertlserver(lserver, namePlatform, nameType) {
             nrb_managed_by: lserver[i]["NRB_MANAGED_BY"],
             assignment: lserver[i]["ASSIGNMENT"],
             nrb_class_service: lserver[i]["NRB_CLASS_SERVICE"],
-            nrb_env_type: (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim(),
+            nrb_env_type: lserver[i]["NRB_ENV_TYPE"],
             status: lserver[i]["ISTATUS"],
             description: lserver[i]["DESCRIPTION"],
 
@@ -217,7 +211,7 @@ async function insertSystem(lserver, namePlatform, nameType) {
             nrb_managed_by: lserver[i]["NRB_MANAGED_BY"],
             assignment: lserver[i]["ASSIGNMENT"],
             nrb_class_service: lserver[i]["NRB_CLASS_SERVICE"],
-            nrb_env_type: (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim(),
+            nrb_env_type: lserver[i]["NRB_ENV_TYPE"],
             status: lserver[i]["ISTATUS"],
             description: lserver[i]["DESCRIPTION"],
 
@@ -344,7 +338,6 @@ async function insertSystem(lserver, namePlatform, nameType) {
 }
 
 
-
 async function insertzLinux(lserver, namePlatform) {
 
     var i = await insertClient(lserver);
@@ -366,7 +359,7 @@ async function insertzLinux(lserver, namePlatform) {
             nrb_managed_by: lserver[i]["NRB_MANAGED_BY"],
             assignment: lserver[i]["ASSIGNMENT"],
             nrb_class_service: lserver[i]["NRB_CLASS_SERVICE"],
-            nrb_env_type: (lserver[i]["NRB_ENV_TYPE"]).substring((lserver[i]["NRB_ENV_TYPE"]).lastIndexOf(".") + 1).trim(),
+            nrb_env_type: lserver[i]["NRB_ENV_TYPE"],
             status: lserver[i]["ISTATUS"],
             description: lserver[i]["DESCRIPTION"],
 
@@ -513,20 +506,3 @@ async function insertClient(apps) {
     }
     return i;
 }
-
-
-/* .then(async function(res) {
-    if (lserver.company != 'PROD-NRB') {
-        await db.client_systeme.findOrCreate({
-            where: {
-                [db.Op.and]: [{ client_id: lserver.client_id, systeme_id: res[0].dataValues.systeme_id }]
-            },
-            defaults: {
-                client_id: lserver.client_id,
-                systeme_id: res[0].dataValues.systeme_id
-
-            }
-        })
-    }
-
-}); */

@@ -2,7 +2,6 @@ const db = require("../index.db");
 const Provider = db.provider;
 const Provider_Platform = db.provider_platform;
 const logger = require('../logger');
-
 const reader = require('xlsx')
 let compt = 0;
 
@@ -37,8 +36,6 @@ export async function insertProvidersB(fileName, namePlatform) {
     logger.info('end processing this file : ', fileName);
 
 }
-
-
 
 async function insertVendors(vendors, namePlatform) {
 

@@ -1,9 +1,6 @@
 const db = require("../index.db");
 const utils = require("./utils");
-
-
 const { Sequelize, DataTypes, Op } = require("sequelize");
-
 
 exports.findAll = (req, res) => {
     const platform = req.body.platform;
@@ -52,7 +49,6 @@ exports.findAll = (req, res) => {
 
 
 };
-
 
 exports.findById = (req, res) => {
 
@@ -144,12 +140,6 @@ exports.findById = (req, res) => {
 
 };
 
-/* ['zlinux_id', 'Id'], [Sequelize.col('domaine'), 'Domaine'], [Sequelize.col('os_version'), 'OS Version'], [Sequelize.col('cpu_type'), 'CPU Type'], [Sequelize.col('cpu_number'), 'CPU Number'],
-
-
-[Sequelize.col('ci.logical_name'), 'Logical name'], [Sequelize.col('ci.ciType.name'), 'Type'], [Sequelize.col('ci.ciSubtype.name'), 'Subtype'], [Sequelize.col('ci.envType.name'), 'Environnement'], [Sequelize.col('ci.status.name'), 'Status'], [Sequelize.col('ci.description'), 'Description'], [Sequelize.col('systems.ci.logical_name'), 'System Logical Name'],
-
- */
 function buildAttributes(columns) {
     let attributes = [];
     columns.forEach(element => {

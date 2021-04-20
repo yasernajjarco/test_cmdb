@@ -3,8 +3,6 @@ const ci = db.ci;
 const app = db.application;
 const classService = db.classService;
 const utils = require("./utils");
-
-
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
@@ -45,7 +43,6 @@ exports.findAll = (req, res) => {
 
 
 };
-
 
 exports.findById = (req, res) => {
 
@@ -131,7 +128,6 @@ exports.findById = (req, res) => {
 
 
 };
-
 
 function buildAttributes(columns) {
     let attributes = [];

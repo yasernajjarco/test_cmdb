@@ -1,7 +1,6 @@
 const db = require("../index.db");
 const utils = require("./utils");
-
-
+const messageErreurs = require("../config/messageErreurs.json");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 
 exports.findAll = (req, res) => {
@@ -54,11 +53,46 @@ exports.findAll = (req, res) => {
         });
 };
 
-
 exports.findById = (req, res) => {
 
     const id = req.params.id;
 
+    getById(id, res);
+};
+
+exports.update = async(req, res) => {
+    const id = req.params.id;
+    try {
+
+        await utils.isLastUpdate(id, req.body.last_update);
+        const class_service_id = await utils.get_classService_id(req.body.classService)
+        const status_id = await utils.get_status_id(req.body.status)
+        const environnement_id = await utils.get_environnement_id(req.body.environnement)
+
+
+        db.ci.update({ logical_name: req.body.logical_name, description: req.body.description, our_name: req.body.name, class_service_id: class_service_id, status_id: status_id, env_type_id: environnement_id }, {
+                where: { ci_id: id }
+            }).then(result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update element hardware', id)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+
+            })
+            .catch(err => {
+                res.status(500).send(messageErreurs[4]);
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send({ error: 99, message: error.message });
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+function getById(id, res) {
     db.lpars.findAll({
             where: { ci_id: id },
             include: [{
@@ -119,6 +153,7 @@ exports.findById = (req, res) => {
             attributes: [
                 ['ci_id', 'id'],
                 [Sequelize.col('ci.our_name'), 'name'],
+                [Sequelize.col('ci.logical_name'), 'logical_name'],
                 [Sequelize.col('ci.ciType.name'), 'type'],
                 [Sequelize.col('ci.ciSubtype.name'), 'subtype'],
                 [Sequelize.col('ci.envType.name'), 'environnement'],
@@ -153,9 +188,7 @@ exports.findById = (req, res) => {
                 message: err.message || "Some error occurred while retrieving partitions."
             });
         });
-
-
-};
+}
 
 function buildAttributes(columns) {
     let attributes = [];

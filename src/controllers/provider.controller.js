@@ -34,7 +34,6 @@ exports.findAll = (req, res) => {
 
 };
 
-
 exports.findById = (req, res) => {
 
     const id = req.params.id;
@@ -86,43 +85,6 @@ exports.findById = (req, res) => {
 
 };
 
-
-function buildAttributes(columns) {
-    let attributes = [];
-    columns.forEach(element => {
-        switch (element) {
-
-            case 'name':
-                attributes.push(['name', 'name']);
-                break;
-            case 'vendor_code':
-                attributes.push(['vendor_code', 'vendor_code']);
-                break;
-            case 'id':
-                attributes.push(['provider_id', 'id']);
-                break;
-            case 'address':
-                attributes.push(['address', 'address']);
-                break;
-            case 'status':
-                attributes.push(['vendor', 'vendor']);
-                break;
-        }
-
-
-    });
-
-    return attributes;
-
-}
-
-function buildCondition(platform) {
-    let condition = (platform !== undefined) ? { '$platforms.name$': platform } : {};
-    return condition;
-}
-
-
-
 exports.findForDetails = (req, res) => {
 
     db.provider.findAll({
@@ -159,91 +121,36 @@ exports.findForDetails = (req, res) => {
 
 };
 
+function buildAttributes(columns) {
+    let attributes = [];
+    columns.forEach(element => {
+        switch (element) {
 
-/*
-exports.findAll = (req, res) => {
-
-  Provider.findAll()
-     .then(data => {
-       res.send(data);
-     })
-     .catch(err => {
-       res.status(500).send({
-         message:
-           err.message || "Some error occurred while retrieving Platforms."
-       });
-     });
- };
- 
-  
- exports.findByPlatform = (req, res) => {
- const id = req.params.id;
-
- Provider.findAll({ 
-   include: [{ model: db.platforms, as: 'platforms' , attributes: ['name'], where: { platform_id: id } }],
-   attributes: ['provider_id', 'name','address','vendor' ]
-  
-  } )
-     .then(data => {
-       res.send(data);
-     })
-     .catch(err => {
-       res.status(500).send({
-         message:
-           err.message || "Some error occurred while retrieving Platforms."
-       });
-     });
- };
+            case 'name':
+                attributes.push(['name', 'name']);
+                break;
+            case 'vendor_code':
+                attributes.push(['vendor_code', 'vendor_code']);
+                break;
+            case 'id':
+                attributes.push(['provider_id', 'id']);
+                break;
+            case 'address':
+                attributes.push(['address', 'address']);
+                break;
+            case 'status':
+                attributes.push(['vendor', 'vendor']);
+                break;
+        }
 
 
-// Update a Provider by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
-
-  Platform.update(req.body, {
-    where: { platform_id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Platform was updated successfully."
-        });
-      } else {
-        res.send({
-          message: `Cannot update Provider with id=${id}. Maybe Provider was not found or req.body is empty!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Provider with id=" + id
-      });
     });
-};
 
+    return attributes;
 
-// Delete a Provider with the specified id in the request
-exports.delete = (req, res) => {
-  const id = req.params.id;
+}
 
-  Platform.destroy({
-    where: { platform_id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Provider was deleted successfully!"
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Provider with id=${id}. Maybe Provider was not found!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Provider with id=" + id
-      });
-    });
-};
- */
+function buildCondition(platform) {
+    let condition = (platform !== undefined) ? { '$platforms.name$': platform } : {};
+    return condition;
+}

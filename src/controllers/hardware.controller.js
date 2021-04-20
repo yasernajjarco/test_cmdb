@@ -1,12 +1,10 @@
 const db = require("../index.db");
 const utils = require("./utils");
-
-
+const messageErreurs = require("../config/messageErreurs.json");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 const hardware_relation = require("../models/hardware_relation");
 
 exports.findAll = (req, res) => {
-    //    const platform = req.query.id;
     const platform = req.body.platform;
     const type = req.body.type;
     const subtype = req.body.subtype;
@@ -38,40 +36,249 @@ exports.findAll = (req, res) => {
                     required: false,
                     as: 'hardwares',
                     through: { attributes: [] },
-                    attributes: [
-                        //     [Sequelize.col('serial_no'), 'serial_no']
-                    ]
+                    attributes: []
                 },
                 {
                     model: db.client,
                     required: false,
                     as: 'clients',
                     through: { attributes: [] },
-                    attributes: [
-                        //   [Sequelize.col('companyname'), 'client_name']
-
-                    ]
+                    attributes: []
                 },
 
 
             ],
             attributes: attributes
-                /*
-                    [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.name"), '_', Sequelize.col("ci.our_name")), 'Displayname']
-                    [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.prefixe"), '_', Sequelize.col("ci.our_name")), 'Displayname']
-
-                */
-
-
         })
         .then(data => {
             res.send(data);
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving hardwares."
-            });
+            if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+            else res.status(500).send(messageErreurs[0]);
         });
+};
+
+exports.findById = (req, res) => {
+    const id = req.params.id;
+
+    getById(id, res);
+
+
+};
+
+exports.update = async(req, res) => {
+    const id = req.params.id;
+    try {
+
+        await utils.isLastUpdate(id, req.body.last_update);
+        const class_service_id = await utils.get_classService_id(req.body.classService)
+        const status_id = await utils.get_status_id(req.body.status)
+        const environnement_id = await utils.get_environnement_id(req.body.environnement)
+
+        db.hardwares.update({ serial_no: req.body.serial_no }, {
+            where: { ci_id: id }
+        }).then(async result => {
+            let num = result[0];
+            if (num > 0) {
+                let audit = utils.buildAudit('update element hardware', id, req.user)
+                console.log(audit)
+                await db.audit.create(audit)
+            }
+            db.ci.update({ description: req.body.description, our_name: req.body.name, class_service_id: class_service_id, status_id: status_id, env_type_id: environnement_id }, {
+                where: { ci_id: id }
+            }).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+
+                    let audit = utils.buildAudit('update element hardware', id, req.user)
+                    console.log(audit)
+
+                    await db.audit.create(audit)
+                }
+
+            })
+        }).then(all => {
+            getById(id, res)
+        }).catch(err => {
+            res.status(500).send(messageErreurs[104]);
+        });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+
+};
+
+exports.addRelation = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
+        let hardware_id = await getId(id)
+        let hardware_id_1 = await getId(req.body.id)
+
+        db.hardwares_relations.findOrCreate({
+                where: {
+                    [Op.or]: [{
+                        hardware_id: hardware_id,
+                        hardware_id_1: hardware_id_1
+
+                    }, {
+                        hardware_id: hardware_id_1,
+                        hardware_id_1: hardware_id
+
+                    }]
+
+                },
+                defaults: {
+                    hardware_id: hardware_id,
+                    hardware_id_1: hardware_id_1
+
+                }
+            }).then(async num => {
+                if (num[0]._options.isNewRecord) {
+                    let audit = utils.buildAudit('update relation hardware', id, req.user)
+                    await db.audit.create(audit)
+                    getById(id, res)
+
+                } else {
+                    res.send(messageErreurs[108]);
+                }
+            })
+            .catch(err => {
+                res.send(messageErreurs[106]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+exports.deleteRelation = async(req, res) => {
+    const id = req.params.id;
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
+        let hardware_id = await getId(id)
+        let hardware_id_1 = await getId(req.body.id)
+
+        db.hardwares_relations.destroy({
+                where: {
+                    [Op.or]: [{
+                        hardware_id: hardware_id,
+                        hardware_id_1: hardware_id_1
+
+                    }, {
+                        hardware_id: hardware_id_1,
+                        hardware_id_1: hardware_id
+
+                    }]
+                }
+            }).then(async num => {
+                if (num > 0) {
+                    let audit = utils.buildAudit('remove relation hardware-hardware', id, req.user)
+                    await db.audit.create(audit)
+                    getById(id, res)
+
+                } else {
+                    res.send(messageErreurs[105]);
+                }
+            })
+            .catch(err => {
+                res.status(500).send(messageErreurs[106]);
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+
+};
+
+exports.addClient = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
+        let hardware_id = await getId(id)
+        let client_id = req.body.id
+
+        db.client_hardware.findOrCreate({
+                where: {
+                    [db.Op.and]: [{ client_id: client_id, hardware_id: hardware_id }]
+                },
+                defaults: {
+                    client_id: client_id,
+                    hardware_id: hardware_id
+
+                }
+            }).then(num => {
+                if (num[0]._options.isNewRecord) {
+                    db.audit.create({
+                        audittimestamp: Sequelize.fn('NOW'),
+                        audituser: req.user,
+                        auditdescription: 'update relation hardware',
+                        ci_id: id
+                    })
+                    getById(id, res)
+                } else {
+                    res.send(messageErreurs[7]);
+                }
+            })
+            .catch(err => {
+                res.status(500).send(messageErreurs[3]);
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+
+};
+
+exports.deleteClient = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
+        let hardware_id = await getId(id)
+        let client_id = req.body.id
+
+        db.client_hardware.destroy({
+                where: {
+                    [db.Op.and]: [{ client_id: client_id, hardware_id: hardware_id }]
+                }
+            }).then(async num => {
+                if (num > 0) {
+                    let audit = utils.buildAudit('remove relation hardware-client', id, req.user)
+                    await db.audit.create(audit)
+                    getById(id, res)
+                } else {
+                    res.status(500).send(messageErreurs[102]);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).send(messageErreurs[103]);
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+
 };
 
 function buildAttributes(columns) {
@@ -135,248 +342,6 @@ function buildCondition(platform, type, subtype) {
     }: {};
     return condition;
 }
-
-
-exports.findById = (req, res) => {
-    const id = req.params.id;
-
-    getById(id, res);
-
-
-};
-
-
-exports.addRelation = async(req, res) => {
-    const id = req.params.id;
-
-    try {
-        await utils.isLastUpdate(id, req.body.last_update);
-
-        let hardware_id = await getId(id)
-        let hardware_id_1 = await getId(req.body.id)
-
-        db.hardwares_relations.findOrCreate({
-                where: {
-                    [Op.or]: [{
-                        hardware_id: hardware_id,
-                        hardware_id_1: hardware_id_1
-
-                    }, {
-                        hardware_id: hardware_id_1,
-                        hardware_id_1: hardware_id
-
-                    }]
-
-                },
-                defaults: {
-                    hardware_id: hardware_id,
-                    hardware_id_1: hardware_id_1
-
-                }
-            }).then(num => {
-                if (num[0]._options.isNewRecord) {
-                    db.audit.create({
-                        audittimestamp: Sequelize.fn('NOW'),
-                        audituser: req.user,
-                        auditdescription: 'update relation hardware',
-                        ci_id: id
-                    })
-
-                    /*  res.send({
-                         message: "hardware relation was added successfully."
-                     }); */
-                    getById(id, res)
-
-                } else {
-                    res.send({
-                        message: `Cannot update hardware relation with id=${id}. Maybe hardware relation already exists`
-                    });
-                }
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(500).send({
-                    message: "Error updating hardware relation with id=" + id
-                });
-            });
-    } catch (error) {
-        res.status(500).send({
-            message: error.message
-        });
-    }
-
-
-
-};
-
-exports.deleteRelation = async(req, res) => {
-    const id = req.params.id;
-
-    try {
-        await utils.isLastUpdate(id, req.body.last_update);
-
-        let hardware_id = await getId(id)
-        let hardware_id_1 = await getId(req.body.id)
-
-        db.hardwares_relations.findOrCreate({
-                where: {
-                    [Op.or]: [{
-                        hardware_id: hardware_id,
-                        hardware_id_1: hardware_id_1
-
-                    }, {
-                        hardware_id: hardware_id_1,
-                        hardware_id_1: hardware_id
-
-                    }]
-
-                },
-                defaults: {
-                    hardware_id: hardware_id,
-                    hardware_id_1: hardware_id_1
-
-                }
-            }).then(num => {
-                if (num[0]._options.isNewRecord) {
-                    db.audit.create({
-                        audittimestamp: Sequelize.fn('NOW'),
-                        audituser: req.user,
-                        auditdescription: 'update relation hardware',
-                        ci_id: id
-                    })
-
-                    /*  res.send({
-                         message: "hardware relation was added successfully."
-                     }); */
-                    getById(id, res)
-
-                } else {
-                    res.send({
-                        message: `Cannot update hardware relation with id=${id}. Maybe hardware relation already exists`
-                    });
-                }
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(500).send({
-                    message: "Error updating hardware relation with id=" + id
-                });
-            });
-    } catch (error) {
-        res.status(500).send({
-            message: error.message
-        });
-    }
-
-
-
-};
-
-exports.addClient = async(req, res) => {
-    const id = req.params.id;
-
-    try {
-        await utils.isLastUpdate(id, req.body.last_update);
-
-        let hardware_id = await getId(id)
-        let client_id = req.body.id
-
-        db.client_hardware.findOrCreate({
-                where: {
-                    [db.Op.and]: [{ client_id: client_id, hardware_id: hardware_id }]
-                },
-                defaults: {
-                    client_id: client_id,
-                    hardware_id: hardware_id
-
-                }
-            }).then(num => {
-                if (num[0]._options.isNewRecord) {
-                    db.audit.create({
-                        audittimestamp: Sequelize.fn('NOW'),
-                        audituser: req.user,
-                        auditdescription: 'update relation hardware',
-                        ci_id: id
-                    })
-                    getById(id, res)
-                } else {
-                    res.send({
-                        message: `Cannot update hardware client relation with id=${id}. Maybe client relation already exists`
-                    });
-                }
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(500).send({
-                    message: "Error updating hardware client relation with id=" + id
-                });
-            });
-    } catch (error) {
-        res.status(500).send({
-            message: error.message
-        });
-    }
-
-
-
-};
-
-exports.update = async(req, res) => {
-    const id = req.params.id;
-    try {
-
-        await utils.isLastUpdate(id, req.body.last_update);
-        const class_service_id = await utils.get_classService_id(req.body.classService)
-        const status_id = await utils.get_status_id(req.body.status)
-        const environnement_id = await utils.get_environnement_id(req.body.environnement)
-
-        db.hardwares.update({ serial_no: req.body.serial_no }, {
-            where: { ci_id: id }
-        }).then(result => {
-            let num = result[0];
-            if (num > 0) {
-                db.audit.create({
-                    audittimestamp: Sequelize.fn('NOW'),
-                    audituser: req.user,
-                    auditdescription: 'update element hardware',
-                    ci_id: id
-                })
-            }
-            db.ci.update({ description: req.body.description, our_name: req.body.name, class_service_id: class_service_id, status_id: status_id, env_type_id: environnement_id }, {
-                where: { ci_id: id }
-            }).then(result => {
-                let num = result[0];
-                if (num > 0) {
-                    db.audit.create({
-                        audittimestamp: Sequelize.fn('NOW'),
-                        audituser: req.user,
-                        auditdescription: 'update element hardware',
-                        ci_id: id
-                    })
-                }
-
-            })
-        }).then(all => {
-            getById(id, res)
-                // res.redirect('/api/hardwares/details/' + id);
-        }).catch(err => {
-            res.status(500).send({
-                message: "Error updating hardware with id=" + id
-            });
-        });
-    } catch (error) {
-        res.status(500).send({
-            message: error.message
-        });
-    }
-
-
-
-
-
-
-};
-
 
 function getById(id, res) {
 
@@ -471,7 +436,6 @@ function getById(id, res) {
             ],
             attributes: [
                 //['hardware_id', 'id'],
-                ['serial_no', 'serial_no'],
                 [Sequelize.col('ci.ci_id'), 'id'],
                 [Sequelize.col('ci.our_name'), 'name'],
                 [Sequelize.col('ci.ciType.name'), 'type'],
@@ -482,6 +446,7 @@ function getById(id, res) {
                 [Sequelize.col('ci.classService.name'), 'classService'],
                 [Sequelize.col('ci.nrb_managed_by'), 'nrb_managed_by'],
                 [Sequelize.col('ci.platforms.name'), 'platform'],
+                ['serial_no', 'serial_no']
             ]
         }).map(data => data.toJSON())
         .then(async(data) => {
@@ -501,9 +466,7 @@ function getById(id, res) {
             }
         })
         .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving hardwares."
-            });
+            res.status(500).send(messageErreurs[0]);
         });
 }
 
@@ -512,7 +475,7 @@ async function getId(hardware_id) {
         let step1 = await db.hardwares.findOne({ where: { ci_id: hardware_id }, attributes: ['hardware_id'] })
         return step1.dataValues.hardware_id;
     } catch (error) {
-        throw new Error('element hardware not found or hardware does not exist');
+        throw new Error('109');
     }
 
 }

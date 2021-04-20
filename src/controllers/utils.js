@@ -1,5 +1,7 @@
 const db = require("../index.db");
 const { Sequelize, DataTypes, Op } = require("sequelize");
+const messageErreurs = require("../config/messageErreurs.json");
+
 
 export function first(array) {
     if (array == null)
@@ -8,7 +10,6 @@ export function first(array) {
         return {}
     return array[0];
 };
-
 export function buildObject(data) {
     let keys = Object.keys(data);
 
@@ -47,31 +48,27 @@ export async function getLastAudit(id) {
     }
 
 }
-
-
 export async function isLastUpdate(id, last_update) {
 
     let audit = await getLastAudit(id);
     if (audit.last_update == last_update) return true;
-    else throw new Error('someone has already updated, please refresh your element to get last modification');
+    else throw new Error('13');
 }
-
 export async function get_classService_id(name) {
     try {
         let step1 = await db.classService.findOne({ where: { name: name }, attributes: ['class_service_id'] })
         return step1.dataValues.class_service_id;
     } catch (error) {
-        throw new Error('class_service not found or class_service does not exist');
+        throw new Error('10');
 
     }
 }
-
 export async function get_status_id(name) {
     try {
         let step1 = await db.status.findOne({ where: { name: name }, attributes: ['status_id'] });
         return step1.dataValues.status_id;
     } catch (error) {
-        throw new Error('status not found or status does not exist');
+        throw new Error('11');
     }
 
 }
@@ -80,7 +77,16 @@ export async function get_environnement_id(name) {
         let step1 = await db.envType.findOne({ where: { name: name }, attributes: ['env_type_id'] })
         return step1.dataValues.env_type_id;
     } catch (error) {
-        throw new Error('environnement not found or environnement does not exist');
+        throw new Error('12');
+    }
+
+}
+export function buildAudit(desc, id, user) {
+    return {
+        audittimestamp: Sequelize.fn('NOW'),
+        audituser: user,
+        auditdescription: desc,
+        ci_id: id
     }
 
 }

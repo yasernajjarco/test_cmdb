@@ -33,7 +33,6 @@ exports.findAll = (req, res) => {
 
 };
 
-
 exports.findById = (req, res) => {
 
     const id = req.params.id;
@@ -161,36 +160,6 @@ exports.findById = (req, res) => {
 
 
 };
-
-
-function buildAttributes(columns) {
-    let attributes = [];
-    columns.forEach(element => {
-        switch (element) {
-
-            case 'name':
-                attributes.push(['companyname', 'name']);
-                break;
-            case 'address':
-                attributes.push(['address', 'address']);
-                break;
-            case 'id':
-                attributes.push(['client_id', 'id']);
-                break;
-        }
-
-
-    });
-
-    return attributes;
-
-}
-
-function buildCondition(platform) {
-    let condition = (platform !== undefined) ? { '$platforms.name$': platform } : {};
-    return condition;
-}
-
 
 exports.buildTableById = (req, res) => {
 
@@ -358,38 +327,37 @@ exports.findClientsForTable = (req, res) => {
 
 };
 
+function buildAttributes(columns) {
+    let attributes = [];
+    columns.forEach(element => {
+        switch (element) {
+
+            case 'name':
+                attributes.push(['companyname', 'name']);
+                break;
+            case 'address':
+                attributes.push(['address', 'address']);
+                break;
+            case 'id':
+                attributes.push(['client_id', 'id']);
+                break;
+        }
 
 
-/* function buildResult(systems, apps, data) {
-    let result = [];
-    systems.forEach(sys => {
-        result.push({ name: sys.logical_name, apps: [] })
-    })
+    });
 
-    apps.forEach(app => {
-        let index = result.findIndex(function(item) { return item.name === app.sysName })
+    return attributes;
 
-        result[index].apps.push(app)
-
-    })
-    return result;
-} */
-
-function buildSystems(data) {
-    let systems = [];
-    data.forEach(element => {
-        let isFound = systems.some(function(el) { return el.logical_name === element.logical_name });
-        if (!isFound) systems.push({ logical_name: element.logical_name })
-    })
-    return systems;
 }
 
+function buildCondition(platform) {
+    let condition = (platform !== undefined) ? { '$platforms.name$': platform } : {};
+    return condition;
+}
 
 function buildResult(data) {
     let apps = [];
     data.forEach(element => {
-        /* let isFound = apps.some(function(el) { return el.ci_application_id == element.application.ci_application_id && el.sysName == element.systems.ci.logical_name });
-        if (!isFound)  */
         element.instances.forEach(instance => {
             apps.push(getApp(instance, element.id))
         })

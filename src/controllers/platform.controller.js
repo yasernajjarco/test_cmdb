@@ -44,7 +44,6 @@ exports.create = (req, res) => {
         });
 };
 
-
 // Find a single Platform with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
@@ -60,10 +59,6 @@ exports.findOne = (req, res) => {
             });
         });
 };
-
-
-
-
 
 // Update a Platform by the id in the request
 exports.update = (req, res) => {

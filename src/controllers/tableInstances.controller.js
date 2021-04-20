@@ -6,8 +6,6 @@ const utils = require("./utils");
 
 
 
-
-
 exports.buildTableById = (req, res) => {
 
     const id = req.params.id;
@@ -167,7 +165,6 @@ exports.findClientsForTable = (req, res) => {
 
 
 };
-
 
 function buildResult(data) {
     data.forEach(element => {

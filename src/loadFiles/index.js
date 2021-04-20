@@ -3,21 +3,16 @@ const fs = require('fs');
 const insertProviders = require('./insertProviders');
 const insertSofts = require('./insertSofts');
 const insertOccurence = require('./insertOccurence');
-
 const db = require("../index.db");
 const insertHardwares = require('./insertHardwares');
 const insertVirtuels = require('./insertVirtuels');
 const instances = require('./instances');
-const updateCopany = require('./updateCopany');
-
+const updateCompany = require('./updateCompany');
 const XLSX = require('xlsx');
 let clients_instance_z;
-
-
 const logger = require('../logger');
 
-
-async function test() {
+async function initialLoad() {
     let file = '';
 
 
@@ -113,24 +108,24 @@ async function test() {
 
         // update company
         file = path.resolve(__dirname, "update company/" + 'occurences_clients Z.xlsx')
-        await updateCopany.updateOccurences(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await updateCompany.updateOccurences(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "update company/" + 'CI virtual Z.xlsx')
-        await updateCopany.updateSystemes(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await updateCompany.updateSystemes(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "update company/" + 'linux_clients Z.xlsx')
-        await updateCopany.updateLinux(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await updateCompany.updateLinux(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "update company/" + 'CI hardware B.xlsx')
-        await updateCopany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await updateCompany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
 
         file = path.resolve(__dirname, "update company/" + 'CI hardware Z.xlsx')
-        await updateCopany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
+        await updateCompany.updateHardware(file, file.substring(file.lastIndexOf(" ")).trim().charAt(0));
         //////////////////////////////////
 
 
         file = path.resolve(__dirname, "update company/" + 'clients.csv')
-        await updateCopany.updateClients(file, '');
+        await updateCompany.updateClients(file, '');
 
         let time = await new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
         await logger.info('End at: ', time)
@@ -142,8 +137,6 @@ async function test() {
 
 
 };
-
-
 
 
 async function generateFiles() {
@@ -184,4 +177,4 @@ async function removeElementsNoOccurenciables(data) {
     });
 }
 
-module.exports.test = test;
+module.exports.initialLoad = initialLoad;

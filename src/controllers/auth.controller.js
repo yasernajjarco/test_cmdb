@@ -1,6 +1,5 @@
 const config = require("../config/config");
 const usersTest = require("../config/usersTest");
-
 var jwt = require("jsonwebtoken");
 
 
@@ -8,8 +7,6 @@ async function isValid(username) {
     return usersTest.users.find(u => u.username === username)
 
 }
-
-
 exports.signin = (req, res) => {
     isValid(req.body.username).
 

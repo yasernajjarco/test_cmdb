@@ -16,7 +16,6 @@ exports.findStatus = (req, res) => {
         });
 };
 
-
 exports.findPlatforms = (req, res) => {
     db.platforms.findAll({})
         .then(data => {
@@ -29,7 +28,6 @@ exports.findPlatforms = (req, res) => {
         });
 };
 
-
 exports.findClasseServices = (req, res) => {
     db.classService.findAll({})
         .then(data => {
@@ -41,7 +39,6 @@ exports.findClasseServices = (req, res) => {
             });
         });
 };
-
 exports.findEnvironment = (req, res) => {
     db.envType.findAll({})
         .then(data => {
@@ -53,92 +50,3 @@ exports.findEnvironment = (req, res) => {
             });
         });
 };
-
-
-/*
-exports.findAll = (req, res) => {
-
-  Provider.findAll()
-     .then(data => {
-       res.send(data);
-     })
-     .catch(err => {
-       res.status(500).send({
-         message:
-           err.message || "Some error occurred while retrieving Platforms."
-       });
-     });
- };
- 
-  
- exports.findByPlatform = (req, res) => {
- const id = req.params.id;
-
- Provider.findAll({ 
-   include: [{ model: db.platforms, as: 'platforms' , attributes: ['name'], where: { platform_id: id } }],
-   attributes: ['provider_id', 'name','address','vendor' ]
-  
-  } )
-     .then(data => {
-       res.send(data);
-     })
-     .catch(err => {
-       res.status(500).send({
-         message:
-           err.message || "Some error occurred while retrieving Platforms."
-       });
-     });
- };
-
-
-// Update a Provider by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
-
-  Platform.update(req.body, {
-    where: { platform_id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Platform was updated successfully."
-        });
-      } else {
-        res.send({
-          message: `Cannot update Provider with id=${id}. Maybe Provider was not found or req.body is empty!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Provider with id=" + id
-      });
-    });
-};
-
-
-// Delete a Provider with the specified id in the request
-exports.delete = (req, res) => {
-  const id = req.params.id;
-
-  Platform.destroy({
-    where: { platform_id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Provider was deleted successfully!"
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Provider with id=${id}. Maybe Provider was not found!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Provider with id=" + id
-      });
-    });
-};
- */
