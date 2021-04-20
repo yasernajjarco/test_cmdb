@@ -2,6 +2,7 @@ const db = require("../index.db");
 const utils = require("./utils");
 const messageErreurs = require("../config/messageErreurs.json");
 const { Sequelize, DataTypes, Op } = require("sequelize");
+const e = require("express");
 
 exports.findAll = (req, res) => {
     //    const platform = req.query.id;
@@ -75,17 +76,136 @@ exports.update = async(req, res) => {
             }).then(result => {
                 let num = result[0];
                 if (num > 0) {
-                    let audit = utils.buildAudit('update element hardware', id)
+                    let audit = utils.buildAudit('update element partition', id, req.user)
                     db.audit.create(audit)
                 }
                 getById(id, res)
 
             })
             .catch(err => {
-                res.status(500).send(messageErreurs[4]);
+                res.status(500).send(messageErreurs[202]);
             });
     } catch (error) {
-        if (error.message != undefined) res.status(500).send({ error: 99, message: error.message });
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+exports.addSystem = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+        let lpar_id = await getIdLpar(id)
+        let system_id = await getIdSyseme(req.body.id)
+
+        db.systems.update({ lpar_id: lpar_id }, { where: { systeme_id: system_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update relation partition-system', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErreurs[203]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+exports.addHardware = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        // await utils.isLastUpdate(id, req.body.last_update);
+        let lpar_id = await getIdLpar(id)
+        let hardware_id = await getIdHardware(req.body.id)
+
+        db.lpars.update({ hardware_id: hardware_id }, { where: { lpar_id: lpar_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update relation partition-hardware', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErreurs[206]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+exports.deleteHardware = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+        let lpar_id = await getIdLpar(id)
+
+        db.lpars.update({ hardware_id: null }, { where: { lpar_id: lpar_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update relation partition-hardware', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErreurs[207]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+exports.deleteSystem = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+        let system_id = await getIdSyseme(req.body.id)
+
+        db.systems.update({ lpar_id: null }, { where: { systeme_id: system_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('delete relation partition-system', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErreurs[204]);
+
+            });
+    } catch (error) {
+        console.log(error)
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
         else res.status(500).send(messageErreurs[0]);
     }
 
@@ -255,4 +375,34 @@ function buildCondition(platform, type, subtype) {
         [Op.like]: `%${subtype}%`
     }: {};
     return condition;
+}
+
+async function getIdSyseme(id) {
+    try {
+        let step1 = await db.systems.findOne({ where: { ci_id: id }, attributes: ['systeme_id'] })
+        return step1.dataValues.systeme_id;
+    } catch (error) {
+        throw new Error('211');
+    }
+
+}
+
+async function getIdLpar(id) {
+    try {
+        let step1 = await db.lpars.findOne({ where: { ci_id: id }, attributes: ['lpar_id'] })
+        return step1.dataValues.lpar_id;
+    } catch (error) {
+        throw new Error('212');
+    }
+
+}
+
+async function getIdHardware(hardware_id) {
+    try {
+        let step1 = await db.hardwares.findOne({ where: { ci_id: hardware_id }, attributes: ['hardware_id'] })
+        return step1.dataValues.hardware_id;
+    } catch (error) {
+        throw new Error('109');
+    }
+
 }

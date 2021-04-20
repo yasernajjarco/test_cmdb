@@ -8,8 +8,6 @@ const load = require("./loadFiles/index");
 import routes from './routes/index.routes';
 const logger = require('./logger');
 
-
-
 const app = express();
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
@@ -56,12 +54,12 @@ app.get("/", (req, res) => {
 });
 
 
-
+/* 
 let time = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 logger.info('start at: ', time)
 initial.seed().then(() => {
     load.initialLoad()
-});
+}); */
 
 
 //exportFiles.start();

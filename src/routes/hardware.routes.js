@@ -89,6 +89,9 @@ router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controlle
 
 router.put("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.update);
 
+router.put("/:id/partition", [authJwt.verifyToken, authJwt.isModerator], controller.addPartition);
+router.delete("/:id/partition", [authJwt.verifyToken, authJwt.isModerator], controller.deletePartition);
+
 router.put("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
 router.delete("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.deleteClient);
 

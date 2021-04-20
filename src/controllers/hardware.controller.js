@@ -82,7 +82,6 @@ exports.update = async(req, res) => {
             let num = result[0];
             if (num > 0) {
                 let audit = utils.buildAudit('update element hardware', id, req.user)
-                console.log(audit)
                 await db.audit.create(audit)
             }
             db.ci.update({ description: req.body.description, our_name: req.body.name, class_service_id: class_service_id, status_id: status_id, env_type_id: environnement_id }, {
@@ -92,8 +91,6 @@ exports.update = async(req, res) => {
                 if (num > 0) {
 
                     let audit = utils.buildAudit('update element hardware', id, req.user)
-                    console.log(audit)
-
                     await db.audit.create(audit)
                 }
 
@@ -277,6 +274,66 @@ exports.deleteClient = async(req, res) => {
         else res.status(500).send(messageErreurs[0]);
     }
 
+
+
+};
+
+exports.addPartition = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+
+        let hardware_id = await getId(id)
+        let lpar_id = await getIdLpar(req.body.id)
+
+        db.lpars.update({ hardware_id: hardware_id }, { where: { lpar_id: lpar_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update relation partition-hardware', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErreurs[206]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
+
+
+};
+
+exports.deletePartition = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+        let lpar_id = await getIdLpar(req.body.id)
+        db.lpars.update({ hardware_id: null }, { where: { lpar_id: lpar_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update relation partition-hardware', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErreurs[207]);
+
+            });
+    } catch (error) {
+        console.log(error)
+        if (error.message != undefined) res.status(500).send(messageErreurs[error.message]);
+        else res.status(500).send(messageErreurs[0]);
+    }
 
 
 };
@@ -476,6 +533,16 @@ async function getId(hardware_id) {
         return step1.dataValues.hardware_id;
     } catch (error) {
         throw new Error('109');
+    }
+
+}
+
+async function getIdLpar(id) {
+    try {
+        let step1 = await db.lpars.findOne({ where: { ci_id: id }, attributes: ['lpar_id'] })
+        return step1.dataValues.lpar_id;
+    } catch (error) {
+        throw new Error('212');
     }
 
 }
