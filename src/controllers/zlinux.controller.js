@@ -128,8 +128,10 @@ exports.findById = (req, res) => {
             ]
 
         }).map(data => data.toJSON())
-        .then(data => {
+        .then(async data => {
             let result = utils.buildObject(utils.first(data));
+            let audit = await utils.getLastAudit(result.id);
+            if (audit != null) result['audit'] = audit;
             res.send(result);
         }).catch(err => {
             res.status(500).send({

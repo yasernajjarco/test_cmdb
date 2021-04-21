@@ -6,13 +6,31 @@ const logger = require('./logger');
 const { Sequelize, DataTypes, Op } = require("sequelize");
 const prfixeTest = 'test ';
 const utils = require("./controllers/utils");
+const subtypes = [{
+        'B': [
+            ['Mainframe Bull'],
+            ['Mainframe Appliance Console', 'Switch'],
+            ['Mainframe Drive Enclosure'],
+            ['Mainframe VTS', 'Mainframe Tape Library']
+        ]
+    },
+    {
+        'Z': [
+            [' Mainframe IBM'],
+            ['Mainframe Appliance Console'],
+            ['Mainframe Drive Enclosure'],
+            ['Mainframe VTS']
+        ]
+    }
+
+]
 
 export async function start() {
 
 
     // await generateInstances();
-
-    await generateOccurences();
+    // await generateOccurences();
+    await generteHardwares();
 
 };
 
@@ -119,8 +137,6 @@ async function generateInstances() {
                         result.push(setCompanyInstance(element))
                     })
                     addLine(result, 'instance')
-                    console.log(result)
-                    console.log(result.length)
 
                     let pathFile = path.resolve(__dirname, 'Exported files/', prfixeTest + 'CI sinstance ' + platform + '.xlsx')
                     generateFiles('sinstance|Mainframe Software', pathFile, result)
@@ -233,6 +249,128 @@ async function generateOccurences() {
     })
 }
 
+async function generteHardwares() {
+    let allResult = []
+
+
+    await db.platforms.findAll().map(async data => data.toJSON()).then(async platforms => {
+        await platforms.forEach(async one => {
+            //let platform = one.name;
+            let platform = 'B';
+
+            allResult = await getHardwareforPlatform(platform);
+
+
+        })
+    })
+    Promise.all(allResult)
+        .then(result => {
+            console.log(result)
+        })
+
+}
+
+async function getHardwareforPlatform(platform) {
+    return await new Promise(async function(resolve) {
+        let allResult = [];
+        let ASSIGNMENT = (platform == 'Z') ? 'ZSYS' : 'GCOS';
+        let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
+
+        let subTypes;
+        let i = 0;
+        while (subtypes[i][platform] == undefined) {
+            i++;
+        }
+        subTypes = subtypes[i][platform];
+        await subTypes.forEach(async(subTypeName) => {
+            let cond = [];
+            await subTypeName.forEach(element => {
+
+                cond.push({
+                    '$ci.ciSubtype.name$': {
+                        [Op.like]: `%${element}%`
+                    }
+                });
+
+
+            });
+            condition[Op.or] = cond;
+            allResult.push(getHardwaresBySubtype(condition, ASSIGNMENT).then(async result => {
+                return new Promise(() => result)
+            }));
+        });
+
+        resolve(allResult)
+
+    });
+}
+
+async function getHardwaresBySubtype(condition, ASSIGNMENT) {
+    return await new Promise(async function(resolve) {
+
+        await db.hardwares.findAll({
+                where: condition,
+                include: [{
+                        model: db.ci,
+                        required: false,
+                        as: 'ci',
+                        attributes: [],
+                        include: [
+                            { model: db.platforms, required: false, as: 'platforms', attributes: [] },
+                            { model: db.status, required: false, as: 'status', attributes: [], },
+                            { model: db.classService, required: false, as: 'classService', attributes: [], },
+                            { model: db.ciType, required: false, as: 'ciType', attributes: [], },
+                            { model: db.ciSubtype, required: false, as: 'ciSubtype', attributes: [], },
+                            { model: db.envType, required: false, as: 'envType', attributes: [] },
+                        ]
+                    },
+                    {
+                        model: db.client,
+                        required: false,
+                        as: 'clients',
+                        through: { attributes: [] },
+                        attributes: [
+                            [Sequelize.col('companyname'), 'name'],
+                            [Sequelize.col('client_id'), 'id']
+                        ]
+                    },
+
+                ],
+                attributes: [
+                    ['hardware_id', 'id'],
+                    [Sequelize.col('ci.our_name'), '__EMPTY'],
+                    [Sequelize.col('ci.ciType.name'), 'TYPE'],
+                    [Sequelize.col('ci.ciSubtype.name'), 'SUBTYPE'],
+                    [Sequelize.fn('CONCAT', Sequelize.col("ci.platforms.prefixe"), '_', Sequelize.col("ci.our_name")), 'DISPLAY_NAME'],
+                    [Sequelize.fn('CONCAT', '', ''), 'COMPANY'],
+
+                    [Sequelize.col('ci.nrb_managed_by'), 'NRB_MANAGED_BY'],
+
+                    [Sequelize.fn('CONCAT', ASSIGNMENT), 'ASSIGNMENT'],
+                    [Sequelize.col('ci.classService.name'), 'NRB_CLASS_SERVICE'],
+                    [Sequelize.col('ci.envType.name'), 'NRB_ENV_TYPE'],
+
+                    [Sequelize.col('ci.status.name'), 'ISTATUS'],
+                    [Sequelize.col('ci.description'), 'DESCRIPTION'],
+                    ['serial_no', 'SERIAL_NO']
+                ]
+            }).map(async(data) => data.toJSON())
+            .then(async(data) => {
+
+                let result = [];
+                await data.forEach(element => {
+                    result.push(setCompanyHardware(element));
+                });
+                await addLine(result, 'hardware');
+
+                resolve(result)
+
+            }).catch(err => {
+                console.log(err);
+            });
+    })
+}
+
 function generateFiles(nameSheet, pathFile, data) {
 
 
@@ -252,6 +390,19 @@ function setCompanyInstance(element) {
 
     }
     delete element.systems;
+    delete element.id;
+    return element;
+}
+
+function setCompanyHardware(element) {
+    let clients = element.clients;
+    if (clients != undefined && clients.length > 1) {
+        element['COMPANY'] = 'PROD-NRB'
+    } else {
+        element['COMPANY'] = clients[0].name
+
+    }
+    delete element.clients;
     delete element.id;
     return element;
 }
@@ -278,6 +429,9 @@ function getLineDescription(type) {
     switch (type) {
         case 'instance':
             return ['Our name', 'application', 'Mainframe System', 'sinstance', 'Mainframe Software', '="B C"', '=MBULL_(Our name)', 'Client ou PROD-NRB', 'NRB', 'GCOS', 'Operational', 'Description'];
+        case 'hardware':
+            return [];
+
     }
 }
 

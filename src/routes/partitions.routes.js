@@ -12,11 +12,12 @@ router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controlle
 
 router.put("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.update);
 
-router.put("/:id/system", [authJwt.verifyToken, authJwt.isModerator], controller.addSystem);
+/* router.put("/:id/system", [authJwt.verifyToken, authJwt.isModerator], controller.addSystem);
 router.delete("/:id/system", [authJwt.verifyToken, authJwt.isModerator], controller.deleteSystem);
 
 router.put("/:id/hardware", [authJwt.verifyToken, authJwt.isModerator], controller.addHardware);
-router.delete("/:id/hardware", [authJwt.verifyToken, authJwt.isModerator], controller.deleteHardware);
+router.delete("/:id/hardware", [authJwt.verifyToken, authJwt.isModerator], controller.deleteHardware); */
+
 
 
 export default router;

@@ -244,7 +244,6 @@ function buildAttributes(columns) {
 }
 
 function buildCondition(platform, type, subtype) {
-    console.log(platform)
     let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
 
     (type !== undefined) ? condition['$ci.ciType.name$'] = {
