@@ -30,7 +30,7 @@ export async function start() {
 
     // await generateInstances();
     // await generateOccurences();
-    await generteHardwares();
+    // await generteHardwares();
 
 };
 
@@ -250,62 +250,66 @@ async function generateOccurences() {
 }
 
 async function generteHardwares() {
-    let allResult = []
-
-
     await db.platforms.findAll().map(async data => data.toJSON()).then(async platforms => {
         await platforms.forEach(async one => {
-            //let platform = one.name;
-            let platform = 'B';
+            let platform = one.name;
+            if (platform !== 'I') {
+                let ws
+                getHardwareforPlatform(platform).then(async data => {
+                    let result = await filterBySubtype(data, platform);
 
-            allResult = await getHardwareforPlatform(platform);
+                    let wb = XLSX.utils.book_new();
 
+                    Object.keys(result).forEach(function(key) {
+                        ws = XLSX.utils.json_to_sheet(result[key]);
+                        XLSX.utils.book_append_sheet(wb, ws, key);
+                    });
+                    let pathFile = path.resolve(__dirname, 'Exported files/', prfixeTest + 'CI hardware ' + platform + '.xlsx')
+                    XLSX.writeFile(wb, pathFile);
+
+
+                })
+            }
 
         })
     })
-    Promise.all(allResult)
-        .then(result => {
-            console.log(result)
-        })
 
+}
+
+
+
+
+
+
+
+
+
+
+async function filterBySubtype(data, platform) {
+
+    let result = [];
+    if (platform === 'B') {
+        result['pserver|Mainframe Bull'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe Bull'; });
+        result['pserver|Appliance'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe Appliance Console' || el.SUBTYPE == 'Switch'; });
+        result['storage|M. Drive Enclosure'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe Drive Enclosure'; });
+        result['storage|Mainframe VTS & TL'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe VTS' || el.SUBTYPE == 'Mainframe Tape Library'; });
+        return result;
+    } else if (platform === 'Z') {
+        result['pserver|Mainframe IBM'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe IBM'; });
+        result['pserver|Appliance'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe Appliance Console' });
+        result['storage|M. Drive Enclosure'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe Drive Enclosure'; });
+        result['storage|Mainframe VTS'] = data.filter(function(el) { return el.SUBTYPE == 'Mainframe VTS' });
+        return result;
+
+    } else {
+        return null;
+    }
 }
 
 async function getHardwareforPlatform(platform) {
-    return await new Promise(async function(resolve) {
-        let allResult = [];
-        let ASSIGNMENT = (platform == 'Z') ? 'ZSYS' : 'GCOS';
-        let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
+    let ASSIGNMENT = (platform == 'Z') ? 'ZSYS' : 'GCOS';
+    let condition = (platform !== undefined) ? { '$ci.platforms.name$': platform } : {};
 
-        let subTypes;
-        let i = 0;
-        while (subtypes[i][platform] == undefined) {
-            i++;
-        }
-        subTypes = subtypes[i][platform];
-        await subTypes.forEach(async(subTypeName) => {
-            let cond = [];
-            await subTypeName.forEach(element => {
-
-                cond.push({
-                    '$ci.ciSubtype.name$': {
-                        [Op.like]: `%${element}%`
-                    }
-                });
-
-
-            });
-            condition[Op.or] = cond;
-            allResult.push(getHardwaresBySubtype(condition, ASSIGNMENT).then(async result => {
-                return new Promise(() => result)
-            }));
-        });
-
-        resolve(allResult)
-
-    });
-}
-
-async function getHardwaresBySubtype(condition, ASSIGNMENT) {
     return await new Promise(async function(resolve) {
 
         await db.hardwares.findAll({
@@ -369,6 +373,9 @@ async function getHardwaresBySubtype(condition, ASSIGNMENT) {
                 console.log(err);
             });
     })
+
+
+
 }
 
 function generateFiles(nameSheet, pathFile, data) {
