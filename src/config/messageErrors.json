@@ -1,0 +1,54 @@
+{
+    "0": { "error": 0, "message": "Error, Some error occurred while executing request." },
+
+    "10": { "error": 10, "message": "class service not found or class service does not exist" },
+    "11": { "error": 11, "message": "status not found or status does not exist" },
+    "12": { "error": 12, "message": "environnement not found or environnement does not exist" },
+    "13": { "error": 13, "message": "someone has already updated, please refresh your element to get last modification" },
+
+
+    "101": { "error": 101, "message": "Error, Some error occurred while retrieving hardware." },
+    "102": { "error": 102, "message": "Error, Some error occurred while updating hardware." },
+
+    "103": { "error": 103, "message": "Error, updating hardware-hardware for add relation" },
+    "105": { "error": 105, "message": "Error, updating hardware-hardware for delete relation" },
+    "106": { "error": 106, "message": "Error, updating client-hardware for add relation" },
+    "107": { "error": 107, "message": "Error, updating client-hardware for delete relation" },
+    "108": { "error": 108, "message": "Error, updating hardware-partition for add relation" },
+    "109": { "error": 109, "message": "Error, updating hardware-partition for delete relation" },
+    "111": { "error": 111, "message": "Error, element hardware not found or hardware does not exist" },
+    "112": { "error": 112, "message": "Error, element partition not found or partition does not exist" },
+
+
+
+    "201": { "error": 201, "message": "Error, Some error occurred while retrieving partitions." },
+    "202": { "error": 202, "message": "Error, Some error occurred while updating partition." },
+    "203": { "error": 203, "message": "Error, updating partition-system for add relation" },
+    "204'": { "error": 204, "message": "Error, updating partition-system for delete relation" },
+    "205": { "error": 205, "message": "Error, updating partition-hardware for add relation" },
+    "206": { "error": 206, "message": "Error, updating partition-hardware for delete relation" },
+    "211": { "error": 211, "message": "Error, element system not found or system does not exist" },
+    "212": { "error": 212, "message": "Error, element partition not found or partition does not exist" },
+
+
+
+    "301": { "error": 301, "message": "Error, Some error occurred while retrieving zVM_linux." },
+    "302": { "error": 302, "message": "Error, Some error occurred while updating zVM_linux." },
+
+    "303": { "error": 303, "message": "Error, updating zVM_linux-system for add relation" },
+    "304'": { "error": 304, "message": "Error, updating zVM_linux-system for delete relation" },
+
+    "305": { "error": 305, "message": "Error, updating zVM_linux-client for add relation" },
+    "306": { "error": 306, "message": "Error, updating zVM_linux-client for delete relation" },
+
+    "311": { "error": 311, "message": "Error, element system not found or system does not exist" },
+    "312": { "error": 312, "message": "Error, element zVM_linux not found or zVM_linux does not exist" }
+
+
+
+
+
+
+
+
+}

@@ -16,6 +16,7 @@ router.get("/status/", [authJwt.verifyToken, authJwt.isModerator], controller.fi
 router.get("/platforms/", [authJwt.verifyToken, authJwt.isModerator], controller.findPlatforms);
 router.get("/classeServices/", [authJwt.verifyToken, authJwt.isModerator], controller.findClasseServices);
 router.get("/environments/", [authJwt.verifyToken, authJwt.isModerator], controller.findEnvironment);
+router.get("/messageErrors/", [authJwt.verifyToken, authJwt.isModerator], controller.messageErrors);
 
 
 

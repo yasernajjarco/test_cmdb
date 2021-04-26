@@ -10,7 +10,13 @@ const { authJwt } = require("../middleware");
 router.post("/", [authJwt.verifyToken, authJwt.isModerator], controller.findAll);
 router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controller.findById);
 
+router.put("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.update);
 
+router.put("/:id/system", [authJwt.verifyToken, authJwt.isModerator], controller.addSystem);
+router.delete("/:id/system", [authJwt.verifyToken, authJwt.isModerator], controller.deleteSystem);
+
+router.put("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
+router.delete("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.deleteClient);
 
 
 export default router;

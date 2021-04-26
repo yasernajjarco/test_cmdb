@@ -1,6 +1,5 @@
 const db = require("../index.db");
 const { Sequelize, DataTypes, Op } = require("sequelize");
-const messageErreurs = require("../config/messageErreurs.json");
 
 
 export function first(array) {

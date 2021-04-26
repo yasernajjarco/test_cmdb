@@ -3,6 +3,7 @@ const Provider = db.provider;
 const Op = db.Sequelize.Op;
 const { Sequelize, DataTypes } = require("sequelize");
 const utils = require("./utils");
+const messageErrors = require("../config/messageErrors.json");
 
 exports.findStatus = (req, res) => {
     db.status.findAll({})
@@ -49,4 +50,8 @@ exports.findEnvironment = (req, res) => {
                 message: err.message || "Some error occurred while retrieving hardwares."
             });
         });
+};
+
+exports.messageErrors = (req, res) => {
+    res.send(messageErrors)
 };
