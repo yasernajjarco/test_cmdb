@@ -53,5 +53,9 @@ exports.findEnvironment = (req, res) => {
 };
 
 exports.messageErrors = (req, res) => {
-    res.send(messageErrors)
+    let result = [];
+    for (const [key, value] of Object.entries(messageErrors)) {
+        result.push(value)
+    }
+    res.send(result)
 };
