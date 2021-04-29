@@ -281,6 +281,83 @@ exports.deleteClient = async(req, res) => {
 };
 
 /**
+ * add zVM_Linux to element  system
+ * @param {Request} req the request coming from client (HTTP).
+ * it could contain the id of the zVM_Linux to which the relation should be added like {id, last_update}
+ * @param {Response} res object represents the HTTP response that an Express app sends when it gets an HTTP request, 
+ * it could contain the system update object if there is no error detected, otherwise an error message
+ * @returns {hardware}  the object system updated found or error message
+ */
+exports.addLinux = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+        let zlinux_id = await getIdZlinux(req.body.id)
+        let systeme_id = await getIdSyseme(id)
+
+        db.zLinux.update({ systeme_id: systeme_id }, { where: { zlinux_id: zlinux_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('update relation system-zlinux', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErrors[407]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErrors[error.message]);
+        else res.status(500).send(messageErrors[0]);
+    }
+
+
+};
+
+
+/**
+ * remove zVM_Linux to element  system
+ * @param {Request} req the request coming from client (HTTP).
+ * it could contain the id of the zVM_Linux to which the relation should be removed like {id, last_update}
+ * @param {Response} res object represents the HTTP response that an Express app sends when it gets an HTTP request, 
+ * it could contain the system update object if there is no error detected, otherwise an error message
+ * @returns {hardware}  the object system updated found or error message
+ */
+exports.deleteLinux = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        await utils.isLastUpdate(id, req.body.last_update);
+        let zlinux_id = await getIdZlinux(req.body.id)
+
+        db.zLinux.update({ systeme_id: null }, { where: { zlinux_id: zlinux_id } }
+
+            ).then(async result => {
+                let num = result[0];
+                if (num > 0) {
+                    let audit = utils.buildAudit('remove relation system-zlinux', id, req.user)
+                    db.audit.create(audit)
+                }
+                getById(id, res)
+            })
+            .catch(err => {
+                res.send(messageErrors[408]);
+
+            });
+    } catch (error) {
+        if (error.message != undefined) res.status(500).send(messageErrors[error.message]);
+        else res.status(500).send(messageErrors[0]);
+    }
+
+
+};
+
+
+/**
  * 
  * @param {[]} columns the list of columns that should be placed in the requested object
  * @returns an array with the key and the value (the field name) of each column for Sequelize
@@ -523,6 +600,21 @@ async function getIdSyseme(id) {
         return step1.dataValues.systeme_id;
     } catch (error) {
         throw new Error('211');
+    }
+
+}
+
+/**
+ * 
+ * @param {Integer} ci_id id of element ci
+ * @returns zlinux_id of element zVM_linux where his ci_id if can be found, else return Exception 
+ */
+async function getIdZlinux(id) {
+    try {
+        let step1 = await db.zLinux.findOne({ where: { ci_id: id }, attributes: ['zlinux_id'] })
+        return step1.dataValues.zlinux_id;
+    } catch (error) {
+        throw new Error('312');
     }
 
 }

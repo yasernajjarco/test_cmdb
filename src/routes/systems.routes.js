@@ -19,4 +19,7 @@ router.delete("/:id/partition", [authJwt.verifyToken, authJwt.isModerator], cont
 router.put("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.addClient);
 router.delete("/:id/client", [authJwt.verifyToken, authJwt.isModerator], controller.deleteClient);
 
+router.put("/:id/linux", [authJwt.verifyToken, authJwt.isModerator], controller.addLinux);
+router.delete("/:id/linux", [authJwt.verifyToken, authJwt.isModerator], controller.deleteLinux);
+
 export default router;

@@ -9,7 +9,6 @@
 
     "101": { "error": 101, "message": "Error, Some error occurred while retrieving hardware." },
     "102": { "error": 102, "message": "Error, Some error occurred while updating hardware." },
-
     "103": { "error": 103, "message": "Error, updating hardware-hardware for add relation" },
     "105": { "error": 105, "message": "Error, updating hardware-hardware for delete relation" },
     "106": { "error": 106, "message": "Error, updating client-hardware for add relation" },
@@ -44,15 +43,18 @@
 
     "401": { "error": 401, "message": "Error, Some error occurred while retrieving system." },
     "402": { "error": 402, "message": "Error, Some error occurred while updating system." },
-
     "403": { "error": 403, "message": "Error, updating partition-system for add relation" },
     "404": { "error": 404, "message": "Error, updating partition-system for delete relation" },
-
     "405": { "error": 405, "message": "Error, updating system-client for add relation" },
     "406": { "error": 406, "message": "Error, updating system-client for delete relation" },
+    "407": { "error": 407, "message": "Error, updating system-linux for add relation" },
+    "408": { "error": 408, "message": "Error, updating system-linux for delete relation" },
 
-    "411": { "error": 411, "message": "Error, element system not found or system does not exist" },
-    "412": { "error": 412, "message": "Error, element partition not found or partition does not exist" }
+    "501": { "error": 501, "message": "Error, Some error occurred while retrieving software." },
+    "502": { "error": 502, "message": "Error, Some error occurred while updating software." },
+    "503": { "error": 503, "message": "Error, updating software-provider for add relation" },
+
+    "511": { "error": 511, "message": "Error, element software not found or software does not exist" }
 
 
 
