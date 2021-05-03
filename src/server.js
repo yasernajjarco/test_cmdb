@@ -11,32 +11,16 @@ const logger = require('./logger');
 const app = express();
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
-const options = {
-    info: {
-        version: '1.0.0',
-        title: 'CMDB API',
-        description: 'Service API REST for Mainframe NRB',
-        contact: {
-            name: 'Yaser ALHAJ KARIM',
-            email: 'yaser.alhajkarim@nrb.be',
-        },
-    },
-    security: {
-        BearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-        },
-    },
-    filesPattern: './**/*.js',
-    swaggerUIPath: '/docs',
-    baseDir: __dirname,
-    exposeSwaggerUI: true,
-    exposeApiDocs: false,
-    apiDocsPath: '/v3/docs',
-};
+//https://apitransform.com/convert/
+//copy from file json
+// replace string => json
+//text/plain => application/json
+// localhost => nrbnrx0020.nrb.be
 
-expressJSDocSwagger(app)(options);
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 
