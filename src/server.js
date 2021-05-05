@@ -7,19 +7,16 @@ const exportFiles = require("./exportFiles");
 const load = require("./loadFiles/index");
 import routes from './routes/index.routes';
 const logger = require('./logger');
-
+import YAML from 'yamljs';
 const app = express();
 const expressJSDocSwagger = require('express-jsdoc-swagger');
-
-//https://apitransform.com/convert/
-//copy from file json
-// replace string => json
-//text/plain => application/json
-// localhost => nrbnrx0020.nrb.be
-
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const path = require('path');
 
+
+
+const swagger_path = path.resolve(__dirname, './openapi.yaml');
+const swaggerDocument = YAML.load(swagger_path);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
@@ -56,3 +53,38 @@ app.listen(config.PORT, () =>
     app.use('/api/v1', app),
     console.log(`le server  listening on port ${config.PORT}!`),
 );
+
+
+/***
+ *  HOW TO SET SWAGGER
+ */
+//https://apitransform.com/convert/
+//copy from file json
+// replace "type":"string", =>  '' 
+//text/plain => application/json
+//https://editor.swagger.io/ 
+// to yaml
+
+
+/*
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:3000'
+    description: 'Local development server'
+  - url: 'http://nrbnrx0020.nrb.be:3000'
+    description: 'Development server'
+  - url: 'http://nrbnrx0020.nrb.be:3001'
+    description: 'Test server'
+  - url: 'http://nrbnrx0020.nrb.be:3002'
+    description: 'Production server'
+info:
+  description: "This REST API allows you to view / modify / delete / add all the CI elements of the Mainframe team"
+  version: "1.0.0"
+  title: "CMDB Mainframe"
+  termsOfService: "https://www.nrb.be/"
+  contact:
+    email: "yaser.alhajkarim@nrb.be"
+    name: "Yaser ALHAJ KARIM"
+*/
+
+// paths...

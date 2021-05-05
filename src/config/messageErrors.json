@@ -53,10 +53,14 @@
     "501": { "error": 501, "message": "Error, Some error occurred while retrieving software." },
     "502": { "error": 502, "message": "Error, Some error occurred while updating software." },
     "503": { "error": 503, "message": "Error, updating software-provider for add relation" },
+    "511": { "error": 511, "message": "Error, element software not found or software does not exist" },
 
-    "511": { "error": 511, "message": "Error, element software not found or software does not exist" }
 
+    "601": { "error": 601, "message": "Error, Some error occurred while retrieving provider." },
+    "602": { "error": 602, "message": "Error, Some error occurred while updating provider." },
 
+    "701": { "error": 701, "message": "Error, Some error occurred while retrieving client." },
+    "702": { "error": 702, "message": "Error, Some error occurred while updating client." }
 
 
 

@@ -4,15 +4,19 @@ const Op = db.Sequelize.Op;
 const { Sequelize, DataTypes } = require("sequelize");
 const utils = require("./utils");
 
-
+/**
+ * Retrieves all systems and all instances of every system, if id of client is -1, it's meaning thant for client shared, so return all systems of all clients shared
+ * @param {Request} req the request coming from client (HTTP)
+ * @param {Response} res object represents the HTTP response that an Express app sends when it gets an HTTP request, 
+ * it could contain the list of systems []
+ * @returns {[]}   the list of systems with instances included
+ */
 
 exports.buildTableById = (req, res) => {
 
     const id = req.params.id;
 
     let condition = (id > 0) ? { '$clients.client_id$': id } : { '$clients.isshared$': 1 }
-
-
 
     db.systems.findAll({
             where: condition,
@@ -107,13 +111,18 @@ exports.buildTableById = (req, res) => {
 
 };
 
+/**
+ * Retrieves all clients no shared and class service of his system is 'PAAS', and for clients shared return it like PROD-NRB
+ * @param {Request} req the request coming from client (HTTP)
+ * @param {Response} res object represents the HTTP response that an Express app sends when it gets an HTTP request, 
+ * it could contain the list of clients [] no shared or PROD-NRB.
+ * @returns {[]}   the list of clients
+ */
 exports.findClientsForTable = (req, res) => {
 
     db.client.findAll({
             where: {
                 '$systems.ci.classService.name$': 'PAAS'
-                    //  [db.Op.and]: [{ '$systems.ci.classService.name$': 'IAAS', hardware_id: res[0].dataValues.hardware_id }]
-
             },
             include: [{
                 model: db.systems,
@@ -145,14 +154,9 @@ exports.findClientsForTable = (req, res) => {
                     data = data.filter(function(item) { return item.isshared !== 1 });
                     data.push({ id: -1, name: 'PROD-NRB' })
                 }
-                // console.log(data)
-
-                // data = data.filter(function(item) { return item.systems != undefined && item.systems.length > 0 });
-
                 data.forEach(element => {
                     delete element.isshared;
                     delete element.systems;
-
                 })
                 res.send(data);
             }

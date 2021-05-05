@@ -1,0 +1,1056 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:3000'
+    description: 'Local development server'
+  - url: 'http://nrbnrx0020.nrb.be:3000'
+    description: 'Development server'
+  - url: 'http://nrbnrx0020.nrb.be:3001'
+    description: 'Test server'
+  - url: 'http://nrbnrx0020.nrb.be:3002'
+    description: 'Production server'
+info:
+  description: "This REST API allows you to view / modify / delete / add all the CI elements of the Mainframe team"
+  version: "1.0.0"
+  title: "CMDB Mainframe"
+  termsOfService: "https://www.nrb.be/"
+  contact:
+    email: "yaser.alhajkarim@nrb.be"
+    name: "Yaser ALHAJ KARIM"
+paths:
+  /api/hardwares/:
+    post:
+      summary: return all hardware items
+      operationId: returnallhardwareitems
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: Z
+                type: pserver
+                subtype: Mainframe IBM
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - serial_no
+                  - platform
+            example: " {\r\n     \"platform\" : \"Z\",\r\n     \"type\": \"pserver\",\r\n     \"subtype\":\"Mainframe IBM\" ,\r\n     \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"serial_no\",\"platform\"]\r\n}"
+      tags:
+        - Hardwares
+  /api/hardwares/details/366:
+    get:
+      summary: return a single hardware element by its id
+      operationId: returnasinglehardwareelementbyitsid
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Hardwares
+  /api/hardwares/366:
+    put:
+      summary: update a hardware element
+      operationId: updateahardwareelement
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                serial_no: test
+                id: 386
+                name: 'test  '
+                environnement: 4.Production
+                status: Operational
+                description: lou loyu
+                classService: PAAS
+                last_update: '2021-04-26 11:59:42'
+            example: "{\r\n\"serial_no\": \"test\",\r\n\"id\": 386,\r\n\"name\": \"test  \",\r\n\"environnement\": \"4.Production\",\r\n\"status\": \"Operational\",\r\n\"description\": \"lou loyu\",\r\n\"classService\": \"PAAS\",\r\n        \"last_update\": \"2021-04-26 11:59:42\"\r\n\r\n}"
+      tags:
+        - Hardwares
+  /api/hardwares/366/partition:
+    put:
+      summary: add a partition to a hardware element
+      operationId: addapartitiontoahardwareelement
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 1
+                last_update: '2021-04-19 13:49:18'
+            example: "{\r\n    \"id\" : 1,\r\n            \"last_update\": \"2021-04-19 13:49:18\"\r\n\r\n\r\n}"
+      tags:
+        - Hardwares
+    delete:
+      summary: delete a partition from a hardware element if it exists
+      operationId: deleteapartitionfromahardwareelementifitexists
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Hardwares
+  /api/hardwares/366/client:
+    put:
+      summary: add a client to a hardware element
+      operationId: addaclienttoahardwareelement
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 1
+                last_update: '2021-04-19 13:49:18'
+            example: "{\r\n    \"id\" : 1,\r\n            \"last_update\": \"2021-04-19 13:49:18\"\r\n\r\n\r\n}"
+      tags:
+        - Hardwares
+    delete:
+      summary: delete a client from a hardware element if it exists
+      operationId: deleteaclientfromahardwareelementifitexists
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Hardwares
+  /api/hardwares/366/relation:
+    put:
+      summary: add a relation between two hardware elements
+      operationId: addarelationbetweentwohardwareelements
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 376
+                last_update: '2021-04-16 11:16:16'
+            example: "{\r\n    \"id\" : 376,\r\n    \"last_update\": \"2021-04-16 11:16:16\"\r\n\r\n}"
+      tags:
+        - Hardwares
+    delete:
+      summary: remove a relation between two hardware elements if it exists
+      operationId: removearelationbetweentwohardwareelementsifitexists
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Hardwares
+  /api/partitions:
+    post:
+      summary: partitions/getAll
+      operationId: partitions/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: Z
+                type: lserver
+                subtype: Mainframe LPAR
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - platform
+                  - host_type
+                  - hardware
+            example: " {\r\n     \"platform\" : \"Z\",\r\n     \"type\": \"lserver\",\r\n     \"subtype\": \"Mainframe LPAR\",\r\n     \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"platform\",\"host_type\",\"hardware\"]\r\n}"
+      tags:
+        - Partitions
+  /api/partitions/details/425:
+    get:
+      summary: partitions/id
+      operationId: partitions/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Partitions
+  /api/partitions/425:
+    put:
+      summary: partitions/id update
+      operationId: partitions/idupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 386
+                name: dds
+                environnement: 4.Production
+                status: Operational
+                logical_name: jjji
+                description: lou loyu
+                classService: PAAS
+                last_update: '2021-04-20 11:40:00'
+            example: "{\r\n\r\n\"id\": 386,\r\n\"name\": \"dds\",\r\n\"environnement\": \"4.Production\",\r\n\"status\": \"Operational\",\r\n\"logical_name\" : \"jjji\",\r\n\"description\": \"lou loyu\",\r\n\"classService\": \"PAAS\",\r\n        \"last_update\": \"2021-04-20 11:40:00\"\r\n\r\n}"
+      tags:
+        - Partitions
+  /api/partitions/425/system:
+    put:
+      summary: partitions/system/id add
+      operationId: partitions/system/idadd
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 418
+                last_update: '2021-04-19 13:49:18'
+            example: "{\r\n    \"id\" : 418,\r\n            \"last_update\": \"2021-04-19 13:49:18\"\r\n\r\n\r\n}"
+      tags:
+        - Partitions
+    delete:
+      summary: partitions/system/id add
+      operationId: partitions/system/idadd4
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Partitions
+  /api/partitions/425/hardware:
+    delete:
+      summary: partitions/id/hardware delete
+      operationId: partitions/id/hardwaredelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Partitions
+  /api/systems:
+    post:
+      summary: systems/getAll
+      operationId: systems/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: B
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - platform
+                  - LPAR Host ci
+                  - LPAR Our Name
+            example: "{\r\n \"platform\": \"B\",\r\n \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"platform\",\"LPAR Host ci\",\"LPAR Our Name\"]\r\n\r\n}"
+      tags:
+        - Systems
+  /api/systems/details/622:
+    get:
+      summary: systems/id
+      operationId: systems/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Systems
+  /api/systems/622:
+    put:
+      summary: systems/id update
+      operationId: systems/idupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                name: FMSBACC
+                environnement: 4.Production
+                status: Operational
+                logical_name: FMSBACC
+                description: lou loyu
+                classService: PAAS
+                last_update: '2021-04-20 11:16:07'
+            example: "{\r\n\r\n \"name\": \"FMSBACC\",\r\n \"environnement\": \"4.Production\",\r\n\"status\": \"Operational\",\r\n\"logical_name\" : \"FMSBACC\",\r\n\"description\": \"lou loyu\",\r\n\"classService\": \"PAAS\",\r\n        \"last_update\": \"2021-04-20 11:16:07\"\r\n\r\n}"
+      tags:
+        - Systems
+  /api/systems/622/partition:
+    put:
+      summary: systems/partition/id add
+      operationId: systems/partition/idadd
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 496
+                last_update: '2021-04-29 08:48:51'
+            example: "{\r\n    \"id\" : 496,\r\n        \"last_update\": \"2021-04-29 08:48:51\"\r\n\r\n\r\n}"
+      tags:
+        - Systems
+    delete:
+      summary: systems/partition/id delete
+      operationId: systems/partition/iddelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Systems
+  /api/systems/622/client:
+    put:
+      summary: systems/client/id add
+      operationId: systems/client/idadd
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 1
+                last_update: '2021-04-19 13:49:18'
+            example: "{\r\n    \"id\" : 1,\r\n     \"last_update\": \"2021-04-19 13:49:18\"\r\n\r\n\r\n}"
+      tags:
+        - Systems
+    delete:
+      summary: systems/client/id add delete
+      operationId: systems/client/idadddelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Systems
+  /api/systems/622/linux:
+    put:
+      summary: systems/linux/id add
+      operationId: systems/linux/idadd
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 672
+                last_update: '2021-04-29 08:48:51'
+            example: "{\r\n    \"id\" : 672,\r\n        \"last_update\": \"2021-04-29 08:48:51\"\r\n\r\n\r\n}"
+      tags:
+        - Systems
+    delete:
+      summary: systems/linux/id delete
+      operationId: systems/linux/iddelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Systems
+  /api/zlinuxs:
+    post:
+      summary: zlinux/getAll
+      operationId: zlinux/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - platform
+            example: "{\r\n      \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"platform\"]\r\n\r\n}"
+      tags:
+        - zVM Linuxs
+  /api/zlinuxs/details/672:
+    get:
+      summary: zlinux/id
+      operationId: zlinux/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - zVM Linuxs
+  /api/zlinuxs/672:
+    put:
+      summary: zlinux/id update
+      operationId: zlinux/idupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                name: LINUX26
+                environnement: 4.Production
+                status: Operational
+                description: MSU Production Ethias
+                classService: PAAS
+                domaine: ethias.be
+                os_version: NOVELL SLES 12.3
+                cpu_type: vCPU(IBM/S390)
+                cpu_number: vCPU(IBM/S390)
+                physical_mem_total: '1'
+                last_update: '2021-04-26 15:43:57'
+            example: "{\r\n\"name\": \"LINUX26\",\r\n\"environnement\": \"4.Production\",\r\n\"status\": \"Operational\",\r\n\"description\": \"MSU Production Ethias\",\r\n\"classService\": \"PAAS\",\r\n\"domaine\": \"ethias.be\",\r\n\"os_version\": \"NOVELL SLES 12.3\",\r\n\"cpu_type\": \"vCPU(IBM/S390)\",\r\n\"cpu_number\": \"vCPU(IBM/S390)\",\r\n\"physical_mem_total\": \"1\",\r\n\r\n\"last_update\": \"2021-04-26 15:43:57\"\r\n\r\n}"
+      tags:
+        - zVM Linuxs
+  /api/zlinuxs/672/client:
+    put:
+      summary: zlinux/id/client add
+      operationId: zlinux/id/clientadd
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 5
+                last_update: '2021-04-26 12:26:35'
+            example: "{\r\n    \"id\" : 5,\r\n        \"last_update\": \"2021-04-26 12:26:35\"\r\n}"
+      tags:
+        - zVM Linuxs
+    delete:
+      summary: zlinux/id/client delete
+      operationId: zlinux/id/clientdelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - zVM Linuxs
+  /api/zlinuxs/672/system:
+    put:
+      summary: zlinux/id/system update
+      operationId: zlinux/id/systemupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 666
+                last_update: '2021-04-26 09:06:02'
+            example: "{\r\n\"id\": 666,\r\n        \"last_update\": \"2021-04-26 09:06:02\"\r\n\r\n\r\n}"
+      tags:
+        - zVM Linuxs
+    delete:
+      summary: zlinux/id/system delete
+      operationId: zlinux/id/systemdelete
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - zVM Linuxs
+  /api/instances:
+    post:
+      summary: instances/getAll
+      operationId: instances/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: B
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - platform
+            example: "{\r\n     \"platform\": \"B\",\r\n      \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"platform\"]\r\n\r\n}"
+      tags:
+        - Instances
+  /api/instances/details/989:
+    get:
+      summary: instances/id
+      operationId: instances/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Instances
+  /api/occurences/details/2860:
+    get:
+      summary: occurences/id
+      operationId: occurences/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Occurences
+  /api/occurences:
+    post:
+      summary: occurences/getAll
+      operationId: occurences/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: B
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - platform
+            example: "{\r\n     \"platform\": \"B\",\r\n      \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"platform\"]\r\n\r\n}"
+      tags:
+        - Occurences
+  /api/apps:
+    post:
+      summary: apps/getAll
+      operationId: apps/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: B
+                is_valid: 0
+                columns:
+                  - id
+                  - name
+                  - type
+                  - subtype
+                  - classService
+                  - environnement
+                  - nrb_managed_by
+                  - status
+                  - description
+                  - platform
+                  - product_code
+                  - version
+                  - end_of_support_date
+                  - end_extended_support
+            example: "{\r\n     \"platform\": \"B\",\r\n     \"is_valid\": 0,\r\n      \"columns\":[\"id\",\"name\",\"type\",\"subtype\",\"classService\",\"environnement\",\"nrb_managed_by\",\"status\",\"description\",\"platform\",\"product_code\",\"version\",\"end_of_support_date\",\"end_extended_support\"]\r\n\r\n}"
+      tags:
+        - Applications
+  /api/apps/details/1:
+    get:
+      summary: apps/id
+      operationId: apps/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Applications
+  /api/apps/1:
+    put:
+      summary: apps/id update
+      operationId: apps/idupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                name: test
+                status: Available
+                description: Transactionnel TP8
+                itservice: ITS - Mainframe TP8
+                product_code: TP8
+                version: '4.3'
+                end_of_support_date: 30/06/2022
+                end_extended_support: null
+                is_valid: 1
+                isoccurenciable: 1
+                last_update: '2021-04-29 11:45:27'
+            example: " { \r\n     \"name\" : \"test\",\r\n    \"status\": \"Available\",\r\n    \"description\": \"Transactionnel TP8\",\r\n    \"itservice\": \"ITS - Mainframe TP8\",\r\n    \"product_code\": \"TP8\",\r\n    \"version\": \"4.3\",\r\n    \"end_of_support_date\": \"30/06/2022\",\r\n    \"end_extended_support\": null,\r\n    \"is_valid\": 1,\r\n    \"isoccurenciable\": 1,\r\n        \"last_update\": \"2021-04-29 11:45:27\"\r\n\r\n }"
+      tags:
+        - Applications
+  /api/apps/1/provider:
+    put:
+      summary: apps/provider/id add
+      operationId: apps/provider/idadd
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 2
+                last_update: '2021-04-29 12:11:17'
+            example: "{\r\n    \"id\" : 2,\r\n        \"last_update\": \"2021-04-29 12:11:17\"\r\n\r\n}"
+      tags:
+        - Applications
+  /api/info/status:
+    get:
+      summary: info/status
+      operationId: info/status
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Info
+  /api/info/platforms:
+    get:
+      summary: info/platforms
+      operationId: info/platforms
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Info
+  /api/info/classeServices:
+    get:
+      summary: info/classeServices
+      operationId: info/classeServices
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Info
+  /api/info/environments:
+    get:
+      summary: info/environments
+      operationId: info/environments
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Info
+  /api/info/messageErrors:
+    get:
+      summary: info/messageErrors
+      operationId: info/messageErrors
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Info
+  /api/users/signin:
+    post:
+      summary: users/signin ok
+      operationId: users/signinok
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                username: p60001
+                password: '123456'
+            example: "{\r\n    \"username\" : \"p60001\",\r\n    \"password\" : \"123456\"\r\n\r\n}"
+      tags:
+        - Users
+  /api/cis:
+    post:
+      summary: cis/search
+      operationId: cis/search
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                name: CEC0
+            example: "{\r\n  \"name\" : \"CEC0\"\r\n}"
+      tags:
+        - Cis
+  /api/clients:
+    post:
+      summary: clients/getAll
+      operationId: clients/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: I
+                columns:
+                  - id
+                  - name
+                  - address
+            example: "{\r\n    \"platform\": \"I\",\r\n    \"columns\":[\"id\",\"name\",\"address\"]\r\n}"
+      tags:
+        - Clients
+  /api/clients/details/1:
+    get:
+      summary: clients/id
+      operationId: clients/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Clients
+  /api/clients/1:
+    put:
+      summary: clients/id update
+      operationId: clients/idupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                name: SPW
+            example: "{\r\n    \"name\": \"SPW\"\r\n}"
+      tags:
+        - Clients
+  /api/table:
+    get:
+      summary: table/getAllClients
+      operationId: table/getAllClients
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Table
+  /api/table/details/10:
+    get:
+      summary: table/id
+      operationId: table/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Table
+  /api/providers:
+    post:
+      summary: providers/getAll
+      operationId: providers/getAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                platform: Z
+                columns:
+                  - id
+                  - vendor_code
+                  - name
+                  - address
+                  - vendor
+            example: "{\r\n    \"platform\": \"Z\",\r\n    \"columns\":[\"id\",\"vendor_code\",\"name\",\"address\",\"vendor\"]\r\n}"
+      tags:
+        - Providers
+  /api/providers/apps:
+    get:
+      summary: providers/apps
+      operationId: providers/apps
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Providers
+  /api/providers/details/1:
+    get:
+      summary: providers/id
+      operationId: providers/id
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Providers
+  /api/providers/1:
+    put:
+      summary: providers/id  update
+      operationId: providers/idupdate
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                vendor_code: ABSD
+                name: Absyss name
+                vendor: Absyss
+            example: "{\r\n    \"vendor_code\": \"ABSD\",\r\n    \"name\": \"Absyss name\",\r\n    \"vendor\": \"Absyss\"\r\n}"
+      tags:
+        - Providers
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security:
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+  - bearer: []
+tags: []
+externalDocs:
+  url: ''
+  description: ''

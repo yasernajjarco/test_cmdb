@@ -17,5 +17,6 @@ router.get("/details/:id", [authJwt.verifyToken, authJwt.isModerator], controlle
 
 router.get("/apps/", [authJwt.verifyToken, authJwt.isModerator], controller.findForDetails);
 
+router.put("/:id", [authJwt.verifyToken, authJwt.isModerator], controller.update);
 
 export default router;
