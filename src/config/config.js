@@ -1,6 +1,3 @@
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE3MDA5NzYwLCJleHAiOjE2MjU2NDk3NjB9.eIVCeg2BmCMVO34ySEGBb3i7yuya8dQFHEhCfRwJgYo
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjE3MDA5OTQ4LCJleHAiOjE2MjU2NDk5NDh9.TLFdMlTFW3P8CGsvBH5LmWvcxxW-YvxC6KindnSccGw
-
 let path = require('path');
 let filename = require('path').resolve(__dirname, '../../..');
 let env = path.dirname(filename).split(path.sep).pop();
@@ -105,6 +102,12 @@ const prod = {
     }
 };
 
+/**
+ * read the folder of application and decide witch config to set
+ * this folders have to be like:
+ * /local\Backend\test_cmdb or dev\Backend\test_cmdb or test\Backend\test_cmdb or prod\Backend\test_cmdb
+ * @returns config application
+ */
 function config() {
     switch (env) {
 

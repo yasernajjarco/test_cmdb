@@ -25,13 +25,13 @@ const subtypes = [{
 
 ]
 
+
 export async function start() {
 
 
     // await generateInstances();
     // await generateOccurences();
     // await generteHardwares();
-
 };
 
 
@@ -275,15 +275,6 @@ async function generteHardwares() {
     })
 
 }
-
-
-
-
-
-
-
-
-
 
 async function filterBySubtype(data, platform) {
 

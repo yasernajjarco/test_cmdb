@@ -17,13 +17,10 @@
     "109": { "error": 109, "message": "Error, updating hardware-partition for delete relation" },
     "111": { "error": 111, "message": "Error, element hardware not found or hardware does not exist" },
     "112": { "error": 112, "message": "Error, element partition not found or partition does not exist" },
-
-
-
     "201": { "error": 201, "message": "Error, Some error occurred while retrieving partitions." },
     "202": { "error": 202, "message": "Error, Some error occurred while updating partition." },
     "203": { "error": 203, "message": "Error, updating partition-system for add relation" },
-    "204'": { "error": 204, "message": "Error, updating partition-system for delete relation" },
+    "204": { "error": 204, "message": "Error, updating partition-system for delete relation" },
     "205": { "error": 205, "message": "Error, updating partition-hardware for add relation" },
     "206": { "error": 206, "message": "Error, updating partition-hardware for delete relation" },
     "211": { "error": 211, "message": "Error, element system not found or system does not exist" },

@@ -1,14 +1,7 @@
 const db = require("../index.db");
-import moment from 'moment';
-import ConsoleAppender from 'simple-node-logger/lib/ConsoleAppender';
 const logger = require('../logger');
 let compt = 0;
-let results = [];
-
-//zVM linux, occurence linux all sauf PROD-NRB
-
 const reader = require('xlsx')
-
 
 export async function updateOccurences(fileName, namePlatform) {
 
@@ -31,7 +24,7 @@ export async function updateOccurences(fileName, namePlatform) {
         switch (sheets[i]) {
             case 'CI occurence Z':
                 await updateOccurenceElements(temp, namePlatform);
-                logger.info(compt, ' instances of  world  ', namePlatform, ' has been updated or added');
+                logger.info(compt, ' occurence of  world  ', namePlatform, ' has been updated or added');
 
                 logger.info('end processing this file : ', fileName);
                 break;
@@ -42,7 +35,6 @@ export async function updateOccurences(fileName, namePlatform) {
 
 
 }
-
 
 async function updateOccurenceElements(occurences, namePlatform) {
 
@@ -150,8 +142,6 @@ async function setClient(companyCode, isShared) {
 
 }
 
-
-
 async function upsert(Model, condition, values) {
     return Model
         .findOne({ where: condition })
@@ -163,10 +153,6 @@ async function upsert(Model, condition, values) {
             return Model.create(values);
         })
 }
-
-/////////////////////////////////////////////
-
-
 
 export async function updateClients(fileName, namePlatform) {
 
@@ -254,7 +240,6 @@ export async function updateSystemes(fileName, namePlatform) {
 
 
 }
-
 
 async function updateSystemeElements(systemes, namePlatform) {
 

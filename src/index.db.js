@@ -34,6 +34,7 @@ db.sequelize = sequelize;
 
 
 
+// import all class model
 db.platforms = require("./models/platform")(sequelize, Sequelize, DataTypes);
 db.status = require("./models/status")(sequelize, Sequelize, DataTypes);
 db.classService = require("./models/class_service")(sequelize, Sequelize, DataTypes);
@@ -54,14 +55,15 @@ db.client = require("./models/client")(sequelize, Sequelize, DataTypes);
 db.client_zlinux = require("./models/client_zlinux")(sequelize, Sequelize, DataTypes);
 db.client_hardware = require("./models/client_hardware")(sequelize, Sequelize, DataTypes);
 db.client_systeme = require("./models/client_systeme")(sequelize, Sequelize, DataTypes);
-
 db.occurence = require("./models/occurencesoft")(sequelize, Sequelize, DataTypes);
-
 db.occurence_client = require("./models/occurence_client")(sequelize, Sequelize, DataTypes);
-
 db.contact = require("./models/contact")(sequelize, Sequelize, DataTypes);
 db.audit = require("./models/audit")(sequelize, Sequelize, DataTypes);
 db.client_platform = require("./models/client_platform")(sequelize, Sequelize, DataTypes);
+
+
+// set relation model to config ORM Sequelize with DB
+// if any relation change 1-N or N-N, you have to change then relation here
 
 
 //=============== CI ================//
@@ -91,13 +93,8 @@ db.ci.belongsTo(db.envType, { foreignKey: 'env_type_id', as: "envType" });
 db.ci.hasMany(db.hardwares, { foreignKey: 'ci_id', as: "hardwares" });
 db.hardwares.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
-/* db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares", foreignKey: "hardware_id" });
-db.hardwares.belongsToMany(db.hardwares, { through: "hardware_relation", as: "hardwares1", foreignKey: "hardware_id_1" });
- */
 db.hardwares.belongsToMany(db.hardwares, { as: 'hardwares', through: { model: db.hardwares_relations, unique: false }, foreignKey: 'hardware_id' });
 db.hardwares.belongsToMany(db.hardwares, { as: 'hardwares1', through: { model: db.hardwares_relations, unique: false }, foreignKey: 'hardware_id_1' });
-
-
 
 db.hardwares.belongsToMany(db.client, { through: "client_hardware", as: "clients", foreignKey: "hardware_id" });
 db.client.belongsToMany(db.hardwares, { through: "client_hardware", as: "hardwares", foreignKey: "client_id" });
@@ -110,14 +107,12 @@ db.lpars.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
 db.hardwares.hasMany(db.lpars, { foreignKey: "hardware_id", as: "lpars" });
 db.lpars.belongsTo(db.hardwares, { foreignKey: "hardware_id", as: "hardwares" });
-
 //===============================//
 
 
 //=============== application ================//
 db.ci.hasMany(db.application, { foreignKey: 'ci_id', as: "application" });
 db.application.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
-
 //===============================//
 
 
@@ -129,13 +124,8 @@ db.systems.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 db.lpars.hasMany(db.systems, { foreignKey: 'lpar_id', as: "systems" });
 db.systems.belongsTo(db.lpars, { foreignKey: 'lpar_id', as: "lpars" });
 
-
-/* db.systems.belongsTo(db.client, { foreignKey: 'client_id', as: "clients" });
-db.client.hasMany(db.systems, { foreignKey: 'client_id', as: "systems" }); */
-
 db.systems.belongsToMany(db.client, { through: "client_systeme", as: "clients", foreignKey: "systeme_id" });
 db.client.belongsToMany(db.systems, { through: "client_systeme", as: "systems", foreignKey: "client_id" });
-
 //===============================//
 
 
@@ -151,7 +141,6 @@ db.zLinux.belongsTo(db.systems, { foreignKey: 'systeme_id', as: "systems" });
 
 db.zLinux.belongsToMany(db.client, { through: "client_zlinux", as: "clients", foreignKey: "zlinux_id" });
 db.client.belongsToMany(db.zLinux, { through: "client_zlinux", as: "zLinux", foreignKey: "client_id" });
-
 //===============================//
 
 
@@ -165,17 +154,11 @@ db.instance.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 db.systems.hasMany(db.instance, { foreignKey: 'systeme_id', as: "instances" });
 db.instance.belongsTo(db.systems, { foreignKey: 'systeme_id', as: "systems" });
 
-
-/* db.instance.belongsToMany(db.client, { through: "instance_client", as: "clients", foreignKey: "instance_id" });
-db.client.belongsToMany(db.instance, { through: "instance_client", as: "instances", foreignKey: "client_id" }); */
-
-
 db.application.hasMany(db.instance, { foreignKey: 'ci_application_id', as: "instance" });
 db.instance.belongsTo(db.application, { foreignKey: 'ci_application_id', as: "application" });
 
 db.instance.hasMany(db.occurence, { foreignKey: 'instance_id', as: "occurences" });
 db.occurence.belongsTo(db.instance, { foreignKey: 'instance_id', as: "instance" });
-
 //===============================//
 
 
@@ -186,34 +169,36 @@ db.occurence.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
 
 db.occurence.belongsToMany(db.client, { through: "occurence_client", as: "clients", foreignKey: "occurencesoft_id" });
 db.client.belongsToMany(db.occurence, { through: "occurence_client", as: "occurences", foreignKey: "client_id" });
-
 //===============================//
+
+
+//=============== provider ================//
 
 db.provider.belongsToMany(db.platforms, { through: "provider_platform", as: "platforms", foreignKey: "provider_id" });
 db.platforms.belongsToMany(db.provider, { through: "provider_platform", as: "providers", foreignKey: "platform_id" });
 
+db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "applications" });
+db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
+
+//===============================//
+
+
+//=============== clients ================//
 
 db.client.belongsToMany(db.platforms, { through: "client_platform", as: "platforms", foreignKey: "client_id" });
 db.platforms.belongsToMany(db.client, { through: "client_platform", as: "clients", foreignKey: "platform_id" });
 
-
-
-db.provider.hasMany(db.application, { foreignKey: 'provider_id', as: "applications" });
-db.application.belongsTo(db.provider, { foreignKey: 'provider_id', as: "provider" });
-
 db.client.hasMany(db.contact, { foreignKey: 'client_id', as: "contacts" });
 db.contact.belongsTo(db.client, { foreignKey: 'client_id', as: "client" });
+//===============================//
+
+
+
+
 
 //=============== audit ================//
-
 db.ci.hasMany(db.audit, { foreignKey: 'ci_id', as: "audit" });
 db.audit.belongsTo(db.ci, { foreignKey: 'ci_id', as: "ci" });
-
-
-/*
-
-db.ci.hasMany(db.storages, { foreignKey: 'ci_id', as : "storage"});
-db.storages.belongsTo(db.ci, {foreignKey: 'ci_id', as: "ci"}); */
-
+//===============================//
 
 module.exports = db;
