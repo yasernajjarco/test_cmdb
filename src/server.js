@@ -12,7 +12,7 @@ const app = express();
 const swaggerUi = require('swagger-ui-express');
 const path = require('path');
 
-
+// the document to generate database is in src/scriptMysqlCreationDB V3.sql
 // set up swagger et generate interface html from file openapi.yml
 const swagger_path = path.resolve(__dirname, './openapi.yaml');
 const swaggerDocument = YAML.load(swagger_path);
